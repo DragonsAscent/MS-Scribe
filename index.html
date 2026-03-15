@@ -63,27 +63,67 @@ function startMonacoIfYamlReady() {
       provideHover: function(model, position) {
         const word = model.getWordAtPosition(position);
         if (!word) return null;
-        if (position.lineNumber === 1) return null;
-        let parentKey = findParentKey(model, position.lineNumber);
-        if (!parentKey) {
-          const firstLine = model.getLineContent(1).trim();
-          const match = firstLine.match(/^([\w-]+):/);
-          if (match) parentKey = match[1];
+
+        const line = model.getLineContent(position.lineNumber);
+
+        // Helper: get YAML-parsed object
+        function parseYaml() {
+          try {
+            const yamlLib = typeof jsyaml !== 'undefined' ? jsyaml : window.jsyaml;
+            if (!yamlLib) return null;
+            return yamlLib.load(model.getValue()) || {};
+          } catch (e) {
+            return null;
+          }
         }
-        if (parentKey && schema[parentKey]) {
-          const options = schema[parentKey].options;
-          if (options && options[word.word]) {
-            const opt = options[word.word];
+
+        // Case 1: hovering over a spell-class value
+        const spellClassLineMatch = line.match(/spell-class\s*:\s*['\"]?([.a-zA-Z0-9]+)['\"]?/);
+        if (spellClassLineMatch && line.includes(word.word)) {
+          const classStr = spellClassLineMatch[1];
+          const parts = classStr.split('.').filter(Boolean);
+          const className = parts[parts.length - 1];
+          if (schema[className]) {
+            const opts = schema[className].options || {};
+            const keys = Object.keys(opts).slice(0, 8);
+            const contents = [{ value: `**${className}** (${parts[0] ?? 'unknown'})` }];
+            if (keys.length) contents.push({ value: `Options: ${keys.join(', ')}` });
             return {
               range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
-              contents: [
-                { value: `**${word.word}** (${opt.type})` },
-                { value: `${opt.description}` },
-                { value: `Default: ${opt.default ?? 'none'}` }
-              ]
+              contents
             };
           }
         }
+
+        // Case 2: hovering over an option inside a spell instance - find instance's spell-class
+        const parentKey = findParentKey(model, position.lineNumber);
+        if (parentKey) {
+          const doc = parseYaml();
+          if (doc && doc[parentKey]) {
+            const inst = doc[parentKey];
+            const sc = inst['spell-class'] || inst['spell_class'] || inst['class'];
+            if (sc && typeof sc === 'string') {
+              const classParts = sc.split('.').filter(Boolean);
+              const className = classParts[classParts.length - 1];
+              if (schema[className]) {
+                const options = schema[className].options || {};
+                if (options[word.word]) {
+                  const opt = options[word.word];
+                  return {
+                    range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
+                    contents: [
+                      { value: `**${word.word}** (${opt.type})` },
+                      { value: `${opt.description}` },
+                      { value: `Default: ${opt.default ?? 'none'}` }
+                    ]
+                  };
+                }
+              }
+            }
+          }
+        }
+
+        // Fallback: global option lookup across all spells (unchanged)
         for (const spellName in schema) {
           const options = schema[spellName].options;
           if (options && options[word.word]) {
@@ -98,6 +138,7 @@ function startMonacoIfYamlReady() {
             };
           }
         }
+
         return null;
       }
     });
