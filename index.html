@@ -26,26 +26,22 @@
   }
   /* Inline token style with embedded icon inside the highlighted background */
   .monaco-editor .spell-class-token {
-    color:hsl(263, 100%, 71%) !important;
+    position: relative;
+    color: hsl(263, 100%, 71%) !important;
     font-weight: 500;
-    background-color:rgba(164, 107, 255, 0.13) !important;
-    border-radius:4px;
-    /* icon inside background */
-    /* a clearer wizard-hat icon drawn as SVG; positioned slightly left (negative) so it sits before the first character */
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='16' height='16'><path fill='%23a46bff' d='M32 6c-6 8-18 10-22 18 0 0 6 6 6 10 0 0-6 8 8 14 0 0 6 4 10 4s10-4 10-4c14-6 8-14 8-14 0-4 6-10 6-10-4-8-16-10-22-18zM12 52c4 6 20 8 20 8s16-2 20-8c-8 2-28 2-40 0z'/></svg>");
-    background-repeat: no-repeat;
-    background-position: -8px center;
-    background-size: 16px 16px;
+    background-color: rgba(164, 107, 255, 0.13) !important;
+    border-radius: 4px;
+    /* Icon is rendered via ::before (absolute) so it doesn't change text layout or caret placement */
     padding-right: 0 !important;
     line-height: 18px;
   }
   /* Percent-wrapped token (e.g., %arg:4:1%) */
   .monaco-editor .percent-token {
-    color: rgb(177, 130, 130) !important;
+    color: rgb(173, 114, 114) !important;
     background-color: rgba(235, 149, 149, 0.03) !important;
     /* repeating diagonal stripe pattern for better contrast */
     background-image: repeating-linear-gradient(45deg,
-      rgba(235, 149, 149, 0.1) 0px, rgba(235, 149, 149, 0.1) 4px,
+      rgba(231, 119, 119, 0.1) 0px, rgba(231, 119, 119, 0.1) 4px,
       rgba(43, 43, 43, 0.02) 4px, rgba(43, 43, 43, 0.02) 8px);
     background-size: 8px 8px;
     border-radius: 4px;
@@ -406,8 +402,7 @@ function startMonacoIfYamlReady() {
                 const condEntry = schema && schema['modifiers'] && schema['modifiers'].options && schema['modifiers'].options[cond];
                 if (condEntry && condEntry.description) contents.push({ value: condEntry.description });
               } catch (e) {}
-              contents.push({ value: 'This condition is evaluated against the caster (or target for `target-modifiers`).' });
-              contents.push({ value: 'Example: `- onground required$$You must be on the ground to cast this spell!`' });
+              contents.push({ value: 'This condition is evaluated against the caster (or target for `target-modifiers`).\nExample: `- onground required$$You must be on the ground to cast this spell!`\n       - `day denied`' });
               return { range: new monaco.Range(position.lineNumber, 1, position.lineNumber, model.getLineMaxColumn(position.lineNumber)), contents };
             }
           }
@@ -438,36 +433,18 @@ function startMonacoIfYamlReady() {
           }
         }
 
-        // Heuristic: keys starting with `str-` are caster-facing strings (e.g., str-cast-self, str-no-target)
-        try {
-          if (key && key.startsWith('str-')) {
-            const startCol = word && word.startColumn ? word.startColumn : Math.max(1, position.column - key.length);
-            const endCol = word && word.endColumn ? word.endColumn : startCol + key.length;
-            return {
-              range: new monaco.Range(position.lineNumber, startCol, position.lineNumber, endCol),
-              contents: [
-                { value: `**${key}** (string)` },
-                { value: 'A message shown to the caster or target (e.g., cast success, no target). Depends on which `str-` key is used such as `str-no-target`, `str-cast-self`, `str-cast-others`, `str-on-cooldown`, etc' }
-              ]
-            };
-          }
-        } catch (e) {
-          // ignore heuristic failures
-        }
-
         // Modifier help: `modifiers` and `target-modifiers` describe condition lists
         if (key === 'modifiers' || key === 'target-modifiers' || key === 'location-modifiers') {
           const startCol = word && word.startColumn ? word.startColumn : Math.max(1, position.column - key.length);
           const endCol = word && word.endColumn ? word.endColumn : startCol + key.length;
-          const actionsList = ['required/require','denied/deny','power/empower/multiply','addpower/add','cooldown','reagents','casttime','stop','continue','cast','castinstead','variable','string','message'];
+          const actionsList = ['  `required`/`require`','  `denied`/`deny`','  `power`/`empower`/`multiply`','  `addpower`/`add`','  `cooldown`','  `reagents`','  `casttime`','  `stop`','  `continue`','  `cast`','  `castinstead`','  `variable`','  `string`','  `message`'];
           const contents = [];
           contents.push({ value: `**${key}** (list of conditions)` });
           contents.push({ value: 'A YAML list where each item is a condition that modifies casting. Conditions can include comparison operators and `required` to enforce them.' });
           contents.push({ value: '**Modifier actions (when a condition passes):**' });
           for (const a of actionsList) contents.push({ value: `- ${a}` });
           contents.push({ value: 'Examples:' });
-          contents.push({ value: '- `- onground required` (caster/target must be on ground to cast)' });
-          contents.push({ value: '- `- health >10 required` (caster/target must have health > 10)' });
+          contents.push({ value: '- `- onground required` (caster/target must be on ground to cast)\n- `- health >10 required` (caster/target must have health > 10)' });
           return { range: new monaco.Range(position.lineNumber, startCol, position.lineNumber, endCol), contents };
         }
         // Fallback: global option lookup across all spells (unchanged)
