@@ -121,6 +121,7 @@ function startMonacoIfYamlReady() {
     function getGlobalOptions() {
       // built-in global options (fallbacks) — these apply to all spells unless overridden in schema
       const builtins = {
+        '%arg': { type: 'string', description: 'References an argument passed when the spell was cast as a sub-spell or by a player.\n\nExample: `/cast spell arg1 -> %arg:1:DEFAULT%`' },
         'cooldown': { type: 'number', description: 'Number of seconds before this spell can be used again. Decimals allowed (e.g., 0.5 = half second).' },
         'str-cast-self': { type: 'string', description: 'Message sent to caster when a spell is cast.' },
         'str-cast-others': { type: 'string', description: 'Message sent to other players when a spell is cast.' },
