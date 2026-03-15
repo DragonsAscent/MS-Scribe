@@ -8,13 +8,13 @@
   body, html { margin:0; padding:0; height:100%; display:flex; flex-direction:column; font-family:sans-serif; }
   #editor { flex:1; }
   #status { padding:8px; background:#1e1e1e; color:#d4d4d4; font-family:monospace; }
-  .monaco-editor .spell-class-token { color:#a46bff !important; font-weight:700; background-color:rgba(164, 107, 255, 0.212) !important; padding:0 6px; border-radius:4px; }
-  .monaco-editor .spell-class-token:before {
-    content: '';
+  .monaco-editor .spell-class-token { color:#a46bff !important; font-weight:600; background-color:rgba(164, 107, 255, 0.212) !important; padding:0 6px; border-radius:4px; }
+  /* Icon displayed before the token using Monaco's beforeContentClassName */
+  .monaco-editor .spell-class-icon {
     display: inline-block;
     width: 14px;
     height: 14px;
-    margin-right: 6px;
+    margin: 0 6px 0 0;
     vertical-align: middle;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16'><path fill='%23a46bff' d='M12 2l4 6 6 2-10 7-10-7 6-2 4-6z'/></svg>");
     background-size: contain;
@@ -76,9 +76,25 @@ function startMonacoIfYamlReady() {
           const val = m[1];
           const valueIndex = line.indexOf(val, m.index);
           if (valueIndex >= 0) {
-            const startCol = valueIndex + 1; // monaco is 1-based
-            const endCol = startCol + val.length;
-            newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-class-token' } });
+            // Try to include surrounding quotes in the decoration range if present
+            let startIndex = valueIndex;
+            let endIndex = valueIndex + val.length - 1;
+            // look for a quote before
+            const singleBefore = line.lastIndexOf("'", valueIndex);
+            const doubleBefore = line.lastIndexOf('"', valueIndex);
+            const quoteBefore = Math.max(singleBefore, doubleBefore);
+            if (quoteBefore >= m.index) startIndex = quoteBefore;
+            // look for a quote after
+            const singleAfter = line.indexOf("'", valueIndex + val.length);
+            const doubleAfter = line.indexOf('"', valueIndex + val.length);
+            const quoteAfterCandidates = [singleAfter, doubleAfter].filter(x => x !== -1);
+            if (quoteAfterCandidates.length) {
+              const quoteAfter = Math.min(...quoteAfterCandidates);
+              if (quoteAfter > endIndex) endIndex = quoteAfter;
+            }
+            const startCol = startIndex + 1; // monaco is 1-based
+            const endCol = endIndex + 2; // end is inclusive so +1, and convert to 1-based
+            newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-class-token', beforeContentClassName: 'spell-class-icon' } });
           }
         }
       }
