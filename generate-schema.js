@@ -269,9 +269,9 @@ function generate() {
         }
     }
 
-    // Add a 'global' entry that contains modifier conditions so hover/completion can find them
-    if (!schema['global']) schema['global'] = { type: 'global', options: {} };
-    schema['global'].options = Object.assign({}, schema['global'].options || {}, globalConditions);
+    // Add a 'modifiers' entry that contains modifier conditions so hover/completion can find them
+    if (!schema['modifiers']) schema['modifiers'] = { type: 'modifiers', options: {} };
+    schema['modifiers'].options = Object.assign({}, schema['modifiers'].options || {}, globalConditions);
 
     fs.writeFileSync(
         OUTPUT,

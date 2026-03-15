@@ -11874,8 +11874,8 @@
       }
     }
   },
-  "global": {
-    "type": "global",
+  "modifiers": {
+    "type": "modifiers",
     "options": {
       "absorption": {
         "type": "string",

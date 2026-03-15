@@ -40,15 +40,15 @@
   }
   /* Percent-wrapped token (e.g., %arg:4:1%) */
   .monaco-editor .percent-token {
-    color: #00be8f !important;
-    background-color: rgba(0, 255, 200, 0.03) !important;
+    color: rgb(177, 130, 159) !important;
+    background-color: rgba(235, 149, 235, 0.03) !important;
     /* repeating diagonal stripe pattern for better contrast */
     background-image: repeating-linear-gradient(45deg,
-      rgba(0, 255, 200, 0.1) 0px, rgba(0, 255, 200, 0.1) 4px,
-      rgba(90, 90, 90, 0.02) 4px, rgba(90, 90, 90, 0.02) 8px);
+      rgba(235, 149, 235, 0.1) 0px, rgba(235, 149, 235, 0.1) 4px,
+      rgba(54, 54, 54, 0.02) 4px, rgba(54, 54, 54, 0.02) 8px);
     background-size: 8px 8px;
     border-radius: 4px;
-    text-shadow: 0 0 8px rgba(0, 255, 255, 0.12);
+    text-shadow: 0 0 8px rgba(151, 81, 124, 0.205);
     padding-left: 4px !important;
     padding-right: 0 !important;
   }
@@ -90,7 +90,7 @@ function startMonacoIfYamlReady() {
         'str-no-target': { type: 'string', description: 'Message sent to caster when attempting to cast without a valid target.' },
         'str-on-cooldown': { type: 'string', description: 'Message sent to caster when attempting to cast while spell is on cooldown.' }
       };
-      const candidateNames = ['global','Global','__global','GLOBAL','*','AllSpells','GlobalSpell','globalOptions'];
+      const candidateNames = ['modifiers','Modifiers','global','Global','__global','GLOBAL','*','AllSpells','GlobalSpell','globalOptions'];
       const merged = Object.assign({}, builtins);
       for (const n of candidateNames) {
         if (schema && schema[n] && schema[n].options) {
@@ -119,6 +119,8 @@ function startMonacoIfYamlReady() {
   description: "Shout a message above your head. Format /c Shout \\\"MESSAGE_IN_QUOTES\\\" HEXCOLOR1 HEXCOLOR2 END_SIZE"
   str-cast-self: "You shout your message!"
   cooldown: "3*%arg:4:1%"
+  modifiers:
+    - onground required$$You must be on the ground to cast this spell!
   effects:
     - position: caster
       effect: entity
@@ -362,13 +364,14 @@ function startMonacoIfYamlReady() {
               let cond = parts[0];
               let inverted = false;
               if (cond.startsWith('!')) { inverted = true; cond = cond.slice(1); }
-              const actionsList = ['required/require','denied/deny','power/empower/multiply','addpower/add','cooldown','reagents','casttime','stop','continue','cast','castinstead','variable','string','message'];
               const contents = [];
               contents.push({ value: `**Modifier condition:** ${cond}${inverted ? ' (inverted)' : ''}` });
+              // try to find a description from the generated schema modifiers entry
+              try {
+                const condEntry = schema && schema['modifiers'] && schema['modifiers'].options && schema['modifiers'].options[cond];
+                if (condEntry && condEntry.description) contents.push({ value: condEntry.description });
+              } catch (e) {}
               contents.push({ value: 'This condition is evaluated against the caster (or target for `target-modifiers`).' });
-              contents.push({ value: '**Common modifier actions:**' });
-              for (const a of actionsList) contents.push({ value: `- ${a}` });
-              contents.push({ value: '' });
               contents.push({ value: 'Example: `- onground required$$You must be on the ground to cast this spell!`' });
               return { range: new monaco.Range(position.lineNumber, 1, position.lineNumber, model.getLineMaxColumn(position.lineNumber)), contents };
             }
@@ -421,16 +424,16 @@ function startMonacoIfYamlReady() {
         if (key === 'modifiers' || key === 'target-modifiers' || key === 'location-modifiers') {
           const startCol = word && word.startColumn ? word.startColumn : Math.max(1, position.column - key.length);
           const endCol = word && word.endColumn ? word.endColumn : startCol + key.length;
-          return {
-            range: new monaco.Range(position.lineNumber, startCol, position.lineNumber, endCol),
-            contents: [
-              { value: `**${key}** (list of conditions)` },
-              { value: 'A YAML list where each item is a condition that modifies casting. Conditions can include comparison operators and `required` to enforce them.' },
-              { value: 'Examples:' },
-              { value: '- `- onground required` (caster/target must be on ground to cast)' },
-              { value: '- `- health >10 required` (caster/target must have health > 10)' }
-            ]
-          };
+          const actionsList = ['required/require','denied/deny','power/empower/multiply','addpower/add','cooldown','reagents','casttime','stop','continue','cast','castinstead','variable','string','message'];
+          const contents = [];
+          contents.push({ value: `**${key}** (list of conditions)` });
+          contents.push({ value: 'A YAML list where each item is a condition that modifies casting. Conditions can include comparison operators and `required` to enforce them.' });
+          contents.push({ value: '**Modifier actions (when a condition passes):**' });
+          for (const a of actionsList) contents.push({ value: `- ${a}` });
+          contents.push({ value: 'Examples:' });
+          contents.push({ value: '- `- onground required` (caster/target must be on ground to cast)' });
+          contents.push({ value: '- `- health >10 required` (caster/target must have health > 10)' });
+          return { range: new monaco.Range(position.lineNumber, startCol, position.lineNumber, endCol), contents };
         }
         // Fallback: global option lookup across all spells (unchanged)
         // First check a merged global options entry (if present in the schema)
