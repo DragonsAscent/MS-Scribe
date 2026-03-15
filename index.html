@@ -8,7 +8,18 @@
   body, html { margin:0; padding:0; height:100%; display:flex; flex-direction:column; font-family:sans-serif; }
   #editor { flex:1; }
   #status { padding:8px; background:#1e1e1e; color:#d4d4d4; font-family:monospace; }
-  .monaco-editor .spell-class-token { color:#a46bff !important; font-weight:700; background-color:rgba(164, 107, 255, 0.212) !important; padding:0 4px; border-radius:4px; }
+  .monaco-editor .spell-class-token { color:#a46bff !important; font-weight:700; background-color:rgba(164, 107, 255, 0.212) !important; padding:0 6px; border-radius:4px; }
+  .monaco-editor .spell-class-token:before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+    vertical-align: middle;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16'><path fill='%23a46bff' d='M12 2l4 6 6 2-10 7-10-7 6-2 4-6z'/></svg>");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.40.0/min/vs/loader.js"></script>
