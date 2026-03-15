@@ -15,16 +15,16 @@
     background-color:rgba(164, 107, 255, 0.13) !important;
     border-radius:4px;
     /* icon inside background */
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16'><path fill='%23a46bff' d='M12 2l4 6 6 2-10 7-10-7 6-2 4-6z'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='12' height='12'><path fill='%23a46bff' d='M12 2l4 6 6 2-10 7-10-7 6-2 4-6z'/></svg>");
     background-repeat: no-repeat;
-    background-position: 8px center;
-    padding-left: 26px !important;
+    background-position: 6px center;
+    background-size: 12px 12px;
     padding-right: 0 !important;
     line-height: 18px;
   }
   /* Percent-wrapped token (e.g., %arg:4:1%) */
   .monaco-editor .percent-token {
-    color: #00ffbf !important;
+    color: #00be8f !important;
     background-color: rgba(0, 255, 200, 0.03) !important;
     /* repeating diagonal stripe pattern for better contrast */
     background-image: repeating-linear-gradient(45deg,
@@ -182,9 +182,7 @@ function startMonacoIfYamlReady() {
               if (startCol < 1) startCol = 1;
               if (endCol > lineMax) endCol = lineMax;
               if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
-              // widen by a few columns to ensure cursor can be placed at the visual end
-                const EXTRA_END_COLS = 8;
-                if (endCol < lineMax) endCol = Math.min(endCol + EXTRA_END_COLS, lineMax);
+              // keep exact range matching the quoted string (no extra widening)
               newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-class-token' } });
           }
         }
@@ -230,12 +228,12 @@ function startMonacoIfYamlReady() {
         while ((m = regex.exec(line)) !== null) {
           const matchText = m[0];
           const startIndex = m.index; // zero-based
+          // Use the exact %...% span so highlights begin and end on the percent signs
           const startCol = startIndex + 1;
           const lineMax = model.getLineMaxColumn(i);
-          let endCol = startIndex + matchText.length + 1;
+          let endCol = startIndex + matchText.length + 1; // exclusive end
           if (endCol > lineMax) endCol = lineMax;
           if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
-          if (endCol < lineMax) endCol = Math.min(endCol + 2, lineMax);
           newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'percent-token' } });
         }
       }
