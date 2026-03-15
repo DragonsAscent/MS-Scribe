@@ -1,5 +1,5 @@
 {
-  "AgeSpell": {
+  ".targeted.AgeSpell": {
     "type": "targeted",
     "options": {
       "age": {
@@ -19,7 +19,7 @@
       }
     }
   },
-  "AreaEffectSpell": {
+  ".targeted.AreaEffectSpell": {
     "type": "targeted",
     "options": {
       "spells": {
@@ -104,7 +104,7 @@
       }
     }
   },
-  "AreaScanSpell": {
+  ".targeted.AreaScanSpell": {
     "type": "targeted",
     "options": {
       "radius": {
@@ -239,7 +239,7 @@
       }
     }
   },
-  "ArmorSpell": {
+  ".buff.ArmorSpell": {
     "type": "buff",
     "options": {
       "duration": {
@@ -369,7 +369,7 @@
       }
     }
   },
-  "BeamSpell": {
+  ".instant.BeamSpell": {
     "type": "instant",
     "options": {
       "can-cast-with-item": {
@@ -504,7 +504,7 @@
       }
     }
   },
-  "BindSpell": {
+  ".command.BindSpell": {
     "type": "command",
     "options": {
       "bindable-items": {
