@@ -71,7 +71,7 @@ function startMonacoIfYamlReady() {
     const editor = monaco.editor.create(document.getElementById('editor'), {
       value: `Shout_Banner:
   spell-class: ".instant.DummySpell"
-  description: "Shout a message above your head. Format /c Shout \"MESSAGE_IN_QUOTES\" HEXCOLOR1 HEXCOLOR2 END_SIZE"
+  description: "Shout a message above your head. Format /c Shout \\\"MESSAGE_IN_QUOTES\\\" HEXCOLOR1 HEXCOLOR2 END_SIZE"
   str-cast-self: "You shout your message!"
   cooldown: "3*%arg:4:1%"
   effects:
@@ -165,8 +165,29 @@ function startMonacoIfYamlReady() {
 
     // Update decorations after init and on content change
     updateSpellClassDecorations();
+    let spellNameDecorationIds = [];
+    function updateSpellNameDecorations() {
+      const model = editor.getModel();
+      if (!model) return;
+      const newDecs = [];
+      const lineCount = model.getLineCount();
+      const topKeyRegex = /^([A-Za-z0-9_\-]+)\s*:/;
+      for (let i = 1; i <= lineCount; i++) {
+        const line = model.getLineContent(i);
+        const m = line.match(topKeyRegex);
+        if (m && line.trim().length && line[0] !== ' ' && line[0] !== '\t') {
+          const key = m[1];
+          const startCol = m.index + 1;
+          const endCol = startCol + key.length + 1;
+          newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-name-token' } });
+        }
+      }
+      spellNameDecorationIds = editor.deltaDecorations(spellNameDecorationIds, newDecs);
+    }
+    updateSpellNameDecorations();
     editor.onDidChangeModelContent(() => {
       updateSpellClassDecorations();
+      updateSpellNameDecorations();
     });
 
     function findParentKey(model, lineNumber) {
