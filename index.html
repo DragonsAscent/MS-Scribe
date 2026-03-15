@@ -7,7 +7,23 @@
 <style>
   body, html { margin:0; padding:0; height:100%; display:flex; flex-direction:column; font-family:sans-serif; }
   #editor { flex:1; }
-  #status { padding:8px; background:#1e1e1e; color:#d4d4d4; font-family:monospace; }
+  #status {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    max-width: 480px;
+    max-height: 240px;
+    overflow: auto;
+    padding: 12px 14px;
+    background: rgba(30,30,30,0.95);
+    color: #d4d4d4;
+    font-family: monospace;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    white-space: pre-wrap;
+    z-index: 10000;
+    font-size: 13px;
+  }
   /* Inline token style with embedded icon inside the highlighted background */
   .monaco-editor .spell-class-token {
     color:hsl(263, 100%, 71%) !important;
