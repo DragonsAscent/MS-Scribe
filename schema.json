@@ -1,5 +1,6 @@
 {
   "AgeSpell": {
+    "type": "unknown",
     "options": {
       "age": {
         "type": "number",
@@ -19,6 +20,7 @@
     }
   },
   "AreaEffectSpell": {
+    "type": "unknown",
     "options": {
       "spells": {
         "type": "string",
@@ -103,6 +105,7 @@
     }
   },
   "AreaScanSpell": {
+    "type": "unknown",
     "options": {
       "radius": {
         "type": "number",
@@ -237,6 +240,7 @@
     }
   },
   "ArmorSpell": {
+    "type": "unknown",
     "options": {
       "permanent": {
         "type": "boolean",
@@ -276,6 +280,7 @@
     }
   },
   "BeamSpell": {
+    "type": "unknown",
     "options": {
       "relative-offset": {
         "type": "any",
@@ -400,6 +405,7 @@
     }
   },
   "BindSpell": {
+    "type": "unknown",
     "options": {
       "bindable-items": {
         "type": "string",
@@ -449,6 +455,7 @@
     }
   },
   "BlinkSpell": {
+    "type": "unknown",
     "options": {
       "str-cant-blink": {
         "type": "string",
@@ -463,6 +470,7 @@
     }
   },
   "BlockBeamSpell": {
+    "type": "unknown",
     "options": {
       "block-type": {
         "type": "string",
@@ -607,6 +615,7 @@
     }
   },
   "BombSpell": {
+    "type": "unknown",
     "options": {
       "block": {
         "type": "string",
@@ -631,6 +640,7 @@
     }
   },
   "BowSpell": {
+    "type": "unknown",
     "options": {
       "bow-names": {
         "type": "string",
@@ -740,6 +750,7 @@
     }
   },
   "Buff-Spell": {
+    "type": "buff",
     "options": {
       "duration": {
         "type": "number",
@@ -834,6 +845,7 @@
     }
   },
   "BuffCarpetSpell": {
+    "type": "buff",
     "options": {
       "platform-block": {
         "type": "string",
@@ -848,6 +860,7 @@
     }
   },
   "BuildSpell": {
+    "type": "unknown",
     "options": {
       "slot": {
         "type": "number",
@@ -887,6 +900,7 @@
     }
   },
   "CaptureSpell": {
+    "type": "unknown",
     "options": {
       "item-name": {
         "type": "string",
@@ -916,6 +930,7 @@
     }
   },
   "CastAtMarkSpell": {
+    "type": "unknown",
     "options": {
       "mark-spell": {
         "type": "string",
@@ -935,6 +950,7 @@
     }
   },
   "ChainSpell": {
+    "type": "unknown",
     "options": {
       "spell": {
         "type": "string",
@@ -959,6 +975,7 @@
     }
   },
   "ClaritySpell": {
+    "type": "unknown",
     "options": {
       "multiplier": {
         "type": "number",
@@ -978,6 +995,7 @@
     }
   },
   "CleanseSpell": {
+    "type": "unknown",
     "options": {
       "remove": {
         "type": "string",
@@ -987,6 +1005,7 @@
     }
   },
   "CloseInventorySpell": {
+    "type": "unknown",
     "options": {
       "delay": {
         "type": "any",
@@ -996,6 +1015,7 @@
     }
   },
   "CollisionSpell": {
+    "type": "unknown",
     "options": {
       "target-state": {
         "type": "any",
@@ -1005,6 +1025,7 @@
     }
   },
   "CombustSpell": {
+    "type": "unknown",
     "options": {
       "fire-ticks": {
         "type": "number",
@@ -1044,6 +1065,7 @@
     }
   },
   "ConfusionSpell": {
+    "type": "unknown",
     "options": {
       "radius": {
         "type": "number",
@@ -1058,6 +1080,7 @@
     }
   },
   "ConjureBookSpell": {
+    "type": "unknown",
     "options": {
       "pickup-delay": {
         "type": "number",
@@ -1102,6 +1125,7 @@
     }
   },
   "ConjureFireworkSpell": {
+    "type": "unknown",
     "options": {
       "count": {
         "type": "number",
@@ -1141,6 +1165,7 @@
     }
   },
   "ConjureSpell": {
+    "type": "unknown",
     "options": {
       "delay": {
         "type": "number",
@@ -1240,6 +1265,7 @@
     }
   },
   "ConversationSpell": {
+    "type": "unknown",
     "options": {
       "conversation": {
         "type": "any",
@@ -1249,6 +1275,7 @@
     }
   },
   "CrippleSpell": {
+    "type": "unknown",
     "options": {
       "effect-strength": {
         "type": "number",
@@ -1288,6 +1315,7 @@
     }
   },
   "CustomNameVisibilitySpell": {
+    "type": "unknown",
     "options": {
       "target-state": {
         "type": "any",
@@ -1297,6 +1325,7 @@
     }
   },
   "DamageEmpowerSpell": {
+    "type": "unknown",
     "options": {
       "damage-multiplier": {
         "type": "number",
@@ -1321,6 +1350,7 @@
     }
   },
   "DamageSpell": {
+    "type": "unknown",
     "options": {
       "damage": {
         "type": "number",
@@ -1345,6 +1375,7 @@
     }
   },
   "DataSpell": {
+    "type": "unknown",
     "options": {
       "data-element": {
         "type": "string",
@@ -1359,6 +1390,7 @@
     }
   },
   "DeprecatedGlowSpell": {
+    "type": "unknown",
     "options": {
       "duration": {
         "type": "number",
@@ -1378,6 +1410,7 @@
     }
   },
   "DestroySpell": {
+    "type": "unknown",
     "options": {
       "vert-radius": {
         "type": "number",
@@ -1447,6 +1480,7 @@
     }
   },
   "DisarmSpell": {
+    "type": "unknown",
     "options": {
       "disarmable-items": {
         "type": "string",
@@ -1476,6 +1510,7 @@
     }
   },
   "DiscoverRecipeSpell": {
+    "type": "unknown",
     "options": {
       "discover": {
         "type": "boolean",
@@ -1490,6 +1525,7 @@
     }
   },
   "DisguiseSpell": {
+    "type": "unknown",
     "options": {
       "player-name": {
         "type": "any",
@@ -1524,6 +1560,7 @@
     }
   },
   "DodgeSpell": {
+    "type": "unknown",
     "options": {
       "distance": {
         "type": "number",
@@ -1548,6 +1585,7 @@
     }
   },
   "DotSpell": {
+    "type": "unknown",
     "options": {
       "delay": {
         "type": "number",
@@ -1607,6 +1645,7 @@
     }
   },
   "DowseSpell": {
+    "type": "unknown",
     "options": {
       "block-type": {
         "type": "string",
@@ -1646,6 +1685,7 @@
     }
   },
   "DrainlifeSpell": {
+    "type": "unknown",
     "options": {
       "take-type": {
         "type": "any",
@@ -1695,6 +1735,7 @@
     }
   },
   "EmpowerSpell": {
+    "type": "unknown",
     "options": {
       "power-multiplier": {
         "type": "number",
@@ -1719,6 +1760,7 @@
     }
   },
   "EnchantSpell": {
+    "type": "unknown",
     "options": {
       "enchantments": {
         "type": "string",
@@ -1733,6 +1775,7 @@
     }
   },
   "EntityEditSpell": {
+    "type": "unknown",
     "options": {
       "attributes": {
         "type": "any",
@@ -1762,6 +1805,7 @@
     }
   },
   "EntitySilenceSpell": {
+    "type": "unknown",
     "options": {
       "target-state": {
         "type": "any",
@@ -1771,6 +1815,7 @@
     }
   },
   "EntombSpell": {
+    "type": "unknown",
     "options": {
       "block-type": {
         "type": "string",
@@ -1805,6 +1850,7 @@
     }
   },
   "ExplodeSpell": {
+    "type": "unknown",
     "options": {
       "explosion-size": {
         "type": "number",
@@ -1864,6 +1910,7 @@
     }
   },
   "ExternalCommandSpell": {
+    "type": "targeted.ext",
     "options": {
       "command-to-block": {
         "type": "string",
@@ -1943,6 +1990,7 @@
     }
   },
   "FarmSpell": {
+    "type": "unknown",
     "options": {
       "crop-type": {
         "type": "string",
@@ -2007,6 +2055,7 @@
     }
   },
   "FireballSpell": {
+    "type": "unknown",
     "options": {
       "explosion-size": {
         "type": "number",
@@ -2096,6 +2145,7 @@
     }
   },
   "FlamewalkSpell": {
+    "type": "unknown",
     "options": {
       "radius": {
         "type": "number",
@@ -2135,6 +2185,7 @@
     }
   },
   "FlightPathSpell": {
+    "type": "unknown",
     "options": {
       "speed": {
         "type": "number",
@@ -2169,6 +2220,7 @@
     }
   },
   "FlySpell": {
+    "type": "unknown",
     "options": {
       "target-state": {
         "type": "boolean",
@@ -2183,6 +2235,7 @@
     }
   },
   "FoodSpell": {
+    "type": "unknown",
     "options": {
       "food": {
         "type": "number",
@@ -2202,6 +2255,7 @@
     }
   },
   "ForcebombSpell": {
+    "type": "unknown",
     "options": {
       "pushback-force": {
         "type": "number",
@@ -2246,6 +2300,7 @@
     }
   },
   "ForcepushSpell": {
+    "type": "unknown",
     "options": {
       "radius": {
         "type": "number",
@@ -2280,6 +2335,7 @@
     }
   },
   "ForcetossSpell": {
+    "type": "unknown",
     "options": {
       "damage": {
         "type": "number",
@@ -2324,6 +2380,7 @@
     }
   },
   "ForgetSpell": {
+    "type": "unknown",
     "options": {
       "allow-self-forget": {
         "type": "boolean",
@@ -2373,6 +2430,7 @@
     }
   },
   "FrostWalkSpell": {
+    "type": "unknown",
     "options": {
       "size": {
         "type": "number",
@@ -2387,6 +2445,7 @@
     }
   },
   "GateSpell": {
+    "type": "unknown",
     "options": {
       "world": {
         "type": "string",
@@ -2406,6 +2465,7 @@
     }
   },
   "GeyserSpell": {
+    "type": "unknown",
     "options": {
       "geyser-type": {
         "type": "string",
@@ -2460,6 +2520,7 @@
     }
   },
   "GillsSpell": {
+    "type": "unknown",
     "options": {
       "head-effect": {
         "type": "boolean",
@@ -2479,6 +2540,7 @@
     }
   },
   "GlideSpell": {
+    "type": "unknown",
     "options": {
       "target-state": {
         "type": "any",
@@ -2488,6 +2550,7 @@
     }
   },
   "GlowSpell": {
+    "type": "unknown",
     "options": {
       "key": {
         "type": "any",
@@ -2522,6 +2585,7 @@
     }
   },
   "GripSpell": {
+    "type": "unknown",
     "options": {
       "y-offset": {
         "type": "number",
@@ -2551,6 +2615,7 @@
     }
   },
   "HasteSpell": {
+    "type": "unknown",
     "options": {
       "effect-strength": {
         "type": "number",
@@ -2605,6 +2670,7 @@
     }
   },
   "HealSpell": {
+    "type": "unknown",
     "options": {
       "heal-amount": {
         "type": "number",
@@ -2644,6 +2710,7 @@
     }
   },
   "HelpSpell": {
+    "type": "unknown",
     "options": {
       "require-known-spell": {
         "type": "any",
@@ -2673,6 +2740,7 @@
     }
   },
   "HoldRightSpell": {
+    "type": "unknown",
     "options": {
       "spell": {
         "type": "string",
@@ -2707,6 +2775,7 @@
     }
   },
   "HomingMissileSpell": {
+    "type": "unknown",
     "options": {
       "homing-modifiers": {
         "type": "string",
@@ -2856,6 +2925,7 @@
     }
   },
   "HomingProjectileSpell": {
+    "type": "unknown",
     "options": {
       "projectile-type": {
         "type": "string",
@@ -2980,6 +3050,7 @@
     }
   },
   "ImbueSpell": {
+    "type": "unknown",
     "options": {
       "allowed-items": {
         "type": "string",
@@ -3054,6 +3125,7 @@
     }
   },
   "ImpactRecordSpell": {
+    "type": "unknown",
     "options": {
       "variable-name": {
         "type": "string",
@@ -3073,6 +3145,7 @@
     }
   },
   "Instant-Spell": {
+    "type": "instant",
     "options": {
       "can-cast-with-item": {
         "type": "boolean",
@@ -3087,6 +3160,7 @@
     }
   },
   "InvisibilitySpell": {
+    "type": "unknown",
     "options": {
       "prevent-pickups": {
         "type": "boolean",
@@ -3101,6 +3175,7 @@
     }
   },
   "InvulnerabilitySpell": {
+    "type": "unknown",
     "options": {
       "damage-causes": {
         "type": "array",
@@ -3120,6 +3195,7 @@
     }
   },
   "ItemProjectileSpell": {
+    "type": "unknown",
     "options": {
       "item": {
         "type": "string",
@@ -3234,6 +3310,7 @@
     }
   },
   "ItemSerializeSpell": {
+    "type": "unknown",
     "options": {
       "serializer-key": {
         "type": "string",
@@ -3248,6 +3325,7 @@
     }
   },
   "KeybindSpell": {
+    "type": "unknown",
     "options": {
       "wand-item": {
         "type": "string",
@@ -3262,6 +3340,7 @@
     }
   },
   "LeapSpell": {
+    "type": "unknown",
     "options": {
       "rotation": {
         "type": "number",
@@ -3306,6 +3385,7 @@
     }
   },
   "LevitateSpell": {
+    "type": "unknown",
     "options": {
       "tick-rate": {
         "type": "number",
@@ -3355,6 +3435,7 @@
     }
   },
   "LifewalkSpell": {
+    "type": "unknown",
     "options": {
       "tick-interval": {
         "type": "number",
@@ -3369,6 +3450,7 @@
     }
   },
   "LightningSpell": {
+    "type": "unknown",
     "options": {
       "additional-damage": {
         "type": "number",
@@ -3413,6 +3495,7 @@
     }
   },
   "LightwalkSpell": {
+    "type": "unknown",
     "options": {
       "block-type": {
         "type": "string",
@@ -3432,6 +3515,7 @@
     }
   },
   "ListSpell": {
+    "type": "unknown",
     "options": {
       "spells-to-hide": {
         "type": "any",
@@ -3466,6 +3550,7 @@
     }
   },
   "LocationSpell": {
+    "type": "unknown",
     "options": {
       "location": {
         "type": "string",
@@ -3480,6 +3565,7 @@
     }
   },
   "LoopSpell": {
+    "type": "unknown",
     "options": {
       "delay": {
         "type": "any",
@@ -3624,6 +3710,7 @@
     }
   },
   "MagicBondSpell": {
+    "type": "unknown",
     "options": {
       "duration": {
         "type": "number",
@@ -3638,6 +3725,7 @@
     }
   },
   "MagnetSpell": {
+    "type": "unknown",
     "options": {
       "radius": {
         "type": "number",
@@ -3687,6 +3775,7 @@
     }
   },
   "ManaRegenSpell": {
+    "type": "unknown",
     "options": {
       "regen-mod-amt": {
         "type": "number",
@@ -3701,6 +3790,7 @@
     }
   },
   "ManaSpell": {
+    "type": "unknown",
     "options": {
       "mana": {
         "type": "number",
@@ -3715,6 +3805,7 @@
     }
   },
   "MarkSpell": {
+    "type": "unknown",
     "options": {
       "permanent-marks": {
         "type": "boolean",
@@ -3739,6 +3830,7 @@
     }
   },
   "MaterializeSpell": {
+    "type": "unknown",
     "options": {
       "block-type": {
         "type": "string",
@@ -3823,6 +3915,7 @@
     }
   },
   "MenuSpell": {
+    "type": "unknown",
     "options": {
       "title": {
         "type": "string",
@@ -3877,6 +3970,7 @@
     }
   },
   "MinionSpell": {
+    "type": "unknown",
     "options": {
       "minion": {
         "type": "any",
@@ -4041,6 +4135,7 @@
     }
   },
   "MobGoalEditSpell": {
+    "type": "unknown",
     "options": {
       "remove-all": {
         "type": "boolean",
@@ -4070,6 +4165,7 @@
     }
   },
   "ModifyCooldownSpell": {
+    "type": "unknown",
     "options": {
       "seconds": {
         "type": "number",
@@ -4094,6 +4190,7 @@
     }
   },
   "MountSpell": {
+    "type": "unknown",
     "options": {
       "duration": {
         "type": "number",
@@ -4108,6 +4205,7 @@
     }
   },
   "MultiSpell": {
+    "type": "unknown",
     "options": {
       "cast-random-spell-instead": {
         "type": "boolean",
@@ -4132,6 +4230,7 @@
     }
   },
   "NovaSpell": {
+    "type": "unknown",
     "options": {
       "type": {
         "type": "string",
@@ -4211,6 +4310,7 @@
     }
   },
   "OffhandCooldownSpell": {
+    "type": "unknown",
     "options": {
       "item": {
         "type": "any",
@@ -4225,6 +4325,7 @@
     }
   },
   "OffsetLocationSpell": {
+    "type": "unknown",
     "options": {
       "relative-offset": {
         "type": "any",
@@ -4254,6 +4355,7 @@
     }
   },
   "OrbitSpell": {
+    "type": "unknown",
     "options": {
       "can-hit": {
         "type": "array",
@@ -4408,6 +4510,7 @@
     }
   },
   "PainSpell": {
+    "type": "unknown",
     "options": {
       "spell-damage-type": {
         "type": "string",
@@ -4452,6 +4555,7 @@
     }
   },
   "ParseSpell": {
+    "type": "unknown",
     "options": {
       "operation": {
         "type": "string",
@@ -4466,6 +4570,7 @@
     }
   },
   "ParticleCloudSpell": {
+    "type": "unknown",
     "options": {
       "custom-name": {
         "type": "string",
@@ -4540,6 +4645,7 @@
     }
   },
   "ParticleProjectileSpell": {
+    "type": "unknown",
     "options": {
       "start-forward-offset": {
         "type": "number",
@@ -4894,6 +5000,7 @@
     }
   },
   "PassiveSpell": {
+    "type": "passive",
     "options": {
       "chance": {
         "type": "number",
@@ -4953,6 +5060,7 @@
     }
   },
   "PasteSpell": {
+    "type": "unknown",
     "options": {
       "schematic": {
         "type": "string",
@@ -4987,6 +5095,7 @@
     }
   },
   "PermissionSpell": {
+    "type": "unknown",
     "options": {
       "duration": {
         "type": "number",
@@ -5001,6 +5110,7 @@
     }
   },
   "PhaseSpell": {
+    "type": "unknown",
     "options": {
       "phasable-blocks": {
         "type": "string",
@@ -5030,6 +5140,7 @@
     }
   },
   "PlaceholderAPIDataSpell": {
+    "type": "unknown",
     "options": {
       "variable-name": {
         "type": "string",
@@ -5059,6 +5170,7 @@
     }
   },
   "PlayerMenuSpell": {
+    "type": "unknown",
     "options": {
       "title": {
         "type": "string",
@@ -5168,6 +5280,7 @@
     }
   },
   "PortalSpell": {
+    "type": "unknown",
     "options": {
       "mark-spell": {
         "type": "string",
@@ -5267,6 +5380,7 @@
     }
   },
   "PoseSpell": {
+    "type": "unknown",
     "options": {
       "pose": {
         "type": "any",
@@ -5281,6 +5395,7 @@
     }
   },
   "PotionEffectSpell": {
+    "type": "unknown",
     "options": {
       "targeted": {
         "type": "boolean",
@@ -5305,6 +5420,7 @@
     }
   },
   "ProjectileModifySpell": {
+    "type": "unknown",
     "options": {
       "stop": {
         "type": "boolean",
@@ -5549,6 +5665,7 @@
     }
   },
   "ProjectileSpell": {
+    "type": "unknown",
     "options": {
       "projectile-type": {
         "type": "string",
@@ -5703,6 +5820,7 @@
     }
   },
   "PulserSpell": {
+    "type": "unknown",
     "options": {
       "block-type": {
         "type": "string",
@@ -5762,6 +5880,7 @@
     }
   },
   "PurgeSpell": {
+    "type": "unknown",
     "options": {
       "radius": {
         "type": "number",
@@ -5781,6 +5900,7 @@
     }
   },
   "RandomSpell": {
+    "type": "unknown",
     "options": {
       "pseudo-random": {
         "type": "boolean",
@@ -5805,6 +5925,7 @@
     }
   },
   "ReachSpell": {
+    "type": "unknown",
     "options": {
       "consume-blocks": {
         "type": "boolean",
@@ -5829,6 +5950,7 @@
     }
   },
   "RecallSpell": {
+    "type": "unknown",
     "options": {
       "mark-spell": {
         "type": "string",
@@ -5878,6 +6000,7 @@
     }
   },
   "ReflectSpell": {
+    "type": "unknown",
     "options": {
       "shield-breakers": {
         "type": "string",
@@ -5912,6 +6035,7 @@
     }
   },
   "RegrowSpell": {
+    "type": "unknown",
     "options": {
       "force-wool-color": {
         "type": "boolean",
@@ -5931,6 +6055,7 @@
     }
   },
   "RemoveMarksSpell": {
+    "type": "unknown",
     "options": {
       "radius": {
         "type": "number",
@@ -5955,6 +6080,7 @@
     }
   },
   "RepairSpell": {
+    "type": "unknown",
     "options": {
       "repair-amount": {
         "type": "number",
@@ -5989,6 +6115,7 @@
     }
   },
   "ReplaceSpell": {
+    "type": "unknown",
     "options": {
       "y-offset": {
         "type": "number",
@@ -6063,6 +6190,7 @@
     }
   },
   "ResistSpell": {
+    "type": "unknown",
     "options": {
       "multiplier": {
         "type": "number",
@@ -6112,6 +6240,7 @@
     }
   },
   "ResourcePackSpell": {
+    "type": "unknown",
     "options": {
       "url": {
         "type": "string",
@@ -6136,6 +6265,7 @@
     }
   },
   "RewindSpell": {
+    "type": "unknown",
     "options": {
       "tick-interval": {
         "type": "number",
@@ -6185,6 +6315,7 @@
     }
   },
   "RiptideSpell": {
+    "type": "unknown",
     "options": {
       "duration": {
         "type": "number",
@@ -6194,6 +6325,7 @@
     }
   },
   "RitualSpell": {
+    "type": "unknown",
     "options": {
       "ritual-duration": {
         "type": "number",
@@ -6273,6 +6405,7 @@
     }
   },
   "RoarSpell": {
+    "type": "unknown",
     "options": {
       "radius": {
         "type": "number",
@@ -6292,6 +6425,7 @@
     }
   },
   "RotateSpell": {
+    "type": "unknown",
     "options": {
       "rotation-yaw": {
         "type": "number",
@@ -6326,6 +6460,7 @@
     }
   },
   "ScoreboardDataSpell": {
+    "type": "unknown",
     "options": {
       "variable-name": {
         "type": "any",
@@ -6340,6 +6475,7 @@
     }
   },
   "ScrollSpell": {
+    "type": "unknown",
     "options": {
       "predefined-scrolls": {
         "type": "string",
@@ -6449,6 +6585,7 @@
     }
   },
   "SeeHealthSpell": {
+    "type": "unknown",
     "options": {
       "bar-size": {
         "type": "number",
@@ -6478,6 +6615,7 @@
     }
   },
   "ShadowstepSpell": {
+    "type": "unknown",
     "options": {
       "yaw": {
         "type": "number",
@@ -6507,6 +6645,7 @@
     }
   },
   "ShearSpell": {
+    "type": "unknown",
     "options": {
       "vanilla-sheep-shearing": {
         "type": "boolean",
@@ -6546,6 +6685,7 @@
     }
   },
   "SilenceSpell": {
+    "type": "unknown",
     "options": {
       "prevent-cast": {
         "type": "boolean",
@@ -6605,6 +6745,7 @@
     }
   },
   "SkinSpell": {
+    "type": "unknown",
     "options": {
       "texture": {
         "type": "string",
@@ -6619,6 +6760,7 @@
     }
   },
   "SlimeSizeSpell": {
+    "type": "unknown",
     "options": {
       "size": {
         "type": "string",
@@ -6638,6 +6780,7 @@
     }
   },
   "SlotSelectSpell": {
+    "type": "unknown",
     "options": {
       "ignore-slot-bounds": {
         "type": "boolean",
@@ -6652,6 +6795,7 @@
     }
   },
   "SneakSpell": {
+    "type": "unknown",
     "options": {
       "target-state": {
         "type": "any",
@@ -6661,6 +6805,7 @@
     }
   },
   "SpawnEntitySpell": {
+    "type": "unknown",
     "options": {
       "entity": {
         "type": "any",
@@ -6850,6 +6995,7 @@
     }
   },
   "SpawnTntSpell": {
+    "type": "unknown",
     "options": {
       "fuse": {
         "type": "number",
@@ -6889,6 +7035,7 @@
     }
   },
   "Spell-Configuration": {
+    "type": "unknown",
     "options": {
       "spell-class": {
         "type": "string",
@@ -6993,6 +7140,7 @@
     }
   },
   "Spell-Effects": {
+    "type": "unknown",
     "options": {
       "delay": {
         "type": "number",
@@ -7052,6 +7200,7 @@
     }
   },
   "Spell-Filter": {
+    "type": "unknown",
     "options": {
       "spells": {
         "type": "any",
@@ -7076,6 +7225,7 @@
     }
   },
   "SpellbookSpell": {
+    "type": "unknown",
     "options": {
       "spellbook-block": {
         "type": "string",
@@ -7145,6 +7295,7 @@
     }
   },
   "SpellHasteSpell": {
+    "type": "unknown",
     "options": {
       "cast-time-mod-amt": {
         "type": "number",
@@ -7179,6 +7330,7 @@
     }
   },
   "SprintSpell": {
+    "type": "unknown",
     "options": {
       "target-state": {
         "type": "any",
@@ -7188,6 +7340,7 @@
     }
   },
   "SteedSpell": {
+    "type": "unknown",
     "options": {
       "type": {
         "type": "string",
@@ -7242,6 +7395,7 @@
     }
   },
   "StonevisionSpell": {
+    "type": "unknown",
     "options": {
       "radius": {
         "type": "number",
@@ -7266,6 +7420,7 @@
     }
   },
   "StructureSpell": {
+    "type": "unknown",
     "options": {
       "structure-key": {
         "type": "any",
@@ -7315,6 +7470,7 @@
     }
   },
   "StunSpell": {
+    "type": "unknown",
     "options": {
       "duration": {
         "type": "number",
@@ -7349,6 +7505,7 @@
     }
   },
   "SummonSpell": {
+    "type": "unknown",
     "options": {
       "max-accept-delay": {
         "type": "number",
@@ -7393,6 +7550,7 @@
     }
   },
   "SwitchHealthSpell": {
+    "type": "unknown",
     "options": {
       "require-greater-health-percent": {
         "type": "boolean",
@@ -7407,6 +7565,7 @@
     }
   },
   "SwitchSpell": {
+    "type": "unknown",
     "options": {
       "switch-back": {
         "type": "number",
@@ -7416,6 +7575,7 @@
     }
   },
   "TagEntitySpell": {
+    "type": "unknown",
     "options": {
       "tag": {
         "type": "string",
@@ -7430,6 +7590,7 @@
     }
   },
   "TargetedCarpetSpell": {
+    "type": "targeted",
     "options": {
       "block": {
         "type": "string",
@@ -7474,6 +7635,7 @@
     }
   },
   "TargetedMultiSpell": {
+    "type": "targeted",
     "options": {
       "spells": {
         "type": "string",
@@ -7518,6 +7680,7 @@
     }
   },
   "TeachSpell": {
+    "type": "unknown",
     "options": {
       "require-known-spell": {
         "type": "boolean",
@@ -7562,6 +7725,7 @@
     }
   },
   "TelekinesisSpell": {
+    "type": "unknown",
     "options": {
       "check-plugins": {
         "type": "boolean",
@@ -7571,6 +7735,7 @@
     }
   },
   "TeleportSpell": {
+    "type": "unknown",
     "options": {
       "relative-offset": {
         "type": "any",
@@ -7595,6 +7760,7 @@
     }
   },
   "ThrowBlockSpell": {
+    "type": "unknown",
     "options": {
       "block-type": {
         "type": "string",
@@ -7679,6 +7845,7 @@
     }
   },
   "TimeSpell": {
+    "type": "unknown",
     "options": {
       "time-to-set": {
         "type": "number",
@@ -7693,6 +7860,7 @@
     }
   },
   "TomeSpell": {
+    "type": "unknown",
     "options": {
       "consume-book": {
         "type": "boolean",
@@ -7767,6 +7935,7 @@
     }
   },
   "TotemSpell": {
+    "type": "unknown",
     "options": {
       "main-hand": {
         "type": "string",
@@ -7901,6 +8070,7 @@
     }
   },
   "TransmuteSpell": {
+    "type": "unknown",
     "options": {
       "transmute-type": {
         "type": "string",
@@ -7915,6 +8085,7 @@
     }
   },
   "TreeSpell": {
+    "type": "unknown",
     "options": {
       "tree-type": {
         "type": "any",
@@ -7929,6 +8100,7 @@
     }
   },
   "UnbindSpell": {
+    "type": "unknown",
     "options": {
       "allowed-spells": {
         "type": "string",
@@ -7963,6 +8135,7 @@
     }
   },
   "UnconjureSpell": {
+    "type": "unknown",
     "options": {
       "items": {
         "type": "any",
@@ -7972,6 +8145,7 @@
     }
   },
   "VariableCastSpell": {
+    "type": "unknown",
     "options": {
       "variable-name": {
         "type": "string",
@@ -7986,6 +8160,7 @@
     }
   },
   "VelocitySpell": {
+    "type": "unknown",
     "options": {
       "speed": {
         "type": "number",
@@ -8010,6 +8185,7 @@
     }
   },
   "VinesSpell": {
+    "type": "unknown",
     "options": {
       "up": {
         "type": "number",
@@ -8034,6 +8210,7 @@
     }
   },
   "VolleySpell": {
+    "type": "unknown",
     "options": {
       "fire": {
         "type": "number",
@@ -8143,6 +8320,7 @@
     }
   },
   "WalkwaySpell": {
+    "type": "unknown",
     "options": {
       "platform-type": {
         "type": "string",
@@ -8162,6 +8340,7 @@
     }
   },
   "WallSpell": {
+    "type": "unknown",
     "options": {
       "wall-types": {
         "type": "string",
@@ -8256,6 +8435,7 @@
     }
   },
   "WaterwalkSpell": {
+    "type": "unknown",
     "options": {
       "speed": {
         "type": "number",
@@ -8265,6 +8445,7 @@
     }
   },
   "WindGlideSpell": {
+    "type": "unknown",
     "options": {
       "spell": {
         "type": "string",
@@ -8314,6 +8495,7 @@
     }
   },
   "WindWalkSpell": {
+    "type": "unknown",
     "options": {
       "always-fly": {
         "type": "boolean",
@@ -8368,6 +8550,7 @@
     }
   },
   "ZapSpell": {
+    "type": "unknown",
     "options": {
       "allowed-block-types": {
         "type": "string",

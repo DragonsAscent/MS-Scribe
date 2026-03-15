@@ -143,6 +143,22 @@ function generate() {
 
     const schema = {}
 
+    // Helper to infer spell type from filename
+    function inferSpellType(spellName) {
+        // e.g. ForcepushSpell → instant
+        // e.g. Buff-Spell → buff
+        // e.g. TargetedMultiSpell → targeted
+        // e.g. Instant-Spell → instant
+        const lower = spellName.toLowerCase();
+        if (lower.includes("instant")) return "instant";
+        if (lower.includes("buff")) return "buff";
+        if (lower.includes("targeted")) return "targeted";
+        if (lower.includes("ext")) return "targeted.ext";
+        if (lower.includes("passive")) return "passive";
+        // fallback: unknown
+        return "unknown";
+    }
+
     for (const f of files) {
 
         if (!f.endsWith(".md")) continue
@@ -154,7 +170,8 @@ function generate() {
 
         if (!options) continue
 
-        schema[spell] = { options }
+        const type = inferSpellType(spell);
+        schema[spell] = { type, options }
     }
 
     fs.writeFileSync(
@@ -164,7 +181,6 @@ function generate() {
 
     console.log("Schema generated.")
 }
-
 
 
 generate()
