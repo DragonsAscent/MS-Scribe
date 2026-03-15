@@ -62,7 +62,28 @@ function startMonacoIfYamlReady() {
     monaco.languages.registerHoverProvider('yaml', {
       provideHover: function(model, position) {
         const word = model.getWordAtPosition(position);
-        if (!word) return null;
+        // If Monaco word splitting breaks on hyphen, extract a full key including hyphens
+        function getFullKey() {
+          const line = model.getLineContent(position.lineNumber);
+          const col = position.column - 1; // zero-based index
+          if (col < 0 || col > line.length) return word ? word.word : null;
+          // allowed key chars: letters, numbers, underscore, hyphen
+          const isKeyChar = c => /[A-Za-z0-9_\-]/.test(c);
+          let left = col;
+          // If cursor is on whitespace between key and value, try to use word
+          if (!isKeyChar(line[left])) {
+            if (word && word.word) return word.word;
+            return null;
+          }
+          // expand left
+          while (left - 1 >= 0 && isKeyChar(line[left - 1])) left--;
+          let right = col;
+          while (right + 1 < line.length && isKeyChar(line[right + 1])) right++;
+          return line.substring(left, right + 1);
+        }
+
+        const key = getFullKey();
+        if (!key) return null;
 
         const line = model.getLineContent(position.lineNumber);
 
@@ -79,7 +100,7 @@ function startMonacoIfYamlReady() {
 
         // Case 1: hovering over a spell-class value
         const spellClassLineMatch = line.match(/spell-class\s*:\s*['\"]?([.a-zA-Z0-9]+)['\"]?/);
-        if (spellClassLineMatch && line.includes(word.word)) {
+        if (spellClassLineMatch && line.includes(key)) {
           const classStr = spellClassLineMatch[1];
           const parts = classStr.split('.').filter(Boolean);
           const className = parts[parts.length - 1];
@@ -107,8 +128,8 @@ function startMonacoIfYamlReady() {
               const className = classParts[classParts.length - 1];
               if (schema[className]) {
                 const options = schema[className].options || {};
-                if (options[word.word]) {
-                  const opt = options[word.word];
+                if (options[key]) {
+                  const opt = options[key];
                   return {
                     range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
                     contents: [
@@ -126,12 +147,12 @@ function startMonacoIfYamlReady() {
         // Fallback: global option lookup across all spells (unchanged)
         for (const spellName in schema) {
           const options = schema[spellName].options;
-          if (options && options[word.word]) {
-            const opt = options[word.word];
+          if (options && options[key]) {
+            const opt = options[key];
             return {
               range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
               contents: [
-                { value: `**${word.word}** (${opt.type})` },
+                { value: `**${key}** (${opt.type})` },
                 { value: `${opt.description}` },
                 { value: `Default: ${opt.default ?? 'none'}` }
               ]
