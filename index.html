@@ -59,8 +59,42 @@
     font-weight: 700;
     background-color: rgba(63, 255, 175, 0.103) !important;
     border-radius: 4px;
-    line-height: 20px;
-    padding-right: 0 !important;
+    position: relative;
+    /* keep background-free so text layout is exact; we render the hat via ::before */
+    border-radius: 10px !important;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6) !important;
+  .monaco-editor .spell-class-token::before {
+    content: "";
+    position: absolute;
+    left: -20px; /* place the icon before the first character/quote */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%23a46bff' d='M32 6c-6 8-18 10-22 18 0 0 6 6 6 10 0 0-6 8 8 14 0 0 6 4 10 4s10-4 10-4c14-6 8-14 8-14 0-4 6-10 6-10-4-8-16-10-22-18zM12 52c4 6 20 8 20 8s16-2 20-8c-8 2-28 2-40 0z'/></svg>");
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+  }
+  }
+  .monaco-editor .monaco-hover .hover-contents {
+    border-radius: 10px !important;
+    padding: 0 !important;
+  }
+  /* First hover row (title) with purple background */
+  .monaco-editor .monaco-hover .hover-contents .hover-row:first-child {
+    background: linear-gradient(180deg, rgba(164,107,255,0.16), rgba(124,67,255,0.12));
+    color: #fff !important;
+    padding: 6px 10px !important;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  /* Rest of hover content padding */
+  .monaco-editor .monaco-hover .hover-contents .hover-row:not(:first-child) {
+    padding: 8px 10px !important;
+    color: var(--vscode-editor-foreground, #d4d4d4) !important;
+    background: transparent !important;
   }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
