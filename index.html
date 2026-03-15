@@ -99,7 +99,10 @@ require(['vs/editor/editor.main'], function() {
   editor.onDidChangeModelContent(() => {
     const yamlText = editor.getValue();
     try {
-      jsyaml.load(yamlText);
+      // Use jsyaml if available, otherwise window.jsyaml
+      const yamlLib = typeof jsyaml !== 'undefined' ? jsyaml : window.jsyaml;
+      if (!yamlLib) throw new Error('jsyaml is not defined');
+      yamlLib.load(yamlText);
       statusEl.textContent = 'Config is valid ✅';
       statusEl.style.color = '#0f0';
     } catch (err) {
