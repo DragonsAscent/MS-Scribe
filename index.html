@@ -352,6 +352,28 @@ function startMonacoIfYamlReady() {
 
         // Case 2: hovering over an option inside a spell instance - find instance's spell-class
         const parentKey = findParentKey(model, position.lineNumber);
+        // If we're hovering over an item inside a modifiers list, provide condition/action help
+        if (parentKey && ['modifiers', 'target-modifiers', 'location-modifiers'].includes(parentKey)) {
+          const rawLine = model.getLineContent(position.lineNumber).trim();
+          if (rawLine.startsWith('-')) {
+            const itemText = rawLine.replace(/^-\s*/, '');
+            const parts = itemText.split(/\s+/);
+            if (parts.length) {
+              let cond = parts[0];
+              let inverted = false;
+              if (cond.startsWith('!')) { inverted = true; cond = cond.slice(1); }
+              const actionsList = ['required/require','denied/deny','power/empower/multiply','addpower/add','cooldown','reagents','casttime','stop','continue','cast','castinstead','variable','string','message'];
+              const contents = [];
+              contents.push({ value: `**Modifier condition:** ${cond}${inverted ? ' (inverted)' : ''}` });
+              contents.push({ value: 'This condition is evaluated against the caster (or target for `target-modifiers`).' });
+              contents.push({ value: '**Common modifier actions:**' });
+              for (const a of actionsList) contents.push({ value: `- ${a}` });
+              contents.push({ value: '' });
+              contents.push({ value: 'Example: `- onground required$$You must be on the ground to cast this spell!`' });
+              return { range: new monaco.Range(position.lineNumber, 1, position.lineNumber, model.getLineMaxColumn(position.lineNumber)), contents };
+            }
+          }
+        }
         if (parentKey) {
           const doc = parseYaml();
           if (doc && doc[parentKey]) {
@@ -395,6 +417,21 @@ function startMonacoIfYamlReady() {
           // ignore heuristic failures
         }
 
+        // Modifier help: `modifiers` and `target-modifiers` describe condition lists
+        if (key === 'modifiers' || key === 'target-modifiers' || key === 'location-modifiers') {
+          const startCol = word && word.startColumn ? word.startColumn : Math.max(1, position.column - key.length);
+          const endCol = word && word.endColumn ? word.endColumn : startCol + key.length;
+          return {
+            range: new monaco.Range(position.lineNumber, startCol, position.lineNumber, endCol),
+            contents: [
+              { value: `**${key}** (list of conditions)` },
+              { value: 'A YAML list where each item is a condition that modifies casting. Conditions can include comparison operators and `required` to enforce them.' },
+              { value: 'Examples:' },
+              { value: '- `- onground required` (caster/target must be on ground to cast)' },
+              { value: '- `- health >10 required` (caster/target must have health > 10)' }
+            ]
+          };
+        }
         // Fallback: global option lookup across all spells (unchanged)
         // First check a merged global options entry (if present in the schema)
         const globalOptions = getGlobalOptions();
