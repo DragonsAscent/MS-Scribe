@@ -19,7 +19,7 @@
     background-repeat: no-repeat;
     background-position: 8px center;
     padding-left: 30px !important;
-    padding-right: 8px !important;
+    padding-right: 0 !important;
     line-height: 18px;
   }
   /* Percent-wrapped token (e.g., %arg:4:1%) */
@@ -29,7 +29,8 @@
     background-color: rgba(255, 187, 0, 0.06) !important;
     border-radius: 4px;
     text-shadow: 0 0 8px rgba(255,187,0,0.18);
-    padding: 0 6px !important;
+    padding-left: 4px !important;
+    padding-right: 0 !important;
   }
   /* First-line spell name token */
   .monaco-editor .spell-name-token {
@@ -38,6 +39,7 @@
     background-color: rgba(63, 255, 175, 0.103) !important;
     border-radius: 4px;
     line-height: 20px;
+    padding-right: 0 !important;
   }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
