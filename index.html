@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spell Scribe</title>
+<style>
+  body, html { margin:0; padding:0; height:100%; display:flex; flex-direction:column; font-family:sans-serif; }
+  #editor { flex:1; }
+  #status { padding:8px; background:#1e1e1e; color:#d4d4d4; font-family:monospace; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.40.0/min/vs/loader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+</head>
+<body>
+<div id="editor"></div>
+<div id="status">Loading editor...</div>
+
+<script>
+require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.40.0/min/vs' }});
+require(['vs/editor/editor.main'], function() {
+
+  const statusEl = document.getElementById('status');
+  let schema = {};
+
+  // Fetch the auto-generated schema.json
+  fetch('schema.json')
+    .then(res => res.json())
+    .then(data => {
+      schema = data;
+      statusEl.textContent = 'Schema loaded ✅';
+      statusEl.style.color = '#0f0';
+    })
+    .catch(err => {
+      console.error(err);
+      statusEl.textContent = 'Failed to load schema ❌';
+      statusEl.style.color = '#f44';
+    });
+
+  // Create Monaco editor
+  const editor = monaco.editor.create(document.getElementById('editor'), {
+    value: `# Start typing your spell YAML here\nbasic-spell:\n  spell-class: ".instant.DummySpell"`,
+    language: 'yaml',
+    theme: 'vs-dark',
+    automaticLayout: true
+  });
+
+  // Hover provider
+  monaco.languages.registerHoverProvider('yaml', {
+    provideHover: function(model, position) {
+      const word = model.getWordAtPosition(position);
+      if (!word) return null;
+
+      // Search in schema options
+      for (const spellName in schema) {
+        const options = schema[spellName].options;
+        if (options[word.word]) {
+          const opt = options[word.word];
+          return {
+            range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
+            contents: [
+              { value: `**${word.word}** (${opt.type})` },
+              { value: `${opt.description}` },
+              { value: `Default: ${opt.default ?? 'none'}` }
+            ]
+          };
+        }
+      }
+      return null;
+    }
+  });
+
+  // Live YAML validation
+  editor.onDidChangeModelContent(() => {
+    const yamlText = editor.getValue();
+    try {
+      jsyaml.load(yamlText);
+      statusEl.textContent = 'Config is valid ✅';
+      statusEl.style.color = '#0f0';
+    } catch (err) {
+      statusEl.textContent = 'Error ❌: ' + err.message;
+      statusEl.style.color = '#f44';
+    }
+  });
+
+});
+</script>
+</body>
+</html>
