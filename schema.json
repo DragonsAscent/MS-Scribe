@@ -130,27 +130,27 @@
       "inner-radius": {
         "type": "number",
         "default": "0",
-        "description": ""
+        "description": "Defines an inner radius which can be used to create hollow shapes or make the inner radius more preferable for targeting when used with inner-tolerance"
       },
       "inner-x-radius": {
         "type": "number",
         "default": "0",
-        "description": ""
+        "description": "Defines an inner radius which can be used to create hollow shapes or make the inner radius more preferable for targeting when used with inner-tolerance"
       },
       "inner-y-radius": {
         "type": "number",
         "default": "0",
-        "description": ""
+        "description": "Defines an inner radius which can be used to create hollow shapes or make the inner radius more preferable for targeting when used with inner-tolerance"
       },
       "inner-z-radius": {
         "type": "number",
         "default": "0",
-        "description": ""
+        "description": "Defines an inner radius which can be used to create hollow shapes or make the inner radius more preferable for targeting when used with inner-tolerance"
       },
       "max-blocks": {
         "type": "number",
         "default": "0",
-        "description": "Max blocks to scan."
+        "description": "Maximum amount of blocks to scan."
       },
       "tolerance": {
         "type": "number",
@@ -159,8 +159,8 @@
       },
       "inner-tolerance": {
         "type": "number",
-        "default": "tolerance",
-        "description": "Same as above, but used in the inner radius."
+        "default": "1",
+        "description": "Used for the inner radius when determining what falls into the scanned area when shape takes the value of x_cylinder, y_cylinder, z_cylinder, or ellipsoid. A value lesser than one is more strict (and thus, fewer blocks are scanned), while a value greater than one is more lax (and thus, more blocks are scanned)."
       },
       "absolute-offset": {
         "type": "any",

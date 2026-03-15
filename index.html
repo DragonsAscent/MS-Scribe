@@ -8,6 +8,7 @@
   body, html { margin:0; padding:0; height:100%; display:flex; flex-direction:column; font-family:sans-serif; }
   #editor { flex:1; }
   #status { padding:8px; background:#1e1e1e; color:#d4d4d4; font-family:monospace; }
+  .spell-class-token { color:#ffb86b; font-weight:600; background:rgba(255,184,107,0.06); padding:0 4px; border-radius:3px; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.40.0/min/vs/loader.js"></script>
@@ -46,6 +47,37 @@ function startMonacoIfYamlReady() {
       language: 'yaml',
       theme: 'vs-dark',
       automaticLayout: true
+    });
+
+    // Decorations for highlighting spell-class values
+    let spellClassDecorationIds = [];
+    function updateSpellClassDecorations() {
+      const model = editor.getModel();
+      if (!model) return;
+      const newDecs = [];
+      const lineCount = model.getLineCount();
+      const regex = /spell-class\s*:\s*['\"]?([.A-Za-z0-9]+)['\"]?/g;
+      for (let i = 1; i <= lineCount; i++) {
+        const line = model.getLineContent(i);
+        let m;
+        // Run regex on the line
+        while ((m = regex.exec(line)) !== null) {
+          const val = m[1];
+          const valueIndex = line.indexOf(val, m.index);
+          if (valueIndex >= 0) {
+            const startCol = valueIndex + 1; // monaco is 1-based
+            const endCol = startCol + val.length;
+            newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-class-token' } });
+          }
+        }
+      }
+      spellClassDecorationIds = editor.deltaDecorations(spellClassDecorationIds, newDecs);
+    }
+
+    // Update decorations after init and on content change
+    updateSpellClassDecorations();
+    editor.onDidChangeModelContent(() => {
+      updateSpellClassDecorations();
     });
 
     function findParentKey(model, lineNumber) {
@@ -98,7 +130,7 @@ function startMonacoIfYamlReady() {
           }
         }
 
-        // Case 1: hovering over a spell-class value
+        // Case 1: hovering over a spell-class value — show full options list
         const spellClassLineMatch = line.match(/spell-class\s*:\s*['\"]?([.a-zA-Z0-9]+)['\"]?/);
         if (spellClassLineMatch && line.includes(key)) {
           const classStr = spellClassLineMatch[1];
@@ -106,11 +138,22 @@ function startMonacoIfYamlReady() {
           const className = parts[parts.length - 1];
           if (schema[className]) {
             const opts = schema[className].options || {};
-            const keys = Object.keys(opts).slice(0, 8);
-            const contents = [{ value: `**${className}** (${parts[0] ?? 'unknown'})` }];
-            if (keys.length) contents.push({ value: `Options: ${keys.join(', ')}` });
+            const keys = Object.keys(opts);
+            const contents = [];
+            contents.push({ value: `**${className}** (${parts[0] ?? 'unknown'})` });
+            if (keys.length) {
+              // Add a markdown list of all options
+              for (const k of keys) {
+                const o = opts[k] || {};
+                const t = o.type || 'any';
+                const d = o.description ? o.description.replace(/\n/g, ' ') : '';
+                contents.push({ value: `- **${k}** (${t}) — ${d}` });
+              }
+            } else {
+              contents.push({ value: 'No options documented.' });
+            }
             return {
-              range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
+              range: new monaco.Range(position.lineNumber, word ? word.startColumn : 1, position.lineNumber, word ? word.endColumn : key.length + 1),
               contents
             };
           }
