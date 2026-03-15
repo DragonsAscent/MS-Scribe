@@ -3,6 +3,52 @@ const path = require("path")
 
 const WIKI_DIR = "./MagicSpells.wiki"
 const OUTPUT = "./schema.json"
+// List of all general spells (from user)
+const GENERAL_SPELLS = [
+    "BowSpell",
+    "ExternalCommandSpell",
+    "LocationSpell",
+    "MenuSpell",
+    "MultiSpell",
+    "OffhandCooldownSpell",
+    "PassiveSpell",
+    "PermissionSpell",
+    "PlayerMenuSpell",
+    "RandomSpell",
+    "TargetedMultiSpell"
+];
+
+// Path to the main wiki page for spell type mapping
+const MAIN_WIKI_PAGE = path.join(WIKI_DIR, "Home.md");
+
+// Parse the main wiki page to build a spell-to-type map
+function buildSpellTypeMap() {
+    if (!fs.existsSync(MAIN_WIKI_PAGE)) return {};
+    const md = fs.readFileSync(MAIN_WIKI_PAGE, "utf8");
+    const typeSections = [
+        { header: "General Spells", type: "general" },
+        { header: "Command Spells", type: "command" },
+        { header: "Instant Spells", type: "instant" },
+        { header: "Targeted Spells", type: "targeted" },
+        { header: "Buff Spells", type: "buff" }
+    ];
+    const spellTypeMap = {};
+    for (const section of typeSections) {
+        const regex = new RegExp(`# ${section.header}:[\s\S]*?(?=\n---|\n#|$)`, "i");
+        const match = md.match(regex);
+        if (!match) continue;
+        const block = match[0];
+        // Find all spell links: [`SpellName`](SpellName)
+        const spellLinks = block.match(/\[`([\w-]+)`\]\([^)]+\)/g);
+        if (spellLinks) {
+            for (const link of spellLinks) {
+                const spellName = link.match(/\[`([\w-]+)`\]/)[1];
+                spellTypeMap[spellName] = section.type;
+            }
+        }
+    }
+    return spellTypeMap;
+}
 
 
 
@@ -138,40 +184,57 @@ function parseSpell(file) {
 
 
 function generate() {
+    // Map base type to base file
+    const BASE_TYPE_FILES = {
+        "buff": "Buff-Spell.md",
+        "instant": "Instant-Spell.md",
+        "command": "BindSpell.md", // Example, adjust as needed
+        // Add more base types/files as needed
+    };
+
+    // Preload base options
+    const baseOptionsCache = {};
+    for (const [type, file] of Object.entries(BASE_TYPE_FILES)) {
+        const filePath = path.join(WIKI_DIR, file);
+        if (fs.existsSync(filePath)) {
+            baseOptionsCache[type] = parseSpell(filePath);
+        }
+    }
 
     const files = fs.readdirSync(WIKI_DIR)
 
     const schema = {}
 
-    // Helper to infer spell type from filename
-    function inferSpellType(spellName) {
-        // e.g. ForcepushSpell → instant
-        // e.g. Buff-Spell → buff
-        // e.g. TargetedMultiSpell → targeted
-        // e.g. Instant-Spell → instant
-        const lower = spellName.toLowerCase();
-        if (lower.includes("instant")) return "instant";
-        if (lower.includes("buff")) return "buff";
-        if (lower.includes("targeted")) return "targeted";
-        if (lower.includes("ext")) return "targeted.ext";
-        if (lower.includes("passive")) return "passive";
-        // fallback: unknown
-        return "unknown";
-    }
-
     for (const f of files) {
-
         if (!f.endsWith(".md")) continue
         if (!f.includes("Spell")) continue
 
         const spell = f.replace(".md","")
-
-        const options = parseSpell(path.join(WIKI_DIR,f))
-
+        const filePath = path.join(WIKI_DIR, f)
+        const options = parseSpell(filePath)
         if (!options) continue
 
-        const type = inferSpellType(spell);
-        schema[spell] = { type, options }
+        let type = "unknown";
+        if (GENERAL_SPELLS.includes(spell)) {
+            type = "general";
+        } else {
+            // Extract spell-class from .md file
+            const md = fs.readFileSync(filePath, "utf8");
+            const spellClassMatch = md.match(/spell-class\s*:\s*"?([.a-zA-Z0-9]+)"?/);
+            if (spellClassMatch) {
+                const classParts = spellClassMatch[1].split(".").filter(Boolean);
+                if (classParts.length > 1) {
+                    type = classParts[0].toLowerCase();
+                }
+            }
+        }
+
+        // Merge base options if applicable
+        let mergedOptions = { ...options };
+        if (baseOptionsCache[type]) {
+            mergedOptions = { ...baseOptionsCache[type], ...options };
+        }
+        schema[spell] = { type, options: mergedOptions };
     }
 
     fs.writeFileSync(

@@ -1,6 +1,6 @@
 {
   "AgeSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "age": {
         "type": "number",
@@ -20,7 +20,7 @@
     }
   },
   "AreaEffectSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "spells": {
         "type": "string",
@@ -105,7 +105,7 @@
     }
   },
   "AreaScanSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "radius": {
         "type": "number",
@@ -240,8 +240,98 @@
     }
   },
   "ArmorSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "permanent": {
         "type": "boolean",
         "default": "false",
@@ -280,8 +370,18 @@
     }
   },
   "BeamSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "relative-offset": {
         "type": "any",
         "default": "0,0.5,0",
@@ -405,7 +505,7 @@
     }
   },
   "BindSpell": {
-    "type": "unknown",
+    "type": "command",
     "options": {
       "bindable-items": {
         "type": "string",
@@ -455,7 +555,7 @@
     }
   },
   "BlinkSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "str-cant-blink": {
         "type": "string",
@@ -470,8 +570,18 @@
     }
   },
   "BlockBeamSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "block-type": {
         "type": "string",
         "default": "\"stone\"",
@@ -615,7 +725,7 @@
     }
   },
   "BombSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "block": {
         "type": "string",
@@ -640,7 +750,7 @@
     }
   },
   "BowSpell": {
-    "type": "unknown",
+    "type": "general",
     "options": {
       "bow-names": {
         "type": "string",
@@ -750,7 +860,7 @@
     }
   },
   "Buff-Spell": {
-    "type": "buff",
+    "type": "unknown",
     "options": {
       "duration": {
         "type": "number",
@@ -847,6 +957,96 @@
   "BuffCarpetSpell": {
     "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "platform-block": {
         "type": "string",
         "default": "\"glass\"",
@@ -860,7 +1060,7 @@
     }
   },
   "BuildSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "slot": {
         "type": "number",
@@ -900,7 +1100,7 @@
     }
   },
   "CaptureSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "item-name": {
         "type": "string",
@@ -930,8 +1130,18 @@
     }
   },
   "CastAtMarkSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "mark-spell": {
         "type": "string",
         "default": null,
@@ -950,7 +1160,7 @@
     }
   },
   "ChainSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "spell": {
         "type": "string",
@@ -975,8 +1185,98 @@
     }
   },
   "ClaritySpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "multiplier": {
         "type": "number",
         "default": "0.5",
@@ -995,7 +1295,7 @@
     }
   },
   "CleanseSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "remove": {
         "type": "string",
@@ -1005,7 +1305,7 @@
     }
   },
   "CloseInventorySpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "delay": {
         "type": "any",
@@ -1015,7 +1315,7 @@
     }
   },
   "CollisionSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "target-state": {
         "type": "any",
@@ -1025,7 +1325,7 @@
     }
   },
   "CombustSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "fire-ticks": {
         "type": "number",
@@ -1065,8 +1365,18 @@
     }
   },
   "ConfusionSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "radius": {
         "type": "number",
         "default": "10",
@@ -1080,8 +1390,18 @@
     }
   },
   "ConjureBookSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "pickup-delay": {
         "type": "number",
         "default": "0",
@@ -1125,8 +1445,18 @@
     }
   },
   "ConjureFireworkSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "count": {
         "type": "number",
         "default": "1",
@@ -1165,8 +1495,18 @@
     }
   },
   "ConjureSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "delay": {
         "type": "number",
         "default": "-1",
@@ -1265,7 +1605,7 @@
     }
   },
   "ConversationSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "conversation": {
         "type": "any",
@@ -1275,7 +1615,7 @@
     }
   },
   "CrippleSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "effect-strength": {
         "type": "number",
@@ -1315,7 +1655,7 @@
     }
   },
   "CustomNameVisibilitySpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "target-state": {
         "type": "any",
@@ -1325,8 +1665,98 @@
     }
   },
   "DamageEmpowerSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "damage-multiplier": {
         "type": "number",
         "default": "1.5",
@@ -1350,7 +1780,7 @@
     }
   },
   "DamageSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "damage": {
         "type": "number",
@@ -1375,7 +1805,7 @@
     }
   },
   "DataSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "data-element": {
         "type": "string",
@@ -1390,7 +1820,7 @@
     }
   },
   "DeprecatedGlowSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "duration": {
         "type": "number",
@@ -1410,7 +1840,7 @@
     }
   },
   "DestroySpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "vert-radius": {
         "type": "number",
@@ -1480,7 +1910,7 @@
     }
   },
   "DisarmSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "disarmable-items": {
         "type": "string",
@@ -1510,7 +1940,7 @@
     }
   },
   "DiscoverRecipeSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "discover": {
         "type": "boolean",
@@ -1525,8 +1955,98 @@
     }
   },
   "DisguiseSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "player-name": {
         "type": "any",
         "default": null,
@@ -1560,8 +2080,98 @@
     }
   },
   "DodgeSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "distance": {
         "type": "number",
         "default": "2",
@@ -1585,7 +2195,7 @@
     }
   },
   "DotSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "delay": {
         "type": "number",
@@ -1645,8 +2255,18 @@
     }
   },
   "DowseSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "block-type": {
         "type": "string",
         "default": null,
@@ -1685,7 +2305,7 @@
     }
   },
   "DrainlifeSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "take-type": {
         "type": "any",
@@ -1735,8 +2355,98 @@
     }
   },
   "EmpowerSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "power-multiplier": {
         "type": "number",
         "default": "1.5",
@@ -1760,8 +2470,18 @@
     }
   },
   "EnchantSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "enchantments": {
         "type": "string",
         "default": null,
@@ -1775,7 +2495,7 @@
     }
   },
   "EntityEditSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "attributes": {
         "type": "any",
@@ -1805,7 +2525,7 @@
     }
   },
   "EntitySilenceSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "target-state": {
         "type": "any",
@@ -1815,7 +2535,7 @@
     }
   },
   "EntombSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "block-type": {
         "type": "string",
@@ -1850,7 +2570,7 @@
     }
   },
   "ExplodeSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "explosion-size": {
         "type": "number",
@@ -1910,7 +2630,7 @@
     }
   },
   "ExternalCommandSpell": {
-    "type": "targeted.ext",
+    "type": "general",
     "options": {
       "command-to-block": {
         "type": "string",
@@ -1990,7 +2710,7 @@
     }
   },
   "FarmSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "crop-type": {
         "type": "string",
@@ -2055,7 +2775,7 @@
     }
   },
   "FireballSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "explosion-size": {
         "type": "number",
@@ -2145,8 +2865,98 @@
     }
   },
   "FlamewalkSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "radius": {
         "type": "number",
         "default": "8",
@@ -2185,8 +2995,18 @@
     }
   },
   "FlightPathSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "speed": {
         "type": "number",
         "default": "1.5",
@@ -2220,7 +3040,7 @@
     }
   },
   "FlySpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "target-state": {
         "type": "boolean",
@@ -2235,8 +3055,18 @@
     }
   },
   "FoodSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "food": {
         "type": "number",
         "default": "4",
@@ -2255,7 +3085,7 @@
     }
   },
   "ForcebombSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "pushback-force": {
         "type": "number",
@@ -2300,8 +3130,18 @@
     }
   },
   "ForcepushSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "radius": {
         "type": "number",
         "default": "3",
@@ -2335,7 +3175,7 @@
     }
   },
   "ForcetossSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "damage": {
         "type": "number",
@@ -2380,12 +3220,27 @@
     }
   },
   "ForgetSpell": {
-    "type": "unknown",
+    "type": "command",
     "options": {
-      "allow-self-forget": {
+      "bindable-items": {
+        "type": "string",
+        "default": null,
+        "description": "Items this spell may be bound to."
+      },
+      "allowed-spells": {
+        "type": "string",
+        "default": null,
+        "description": "Spells allowed to be bound by this Bind spell."
+      },
+      "allow-bind-to-fist": {
         "type": "boolean",
         "default": "false",
-        "description": "If this is true the passed spell cast argument should be a spell or * for all spells. Otherwise, if the player has the magicspells.advanced.forget permission, the first argument should be a player name and the second should be a spell or * for all spells."
+        "description": ""
+      },
+      "check-can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": ". When false, the can-cast-with-item option will no longer prevent binding."
       },
       "str-usage": {
         "type": "string",
@@ -2396,6 +3251,26 @@
         "type": "string",
         "default": "\"You do not know a spell by that name.\"",
         "description": ""
+      },
+      "str-cant-bind-item": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to that item.\"",
+        "description": ""
+      },
+      "str-cant-bind-spell": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to an item.\"",
+        "description": ""
+      },
+      "str-spell-cant-bind": {
+        "type": "string",
+        "default": "\"That spell cannot be bound like this.\"",
+        "description": ""
+      },
+      "allow-self-forget": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If this is true the passed spell cast argument should be a spell or * for all spells. Otherwise, if the player has the magicspells.advanced.forget permission, the first argument should be a player name and the second should be a spell or * for all spells."
       },
       "str-no-target": {
         "type": "string",
@@ -2430,8 +3305,98 @@
     }
   },
   "FrostWalkSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "size": {
         "type": "number",
         "default": "2",
@@ -2445,8 +3410,18 @@
     }
   },
   "GateSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "world": {
         "type": "string",
         "default": "\"current\"",
@@ -2465,7 +3440,7 @@
     }
   },
   "GeyserSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "geyser-type": {
         "type": "string",
@@ -2520,8 +3495,98 @@
     }
   },
   "GillsSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "head-effect": {
         "type": "boolean",
         "default": "true",
@@ -2540,7 +3605,7 @@
     }
   },
   "GlideSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "target-state": {
         "type": "any",
@@ -2550,7 +3615,7 @@
     }
   },
   "GlowSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "key": {
         "type": "any",
@@ -2585,7 +3650,7 @@
     }
   },
   "GripSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "y-offset": {
         "type": "number",
@@ -2615,8 +3680,98 @@
     }
   },
   "HasteSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "effect-strength": {
         "type": "number",
         "default": "3",
@@ -2670,7 +3825,7 @@
     }
   },
   "HealSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "heal-amount": {
         "type": "number",
@@ -2710,12 +3865,27 @@
     }
   },
   "HelpSpell": {
-    "type": "unknown",
+    "type": "command",
     "options": {
-      "require-known-spell": {
-        "type": "any",
+      "bindable-items": {
+        "type": "string",
         "default": null,
-        "description": "Boolean"
+        "description": "Items this spell may be bound to."
+      },
+      "allowed-spells": {
+        "type": "string",
+        "default": null,
+        "description": "Spells allowed to be bound by this Bind spell."
+      },
+      "allow-bind-to-fist": {
+        "type": "boolean",
+        "default": "false",
+        "description": ""
+      },
+      "check-can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": ". When false, the can-cast-with-item option will no longer prevent binding."
       },
       "str-usage": {
         "type": "any",
@@ -2726,6 +3896,26 @@
         "type": "any",
         "default": null,
         "description": "Rich Text"
+      },
+      "str-cant-bind-item": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to that item.\"",
+        "description": ""
+      },
+      "str-cant-bind-spell": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to an item.\"",
+        "description": ""
+      },
+      "str-spell-cant-bind": {
+        "type": "string",
+        "default": "\"That spell cannot be bound like this.\"",
+        "description": ""
+      },
+      "require-known-spell": {
+        "type": "any",
+        "default": null,
+        "description": "Boolean"
       },
       "str-desc-line": {
         "type": "any",
@@ -2740,7 +3930,7 @@
     }
   },
   "HoldRightSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "spell": {
         "type": "string",
@@ -2775,7 +3965,7 @@
     }
   },
   "HomingMissileSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "homing-modifiers": {
         "type": "string",
@@ -2925,7 +4115,7 @@
     }
   },
   "HomingProjectileSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "projectile-type": {
         "type": "string",
@@ -3050,8 +4240,53 @@
     }
   },
   "ImbueSpell": {
-    "type": "unknown",
+    "type": "command",
     "options": {
+      "bindable-items": {
+        "type": "string",
+        "default": null,
+        "description": "Items this spell may be bound to."
+      },
+      "allowed-spells": {
+        "type": "string",
+        "default": null,
+        "description": "Spells allowed to be bound by this Bind spell."
+      },
+      "allow-bind-to-fist": {
+        "type": "boolean",
+        "default": "false",
+        "description": ""
+      },
+      "check-can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": ". When false, the can-cast-with-item option will no longer prevent binding."
+      },
+      "str-usage": {
+        "type": "string",
+        "default": "\"Usage: /cast imbue  [uses]\"",
+        "description": "Sent if no spell cast arguments are passed."
+      },
+      "str-no-spell": {
+        "type": "string",
+        "default": "\"You do not know a spell by that name.\"",
+        "description": ""
+      },
+      "str-cant-bind-item": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to that item.\"",
+        "description": ""
+      },
+      "str-cant-bind-spell": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to an item.\"",
+        "description": ""
+      },
+      "str-spell-cant-bind": {
+        "type": "string",
+        "default": "\"That spell cannot be bound like this.\"",
+        "description": ""
+      },
       "allowed-items": {
         "type": "string",
         "default": null,
@@ -3066,11 +4301,6 @@
         "type": "number",
         "default": "5",
         "description": "If no uses are passed with spell cast arguments, this is how many are used."
-      },
-      "str-usage": {
-        "type": "string",
-        "default": "\"Usage: /cast imbue  [uses]\"",
-        "description": "Sent if no spell cast arguments are passed."
       },
       "str-item-name": {
         "type": "string",
@@ -3125,8 +4355,98 @@
     }
   },
   "ImpactRecordSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "variable-name": {
         "type": "string",
         "default": null,
@@ -3145,7 +4465,7 @@
     }
   },
   "Instant-Spell": {
-    "type": "instant",
+    "type": "unknown",
     "options": {
       "can-cast-with-item": {
         "type": "boolean",
@@ -3160,8 +4480,98 @@
     }
   },
   "InvisibilitySpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "prevent-pickups": {
         "type": "boolean",
         "default": "true",
@@ -3175,8 +4585,98 @@
     }
   },
   "InvulnerabilitySpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "damage-causes": {
         "type": "array",
         "default": null,
@@ -3195,8 +4695,18 @@
     }
   },
   "ItemProjectileSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "item": {
         "type": "string",
         "default": "\"iron_sword\"",
@@ -3310,8 +4820,53 @@
     }
   },
   "ItemSerializeSpell": {
-    "type": "unknown",
+    "type": "command",
     "options": {
+      "bindable-items": {
+        "type": "string",
+        "default": null,
+        "description": "Items this spell may be bound to."
+      },
+      "allowed-spells": {
+        "type": "string",
+        "default": null,
+        "description": "Spells allowed to be bound by this Bind spell."
+      },
+      "allow-bind-to-fist": {
+        "type": "boolean",
+        "default": "false",
+        "description": ""
+      },
+      "check-can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": ". When false, the can-cast-with-item option will no longer prevent binding."
+      },
+      "str-usage": {
+        "type": "string",
+        "default": "\"You must specify a spell name and hold an item in your hand.\"",
+        "description": "Message sent if no cast arguments were passed."
+      },
+      "str-no-spell": {
+        "type": "string",
+        "default": "\"You do not know a spell by that name.\"",
+        "description": ""
+      },
+      "str-cant-bind-item": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to that item.\"",
+        "description": ""
+      },
+      "str-cant-bind-spell": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to an item.\"",
+        "description": ""
+      },
+      "str-spell-cant-bind": {
+        "type": "string",
+        "default": "\"That spell cannot be bound like this.\"",
+        "description": ""
+      },
       "serializer-key": {
         "type": "string",
         "default": "\"external::spigot\"",
@@ -3325,8 +4880,53 @@
     }
   },
   "KeybindSpell": {
-    "type": "unknown",
+    "type": "command",
     "options": {
+      "bindable-items": {
+        "type": "string",
+        "default": null,
+        "description": "Items this spell may be bound to."
+      },
+      "allowed-spells": {
+        "type": "string",
+        "default": null,
+        "description": "Spells allowed to be bound by this Bind spell."
+      },
+      "allow-bind-to-fist": {
+        "type": "boolean",
+        "default": "false",
+        "description": ""
+      },
+      "check-can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": ". When false, the can-cast-with-item option will no longer prevent binding."
+      },
+      "str-usage": {
+        "type": "string",
+        "default": "\"You must specify a spell name and hold an item in your hand.\"",
+        "description": "Message sent if no cast arguments were passed."
+      },
+      "str-no-spell": {
+        "type": "string",
+        "default": "\"You do not know a spell by that name.\"",
+        "description": ""
+      },
+      "str-cant-bind-item": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to that item.\"",
+        "description": ""
+      },
+      "str-cant-bind-spell": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to an item.\"",
+        "description": ""
+      },
+      "str-spell-cant-bind": {
+        "type": "string",
+        "default": "\"That spell cannot be bound like this.\"",
+        "description": ""
+      },
       "wand-item": {
         "type": "string",
         "default": "\"blaze_rod\"",
@@ -3340,8 +4940,18 @@
     }
   },
   "LeapSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "rotation": {
         "type": "number",
         "default": "0",
@@ -3385,7 +4995,7 @@
     }
   },
   "LevitateSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "tick-rate": {
         "type": "number",
@@ -3435,8 +5045,98 @@
     }
   },
   "LifewalkSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "tick-interval": {
         "type": "number",
         "default": "15",
@@ -3450,7 +5150,7 @@
     }
   },
   "LightningSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "additional-damage": {
         "type": "number",
@@ -3495,8 +5195,98 @@
     }
   },
   "LightwalkSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "block-type": {
         "type": "string",
         "default": "light",
@@ -3515,8 +5305,53 @@
     }
   },
   "ListSpell": {
-    "type": "unknown",
+    "type": "command",
     "options": {
+      "bindable-items": {
+        "type": "string",
+        "default": null,
+        "description": "Items this spell may be bound to."
+      },
+      "allowed-spells": {
+        "type": "string",
+        "default": null,
+        "description": "Spells allowed to be bound by this Bind spell."
+      },
+      "allow-bind-to-fist": {
+        "type": "boolean",
+        "default": "false",
+        "description": ""
+      },
+      "check-can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": ". When false, the can-cast-with-item option will no longer prevent binding."
+      },
+      "str-usage": {
+        "type": "string",
+        "default": "\"You must specify a spell name and hold an item in your hand.\"",
+        "description": "Message sent if no cast arguments were passed."
+      },
+      "str-no-spell": {
+        "type": "string",
+        "default": "\"You do not know a spell by that name.\"",
+        "description": ""
+      },
+      "str-cant-bind-item": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to that item.\"",
+        "description": ""
+      },
+      "str-cant-bind-spell": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to an item.\"",
+        "description": ""
+      },
+      "str-spell-cant-bind": {
+        "type": "string",
+        "default": "\"That spell cannot be bound like this.\"",
+        "description": ""
+      },
       "spells-to-hide": {
         "type": "any",
         "default": "false",
@@ -3550,7 +5385,7 @@
     }
   },
   "LocationSpell": {
-    "type": "unknown",
+    "type": "general",
     "options": {
       "location": {
         "type": "string",
@@ -3565,7 +5400,7 @@
     }
   },
   "LoopSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "delay": {
         "type": "any",
@@ -3710,7 +5545,7 @@
     }
   },
   "MagicBondSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "duration": {
         "type": "number",
@@ -3725,8 +5560,18 @@
     }
   },
   "MagnetSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "radius": {
         "type": "number",
         "default": "5",
@@ -3775,8 +5620,98 @@
     }
   },
   "ManaRegenSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "regen-mod-amt": {
         "type": "number",
         "default": "3",
@@ -3790,8 +5725,18 @@
     }
   },
   "ManaSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "mana": {
         "type": "number",
         "default": "25",
@@ -3805,8 +5750,18 @@
     }
   },
   "MarkSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "permanent-marks": {
         "type": "boolean",
         "default": "true",
@@ -3830,7 +5785,7 @@
     }
   },
   "MaterializeSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "block-type": {
         "type": "string",
@@ -3915,7 +5870,7 @@
     }
   },
   "MenuSpell": {
-    "type": "unknown",
+    "type": "general",
     "options": {
       "title": {
         "type": "string",
@@ -3970,8 +5925,98 @@
     }
   },
   "MinionSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "minion": {
         "type": "any",
         "default": null,
@@ -4135,7 +6180,7 @@
     }
   },
   "MobGoalEditSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "remove-all": {
         "type": "boolean",
@@ -4165,7 +6210,7 @@
     }
   },
   "ModifyCooldownSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "seconds": {
         "type": "number",
@@ -4190,7 +6235,7 @@
     }
   },
   "MountSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "duration": {
         "type": "number",
@@ -4205,7 +6250,7 @@
     }
   },
   "MultiSpell": {
-    "type": "unknown",
+    "type": "general",
     "options": {
       "cast-random-spell-instead": {
         "type": "boolean",
@@ -4230,7 +6275,7 @@
     }
   },
   "NovaSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "type": {
         "type": "string",
@@ -4310,7 +6355,7 @@
     }
   },
   "OffhandCooldownSpell": {
-    "type": "unknown",
+    "type": "general",
     "options": {
       "item": {
         "type": "any",
@@ -4325,7 +6370,7 @@
     }
   },
   "OffsetLocationSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "relative-offset": {
         "type": "any",
@@ -4355,7 +6400,7 @@
     }
   },
   "OrbitSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "can-hit": {
         "type": "array",
@@ -4510,7 +6555,7 @@
     }
   },
   "PainSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "spell-damage-type": {
         "type": "string",
@@ -4555,7 +6600,7 @@
     }
   },
   "ParseSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "operation": {
         "type": "string",
@@ -4570,7 +6615,7 @@
     }
   },
   "ParticleCloudSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "custom-name": {
         "type": "string",
@@ -4645,8 +6690,18 @@
     }
   },
   "ParticleProjectileSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "start-forward-offset": {
         "type": "number",
         "default": "1",
@@ -5000,7 +7055,7 @@
     }
   },
   "PassiveSpell": {
-    "type": "passive",
+    "type": "general",
     "options": {
       "chance": {
         "type": "number",
@@ -5060,7 +7115,7 @@
     }
   },
   "PasteSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "schematic": {
         "type": "string",
@@ -5095,7 +7150,7 @@
     }
   },
   "PermissionSpell": {
-    "type": "unknown",
+    "type": "general",
     "options": {
       "duration": {
         "type": "number",
@@ -5110,8 +7165,18 @@
     }
   },
   "PhaseSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "phasable-blocks": {
         "type": "string",
         "default": null,
@@ -5140,7 +7205,7 @@
     }
   },
   "PlaceholderAPIDataSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "variable-name": {
         "type": "string",
@@ -5170,7 +7235,7 @@
     }
   },
   "PlayerMenuSpell": {
-    "type": "unknown",
+    "type": "general",
     "options": {
       "title": {
         "type": "string",
@@ -5280,8 +7345,18 @@
     }
   },
   "PortalSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "mark-spell": {
         "type": "string",
         "default": null,
@@ -5380,7 +7455,7 @@
     }
   },
   "PoseSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "pose": {
         "type": "any",
@@ -5395,7 +7470,7 @@
     }
   },
   "PotionEffectSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "targeted": {
         "type": "boolean",
@@ -5420,7 +7495,7 @@
     }
   },
   "ProjectileModifySpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "stop": {
         "type": "boolean",
@@ -5665,8 +7740,18 @@
     }
   },
   "ProjectileSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "projectile-type": {
         "type": "string",
         "default": "arrow",
@@ -5820,7 +7905,7 @@
     }
   },
   "PulserSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "block-type": {
         "type": "string",
@@ -5880,8 +7965,18 @@
     }
   },
   "PurgeSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "radius": {
         "type": "number",
         "default": "15",
@@ -5900,7 +7995,7 @@
     }
   },
   "RandomSpell": {
-    "type": "unknown",
+    "type": "general",
     "options": {
       "pseudo-random": {
         "type": "boolean",
@@ -5925,8 +8020,98 @@
     }
   },
   "ReachSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "consume-blocks": {
         "type": "boolean",
         "default": "true",
@@ -5950,8 +8135,18 @@
     }
   },
   "RecallSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "mark-spell": {
         "type": "string",
         "default": "\"mark\"",
@@ -6000,8 +8195,98 @@
     }
   },
   "ReflectSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "shield-breakers": {
         "type": "string",
         "default": null,
@@ -6035,7 +8320,7 @@
     }
   },
   "RegrowSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "force-wool-color": {
         "type": "boolean",
@@ -6055,7 +8340,7 @@
     }
   },
   "RemoveMarksSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "radius": {
         "type": "number",
@@ -6080,8 +8365,18 @@
     }
   },
   "RepairSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "repair-amount": {
         "type": "number",
         "default": "300",
@@ -6115,7 +8410,7 @@
     }
   },
   "ReplaceSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "y-offset": {
         "type": "number",
@@ -6190,8 +8485,98 @@
     }
   },
   "ResistSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "multiplier": {
         "type": "number",
         "default": "0.5",
@@ -6240,7 +8625,7 @@
     }
   },
   "ResourcePackSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "url": {
         "type": "string",
@@ -6265,7 +8650,7 @@
     }
   },
   "RewindSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "tick-interval": {
         "type": "number",
@@ -6315,7 +8700,7 @@
     }
   },
   "RiptideSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "duration": {
         "type": "number",
@@ -6325,8 +8710,18 @@
     }
   },
   "RitualSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "ritual-duration": {
         "type": "number",
         "default": "200",
@@ -6405,8 +8800,18 @@
     }
   },
   "RoarSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "radius": {
         "type": "number",
         "default": "8",
@@ -6425,7 +8830,7 @@
     }
   },
   "RotateSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "rotation-yaw": {
         "type": "number",
@@ -6460,7 +8865,7 @@
     }
   },
   "ScoreboardDataSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "variable-name": {
         "type": "any",
@@ -6475,8 +8880,53 @@
     }
   },
   "ScrollSpell": {
-    "type": "unknown",
+    "type": "command",
     "options": {
+      "bindable-items": {
+        "type": "string",
+        "default": null,
+        "description": "Items this spell may be bound to."
+      },
+      "allowed-spells": {
+        "type": "string",
+        "default": null,
+        "description": "Spells allowed to be bound by this Bind spell."
+      },
+      "allow-bind-to-fist": {
+        "type": "boolean",
+        "default": "false",
+        "description": ""
+      },
+      "check-can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": ". When false, the can-cast-with-item option will no longer prevent binding."
+      },
+      "str-usage": {
+        "type": "string",
+        "default": "\"You must hold a single blank paper \\nand type /cast scroll  .\"",
+        "description": "Sent if no spell cast arguments are passed."
+      },
+      "str-no-spell": {
+        "type": "string",
+        "default": "\"You do not know a spell by that name.\"",
+        "description": ""
+      },
+      "str-cant-bind-item": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to that item.\"",
+        "description": ""
+      },
+      "str-cant-bind-spell": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to an item.\"",
+        "description": ""
+      },
+      "str-spell-cant-bind": {
+        "type": "string",
+        "default": "\"That spell cannot be bound like this.\"",
+        "description": ""
+      },
       "predefined-scrolls": {
         "type": "string",
         "default": null,
@@ -6487,19 +8937,9 @@
         "default": "\"paper\"",
         "description": "Defines a material that must be held for it to be turned into a scroll item."
       },
-      "str-usage": {
-        "type": "string",
-        "default": "\"You must hold a single blank paper \\nand type /cast scroll  .\"",
-        "description": "Sent if no spell cast arguments are passed."
-      },
       "str-on-use": {
         "type": "string",
         "default": "\"Spell Scroll: %s used. %u uses remaining.\"",
-        "description": ""
-      },
-      "str-no-spell": {
-        "type": "string",
-        "default": "\"You do not know a spell by that name.\"",
         "description": ""
       },
       "str-use-fail": {
@@ -6585,8 +9025,98 @@
     }
   },
   "SeeHealthSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "bar-size": {
         "type": "number",
         "default": "20",
@@ -6615,7 +9145,7 @@
     }
   },
   "ShadowstepSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "yaw": {
         "type": "number",
@@ -6645,7 +9175,7 @@
     }
   },
   "ShearSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "vanilla-sheep-shearing": {
         "type": "boolean",
@@ -6685,7 +9215,7 @@
     }
   },
   "SilenceSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "prevent-cast": {
         "type": "boolean",
@@ -6745,7 +9275,7 @@
     }
   },
   "SkinSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "texture": {
         "type": "string",
@@ -6760,7 +9290,7 @@
     }
   },
   "SlimeSizeSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "size": {
         "type": "string",
@@ -6780,7 +9310,7 @@
     }
   },
   "SlotSelectSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "ignore-slot-bounds": {
         "type": "boolean",
@@ -6795,7 +9325,7 @@
     }
   },
   "SneakSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "target-state": {
         "type": "any",
@@ -6805,7 +9335,7 @@
     }
   },
   "SpawnEntitySpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "entity": {
         "type": "any",
@@ -6995,7 +9525,7 @@
     }
   },
   "SpawnTntSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "fuse": {
         "type": "number",
@@ -7035,8 +9565,18 @@
     }
   },
   "Spell-Configuration": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "spell-class": {
         "type": "string",
         "default": null,
@@ -7140,7 +9680,7 @@
     }
   },
   "Spell-Effects": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "delay": {
         "type": "number",
@@ -7200,7 +9740,7 @@
     }
   },
   "Spell-Filter": {
-    "type": "unknown",
+    "type": "com",
     "options": {
       "spells": {
         "type": "any",
@@ -7225,8 +9765,53 @@
     }
   },
   "SpellbookSpell": {
-    "type": "unknown",
+    "type": "command",
     "options": {
+      "bindable-items": {
+        "type": "string",
+        "default": null,
+        "description": "Items this spell may be bound to."
+      },
+      "allowed-spells": {
+        "type": "string",
+        "default": null,
+        "description": "Spells allowed to be bound by this Bind spell."
+      },
+      "allow-bind-to-fist": {
+        "type": "boolean",
+        "default": "false",
+        "description": ""
+      },
+      "check-can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": ". When false, the can-cast-with-item option will no longer prevent binding."
+      },
+      "str-usage": {
+        "type": "string",
+        "default": "\"Usage: /cast spellbook  [uses]\"",
+        "description": "Sent if no spell cast arguments are passed."
+      },
+      "str-no-spell": {
+        "type": "string",
+        "default": "\"You do not know a spell by that name.\"",
+        "description": ""
+      },
+      "str-cant-bind-item": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to that item.\"",
+        "description": ""
+      },
+      "str-cant-bind-spell": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to an item.\"",
+        "description": ""
+      },
+      "str-spell-cant-bind": {
+        "type": "string",
+        "default": "\"That spell cannot be bound like this.\"",
+        "description": ""
+      },
       "spellbook-block": {
         "type": "string",
         "default": "\"bookshelf\"",
@@ -7241,16 +9826,6 @@
         "type": "boolean",
         "default": "false",
         "description": "Defines whether to destroy the SpellBook block (set to an air block) when uses are depleted."
-      },
-      "str-usage": {
-        "type": "string",
-        "default": "\"Usage: /cast spellbook  [uses]\"",
-        "description": "Sent if no spell cast arguments are passed."
-      },
-      "str-no-spell": {
-        "type": "string",
-        "default": "\"You do not know a spell by that name.\"",
-        "description": ""
       },
       "str-learned": {
         "type": "string",
@@ -7295,8 +9870,98 @@
     }
   },
   "SpellHasteSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "cast-time-mod-amt": {
         "type": "number",
         "default": "-25",
@@ -7330,7 +9995,7 @@
     }
   },
   "SprintSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "target-state": {
         "type": "any",
@@ -7340,8 +10005,18 @@
     }
   },
   "SteedSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "type": {
         "type": "string",
         "default": "\"horse\"",
@@ -7395,8 +10070,98 @@
     }
   },
   "StonevisionSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "radius": {
         "type": "number",
         "default": "4",
@@ -7420,7 +10185,7 @@
     }
   },
   "StructureSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "structure-key": {
         "type": "any",
@@ -7470,7 +10235,7 @@
     }
   },
   "StunSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "duration": {
         "type": "number",
@@ -7505,7 +10270,7 @@
     }
   },
   "SummonSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "max-accept-delay": {
         "type": "number",
@@ -7550,7 +10315,7 @@
     }
   },
   "SwitchHealthSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "require-greater-health-percent": {
         "type": "boolean",
@@ -7565,7 +10330,7 @@
     }
   },
   "SwitchSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "switch-back": {
         "type": "number",
@@ -7575,7 +10340,7 @@
     }
   },
   "TagEntitySpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "tag": {
         "type": "string",
@@ -7635,7 +10400,7 @@
     }
   },
   "TargetedMultiSpell": {
-    "type": "targeted",
+    "type": "general",
     "options": {
       "spells": {
         "type": "string",
@@ -7680,12 +10445,27 @@
     }
   },
   "TeachSpell": {
-    "type": "unknown",
+    "type": "command",
     "options": {
-      "require-known-spell": {
+      "bindable-items": {
+        "type": "string",
+        "default": null,
+        "description": "Items this spell may be bound to."
+      },
+      "allowed-spells": {
+        "type": "string",
+        "default": null,
+        "description": "Spells allowed to be bound by this Bind spell."
+      },
+      "allow-bind-to-fist": {
+        "type": "boolean",
+        "default": "false",
+        "description": ""
+      },
+      "check-can-cast-with-item": {
         "type": "boolean",
         "default": "true",
-        "description": ""
+        "description": ". When false, the can-cast-with-item option will no longer prevent binding."
       },
       "str-usage": {
         "type": "string",
@@ -7695,6 +10475,26 @@
       "str-no-spell": {
         "type": "string",
         "default": "\"You do not know a spell by that name.\"",
+        "description": ""
+      },
+      "str-cant-bind-item": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to that item.\"",
+        "description": ""
+      },
+      "str-cant-bind-spell": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to an item.\"",
+        "description": ""
+      },
+      "str-spell-cant-bind": {
+        "type": "string",
+        "default": "\"That spell cannot be bound like this.\"",
+        "description": ""
+      },
+      "require-known-spell": {
+        "type": "boolean",
+        "default": "true",
         "description": ""
       },
       "str-no-target": {
@@ -7725,7 +10525,7 @@
     }
   },
   "TelekinesisSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "check-plugins": {
         "type": "boolean",
@@ -7735,7 +10535,7 @@
     }
   },
   "TeleportSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "relative-offset": {
         "type": "any",
@@ -7760,8 +10560,18 @@
     }
   },
   "ThrowBlockSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "block-type": {
         "type": "string",
         "default": "\"anvil\"",
@@ -7845,8 +10655,18 @@
     }
   },
   "TimeSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "time-to-set": {
         "type": "number",
         "default": "0",
@@ -7860,8 +10680,53 @@
     }
   },
   "TomeSpell": {
-    "type": "unknown",
+    "type": "command",
     "options": {
+      "bindable-items": {
+        "type": "string",
+        "default": null,
+        "description": "Items this spell may be bound to."
+      },
+      "allowed-spells": {
+        "type": "string",
+        "default": null,
+        "description": "Spells allowed to be bound by this Bind spell."
+      },
+      "allow-bind-to-fist": {
+        "type": "boolean",
+        "default": "false",
+        "description": ""
+      },
+      "check-can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": ". When false, the can-cast-with-item option will no longer prevent binding."
+      },
+      "str-usage": {
+        "type": "string",
+        "default": "\"Usage: While holding a written book, /cast tome  [uses]\"",
+        "description": "Sent if no spell cast arguments are passed."
+      },
+      "str-no-spell": {
+        "type": "string",
+        "default": "\"You do not know a spell with that name.\"",
+        "description": ""
+      },
+      "str-cant-bind-item": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to that item.\"",
+        "description": ""
+      },
+      "str-cant-bind-spell": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to an item.\"",
+        "description": ""
+      },
+      "str-spell-cant-bind": {
+        "type": "string",
+        "default": "\"That spell cannot be bound like this.\"",
+        "description": ""
+      },
       "consume-book": {
         "type": "boolean",
         "default": "false",
@@ -7892,19 +10757,9 @@
         "default": "-1",
         "description": "Defines the number of uses this tome has to teach players its spell. This amount may be negative to define an infinite amount of uses."
       },
-      "str-usage": {
-        "type": "string",
-        "default": "\"Usage: While holding a written book, /cast tome  [uses]\"",
-        "description": "Sent if no spell cast arguments are passed."
-      },
       "str-no-book": {
         "type": "string",
         "default": "\"You must be holding a written book.\"",
-        "description": ""
-      },
-      "str-no-spell": {
-        "type": "string",
-        "default": "\"You do not know a spell with that name.\"",
         "description": ""
       },
       "str-learned": {
@@ -7935,7 +10790,7 @@
     }
   },
   "TotemSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "main-hand": {
         "type": "string",
@@ -8070,7 +10925,7 @@
     }
   },
   "TransmuteSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "transmute-type": {
         "type": "string",
@@ -8085,7 +10940,7 @@
     }
   },
   "TreeSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "tree-type": {
         "type": "any",
@@ -8100,12 +10955,27 @@
     }
   },
   "UnbindSpell": {
-    "type": "unknown",
+    "type": "command",
     "options": {
+      "bindable-items": {
+        "type": "string",
+        "default": null,
+        "description": "Items this spell may be bound to."
+      },
       "allowed-spells": {
         "type": "string",
         "default": null,
         "description": "Spells allowed to be unbound by this Unbind spell."
+      },
+      "allow-bind-to-fist": {
+        "type": "boolean",
+        "default": "false",
+        "description": ""
+      },
+      "check-can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": ". When false, the can-cast-with-item option will no longer prevent binding."
       },
       "str-usage": {
         "type": "string",
@@ -8115,6 +10985,21 @@
       "str-no-spell": {
         "type": "string",
         "default": "\"You do not know a spell by that name.\"",
+        "description": ""
+      },
+      "str-cant-bind-item": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to that item.\"",
+        "description": ""
+      },
+      "str-cant-bind-spell": {
+        "type": "string",
+        "default": "\"That spell cannot be bound to an item.\"",
+        "description": ""
+      },
+      "str-spell-cant-bind": {
+        "type": "string",
+        "default": "\"That spell cannot be bound like this.\"",
         "description": ""
       },
       "str-not-bound": {
@@ -8135,8 +11020,18 @@
     }
   },
   "UnconjureSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "items": {
         "type": "any",
         "default": null,
@@ -8145,8 +11040,18 @@
     }
   },
   "VariableCastSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "variable-name": {
         "type": "string",
         "default": null,
@@ -8160,8 +11065,18 @@
     }
   },
   "VelocitySpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "speed": {
         "type": "number",
         "default": "40",
@@ -8185,7 +11100,7 @@
     }
   },
   "VinesSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "up": {
         "type": "number",
@@ -8210,7 +11125,7 @@
     }
   },
   "VolleySpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "fire": {
         "type": "number",
@@ -8320,8 +11235,98 @@
     }
   },
   "WalkwaySpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "platform-type": {
         "type": "string",
         "default": "\"oak_planks\"",
@@ -8340,8 +11345,18 @@
     }
   },
   "WallSpell": {
-    "type": "unknown",
+    "type": "instant",
     "options": {
+      "can-cast-with-item": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with items.  with this false, spells can still be bound as cast items and cycled."
+      },
+      "can-cast-by-command": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines if this spell can be cast with the /cast (spell) command."
+      },
       "wall-types": {
         "type": "string",
         "default": null,
@@ -8435,8 +11450,98 @@
     }
   },
   "WaterwalkSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "speed": {
         "type": "number",
         "default": "0.05",
@@ -8445,8 +11550,98 @@
     }
   },
   "WindGlideSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "spell": {
         "type": "string",
         "default": null,
@@ -8495,8 +11690,98 @@
     }
   },
   "WindWalkSpell": {
-    "type": "unknown",
+    "type": "buff",
     "options": {
+      "duration": {
+        "type": "number",
+        "default": "0",
+        "description": "Buff spell duration specified in seconds before the buff expires. Set to 0 to define an infinite duration."
+      },
+      "toggle": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether the spell can be deactivated while still active. It will only apply cooldown when its duration fades."
+      },
+      "targeted": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines if this spell should become a targeted spell."
+      },
+      "cancel-on-join": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster joins the game."
+      },
+      "cancel-on-move": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster moves."
+      },
+      "cancel-on-death": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster dies."
+      },
+      "cancel-on-logout": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster leaves the game."
+      },
+      "cancel-on-teleport": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the server emits a teleport event for the caster."
+      },
+      "cancel-on-spell-cast": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster casts a spell.  this cancels all spells if the Spell Filter is left undefined."
+      },
+      "cancel-on-take-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster receives damage."
+      },
+      "cancel-on-give-damage": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster deals damage to another entity."
+      },
+      "cancel-on-change-world": {
+        "type": "boolean",
+        "default": "false",
+        "description": "Defines whether the buff spell will cancel if the caster switches worlds."
+      },
+      "cancel-affects-target": {
+        "type": "boolean",
+        "default": "false",
+        "description": "If the buff spell is targeted, cancelling logic will be affected by and to the target instead."
+      },
+      "real-time-duration": {
+        "type": "boolean",
+        "default": "false",
+        "description": ". When true, duration is tracked using real time, instead of ticks. As such, lag will not impact the duration of the buff spell."
+      },
+      "power-affects-duration": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines whether Spell Power can affect the spell's duration."
+      },
+      "end-spell-from-target": {
+        "type": "boolean",
+        "default": "true",
+        "description": "Defines caster of the spell-on-end. If the spell isn't targeted, the \"target\" is technically the caster, so they cast the spell."
+      },
+      "str-fade": {
+        "type": "string",
+        "default": "true",
+        "description": "Message sent after the buff ends."
+      },
+      "spell-on-end": {
+        "type": "string",
+        "default": null,
+        "description": "Sub-spell that will be cast whenever the buff spell reaches the end of its duration."
+      },
       "always-fly": {
         "type": "boolean",
         "default": "false",
@@ -8550,7 +11835,7 @@
     }
   },
   "ZapSpell": {
-    "type": "unknown",
+    "type": "targeted",
     "options": {
       "allowed-block-types": {
         "type": "string",
