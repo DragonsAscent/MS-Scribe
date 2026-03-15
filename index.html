@@ -111,9 +111,17 @@
     z-index: 6; /* will be placed below text which we set to a higher z-index */
     background-image: url('https://c.tenor.com/0NZ4t7ti0uwAAAAC/tenor.gif');
     background-repeat: no-repeat;
-    background-position: center right;
+    /* shift the GIF left ~10% (90% from left) so it sits a bit more inward */
+    background-position: 110% center;
     background-size: cover;
-    opacity: 0.30;
+    opacity: 0.35;
+    /* small blur and GPU hints to reduce flicker from GIF transparency lines */
+    filter: blur(0.35px);
+    will-change: opacity, transform;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    image-rendering: crisp-edges;
     -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
     mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
   }
