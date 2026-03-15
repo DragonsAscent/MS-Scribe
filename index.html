@@ -162,6 +162,9 @@ function startMonacoIfYamlReady() {
             }
               const lineMax = model.getLineMaxColumn(i);
               let startCol = startIndex + 1; // monaco is 1-based
+              // compensate for left visual padding/icon so cursor aligns with text
+              const COMPENSATE_COLS = 4;
+              startCol = startCol + COMPENSATE_COLS;
               let endCol = endIndex + 2; // convert inclusive endIndex to 1-based exclusive-ish
               // clamp within the line bounds to avoid ranges past line end
               if (startCol < 1) startCol = 1;
