@@ -8,17 +8,32 @@
   body, html { margin:0; padding:0; height:100%; display:flex; flex-direction:column; font-family:sans-serif; }
   #editor { flex:1; }
   #status { padding:8px; background:#1e1e1e; color:#d4d4d4; font-family:monospace; }
-  .monaco-editor .spell-class-token { color:#a46bff !important; font-weight:600; background-color:rgba(164, 107, 255, 0.212) !important; padding:0 6px; border-radius:4px; }
-  /* Icon displayed before the token using Monaco's beforeContentClassName */
-  .monaco-editor .spell-class-icon {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    margin: 0 6px 0 0;
-    vertical-align: middle;
+  /* Inline token style with embedded icon inside the highlighted background */
+  .monaco-editor .spell-class-token {
+    color:#a46bff !important;
+    font-weight:700;
+    background-color:rgba(164, 107, 255, 0.212) !important;
+    border-radius:4px;
+    /* icon inside background */
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16'><path fill='%23a46bff' d='M12 2l4 6 6 2-10 7-10-7 6-2 4-6z'/></svg>");
-    background-size: contain;
     background-repeat: no-repeat;
+    background-position: 8px center;
+    padding-left: 32px !important;
+    padding-right: 8px !important;
+    line-height: 18px;
+  }
+  /* First-line spell name token */
+  .monaco-editor .spell-name-token {
+    color: #fff !important;
+    font-weight: 700;
+    background-color: rgba(80, 63, 255, 0.16) !important;
+    border-radius: 6px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16'><path fill='%23ffffff' d='M12 2l4 6 6 2-10 7-10-7 6-2 4-6z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: 8px center;
+    padding-left: 36px !important;
+    padding-right: 10px !important;
+    line-height: 20px;
   }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
@@ -54,7 +69,54 @@ function startMonacoIfYamlReady() {
       });
 
     const editor = monaco.editor.create(document.getElementById('editor'), {
-      value: `# Start typing your spell YAML here\nbasic-spell:\n  spell-class: ".instant.DummySpell"`,
+      value: `Shout_Banner:
+  spell-class: ".instant.DummySpell"
+  description: "Shout a message above your head. Format /c Shout \"MESSAGE_IN_QUOTES\" HEXCOLOR1 HEXCOLOR2 END_SIZE"
+  str-cast-self: "You shout your message!"
+  cooldown: "3*%arg:4:1%"
+  effects:
+    - position: caster
+      effect: entity
+      entity:
+          duration: 200
+          entity: text_display
+          text: "<transition:%arg:2:white%:%arg:3:gold%:0.25>%arg:1:*crickets*%"
+          brightness:
+            sky: 15
+            block: 15
+          interpolation-delay: 0
+          interpolation-duration: 15
+          teleport-duration: 1
+          background: 0000000
+          billboard: center
+          transformation:
+            left-rotation: "0,0,0,1"
+            right-rotation: "0,0,0,1"
+            scale:
+              x: "0.1"
+              y: "0.1"
+              z: "0.1"
+            translation:
+              x: "0"
+              y: "1"
+              z: "0"
+          delayed-entity-data:
+            - delay: 2
+              entity-data:
+                text: "<transition:%arg:2:white%:%arg:3:gold%:0.25>%arg:1:*crickets*%"
+                interpolation-delay: 0
+                interpolation-duration: 200
+                transformation:
+                  left-rotation: "0,0,0,1"
+                  right-rotation: "0,0,0,1"
+                  scale:
+                    x: "%arg:4:0.8%"
+                    y: "%arg:4:0.8%"
+                    z: "%arg:4:0.8%"
+                  translation:
+                    x: "0"
+                    y: "2"
+                    z: "0"`,
       language: 'yaml',
       theme: 'vs-dark',
       automaticLayout: true
@@ -94,7 +156,7 @@ function startMonacoIfYamlReady() {
             }
             const startCol = startIndex + 1; // monaco is 1-based
             const endCol = endIndex + 2; // end is inclusive so +1, and convert to 1-based
-            newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-class-token', beforeContentClassName: 'spell-class-icon' } });
+            newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-class-token' } });
           }
         }
       }
