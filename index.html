@@ -170,6 +170,7 @@ function startMonacoIfYamlReady() {
     // Update decorations after init and on content change
     updateSpellClassDecorations();
     let spellNameDecorationIds = [];
+    let percentDecorationIds = [];
     function updateSpellNameDecorations() {
       const model = editor.getModel();
       if (!model) return;
@@ -188,10 +189,31 @@ function startMonacoIfYamlReady() {
       }
       spellNameDecorationIds = editor.deltaDecorations(spellNameDecorationIds, newDecs);
     }
+    function updatePercentDecorations() {
+      const model = editor.getModel();
+      if (!model) return;
+      const newDecs = [];
+      const lineCount = model.getLineCount();
+      const regex = /%[^%]+%/g;
+      for (let i = 1; i <= lineCount; i++) {
+        const line = model.getLineContent(i);
+        let m;
+        while ((m = regex.exec(line)) !== null) {
+          const matchText = m[0];
+          const startIndex = m.index; // zero-based
+          const startCol = startIndex + 1;
+          const endCol = startIndex + matchText.length + 1;
+          newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'percent-token' } });
+        }
+      }
+      percentDecorationIds = editor.deltaDecorations(percentDecorationIds, newDecs);
+    }
     updateSpellNameDecorations();
+    updatePercentDecorations();
     editor.onDidChangeModelContent(() => {
       updateSpellClassDecorations();
       updateSpellNameDecorations();
+      updatePercentDecorations();
     });
 
     function findParentKey(model, lineNumber) {
