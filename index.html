@@ -82,8 +82,16 @@ function startMonacoIfYamlReady() {
     let schema = {};
     // Helper to collect global options from schema entries that represent global/common options.
     function getGlobalOptions() {
+      // built-in global options (fallbacks) — these apply to all spells unless overridden in schema
+      const builtins = {
+        'cooldown': { type: 'number', description: 'Number of seconds before this spell can be used again. Decimals allowed (e.g., 0.5 = half second).' },
+        'str-cast-self': { type: 'string', description: 'Message sent to caster when a spell is cast.' },
+        'str-cast-others': { type: 'string', description: 'Message sent to other players when a spell is cast.' },
+        'str-no-target': { type: 'string', description: 'Message sent to caster when attempting to cast without a valid target.' },
+        'str-on-cooldown': { type: 'string', description: 'Message sent to caster when attempting to cast while spell is on cooldown.' }
+      };
       const candidateNames = ['global','Global','__global','GLOBAL','*','AllSpells','GlobalSpell','globalOptions'];
-      const merged = {};
+      const merged = Object.assign({}, builtins);
       for (const n of candidateNames) {
         if (schema && schema[n] && schema[n].options) {
           Object.assign(merged, schema[n].options);
@@ -379,7 +387,7 @@ function startMonacoIfYamlReady() {
               range: new monaco.Range(position.lineNumber, startCol, position.lineNumber, endCol),
               contents: [
                 { value: `**${key}** (string)` },
-                { value: 'A message shown to the caster (e.g., cast success, no target). Supports formatting tokens.' }
+                { value: 'A message shown to the caster or target (e.g., cast success, no target). Depends on which `str-` key is used such as `str-no-target`, `str-cast-self`, `str-cast-others`, `str-on-cooldown`, etc' }
               ]
             };
           }
