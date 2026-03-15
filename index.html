@@ -9,8 +9,8 @@
   #editor { flex:1; }
   #status { padding:8px; background:#1e1e1e; color:#d4d4d4; font-family:monospace; }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.40.0/min/vs/loader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.40.0/min/vs/loader.js"></script>
 </head>
 <body>
 <div id="editor"></div>
@@ -18,100 +18,106 @@
 
 <script>
 require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.40.0/min/vs' }});
-require(['vs/editor/editor.main'], function() {
 
-  const statusEl = document.getElementById('status');
-  let schema = {};
+function startMonacoIfYamlReady() {
+  if (typeof jsyaml === 'undefined' && typeof window.jsyaml === 'undefined') {
+    setTimeout(startMonacoIfYamlReady, 100);
+    return;
+  }
+  require(['vs/editor/editor.main'], function() {
+    const statusEl = document.getElementById('status');
+    let schema = {};
 
-  // Fetch the auto-generated schema.json
-  fetch('schema.json')
-    .then(res => res.json())
-    .then(data => {
-      schema = data;
-      statusEl.textContent = 'Schema loaded ✅';
-      statusEl.style.color = '#0f0';
-    })
-    .catch(err => {
-      console.error(err);
-      statusEl.textContent = 'Failed to load schema ❌';
-      statusEl.style.color = '#f44';
+    fetch('schema.json')
+      .then(res => res.json())
+      .then(data => {
+        schema = data;
+        statusEl.textContent = 'Schema loaded ✅';
+        statusEl.style.color = '#0f0';
+      })
+      .catch(err => {
+        console.error(err);
+        statusEl.textContent = 'Failed to load schema ❌';
+        statusEl.style.color = '#f44';
+      });
+
+    const editor = monaco.editor.create(document.getElementById('editor'), {
+      value: `# Start typing your spell YAML here\nbasic-spell:\n  spell-class: ".instant.DummySpell"`,
+      language: 'yaml',
+      theme: 'vs-dark',
+      automaticLayout: true
     });
 
-  // Create Monaco editor
-  const editor = monaco.editor.create(document.getElementById('editor'), {
-    value: `# Start typing your spell YAML here\nbasic-spell:\n  spell-class: ".instant.DummySpell"`,
-    language: 'yaml',
-    theme: 'vs-dark',
-    automaticLayout: true
-  });
-
-  // Helper: Find parent key for a given line (ignores spell name itself)
-  function findParentKey(model, lineNumber) {
-    for (let i = lineNumber - 1; i > 0; i--) {
-      const line = model.getLineContent(i).trim();
-      // Match YAML key ending with ':'
-      const match = line.match(/^([\w-]+):/);
-      if (match && !line.startsWith('-')) {
-        // Only return if not the first line (spell name)
-        if (i !== 1) return match[1];
-        // Otherwise, skip spell name
-      }
-    }
-    return null;
-  }
-
-  // Hover provider (improved for nested keys)
-  monaco.languages.registerHoverProvider('yaml', {
-    provideHover: function(model, position) {
-      const word = model.getWordAtPosition(position);
-      if (!word) return null;
-
-      // Ignore spell name itself (first line)
-      if (position.lineNumber === 1) return null;
-
-      // Find parent key (spell name)
-      let parentKey = findParentKey(model, position.lineNumber);
-      // If no parent key, try to find the first spell name
-      if (!parentKey) {
-        const firstLine = model.getLineContent(1).trim();
-        const match = firstLine.match(/^([\w-]+):/);
-        if (match) parentKey = match[1];
-      }
-      if (parentKey && schema[parentKey]) {
-        const options = schema[parentKey].options;
-        if (options && options[word.word]) {
-          const opt = options[word.word];
-          return {
-            range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
-            contents: [
-              { value: `**${word.word}** (${opt.type})` },
-              { value: `${opt.description}` },
-              { value: `Default: ${opt.default ?? 'none'}` }
-            ]
-          };
+    function findParentKey(model, lineNumber) {
+      for (let i = lineNumber - 1; i > 0; i--) {
+        const line = model.getLineContent(i).trim();
+        const match = line.match(/^([\w-]+):/);
+        if (match && !line.startsWith('-')) {
+          if (i !== 1) return match[1];
         }
       }
       return null;
     }
-  });
 
-  // Live YAML validation
-  editor.onDidChangeModelContent(() => {
-    const yamlText = editor.getValue();
-    try {
-      // Use jsyaml if available, otherwise window.jsyaml
-      const yamlLib = typeof jsyaml !== 'undefined' ? jsyaml : window.jsyaml;
-      if (!yamlLib) throw new Error('jsyaml is not defined');
-      yamlLib.load(yamlText);
-      statusEl.textContent = 'Config is valid ✅';
-      statusEl.style.color = '#0f0';
-    } catch (err) {
-      statusEl.textContent = 'Error ❌: ' + err.message;
-      statusEl.style.color = '#f44';
-    }
-  });
+    monaco.languages.registerHoverProvider('yaml', {
+      provideHover: function(model, position) {
+        const word = model.getWordAtPosition(position);
+        if (!word) return null;
+        if (position.lineNumber === 1) return null;
+        let parentKey = findParentKey(model, position.lineNumber);
+        if (!parentKey) {
+          const firstLine = model.getLineContent(1).trim();
+          const match = firstLine.match(/^([\w-]+):/);
+          if (match) parentKey = match[1];
+        }
+        if (parentKey && schema[parentKey]) {
+          const options = schema[parentKey].options;
+          if (options && options[word.word]) {
+            const opt = options[word.word];
+            return {
+              range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
+              contents: [
+                { value: `**${word.word}** (${opt.type})` },
+                { value: `${opt.description}` },
+                { value: `Default: ${opt.default ?? 'none'}` }
+              ]
+            };
+          }
+        }
+        for (const spellName in schema) {
+          const options = schema[spellName].options;
+          if (options && options[word.word]) {
+            const opt = options[word.word];
+            return {
+              range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
+              contents: [
+                { value: `**${word.word}** (${opt.type})` },
+                { value: `${opt.description}` },
+                { value: `Default: ${opt.default ?? 'none'}` }
+              ]
+            };
+          }
+        }
+        return null;
+      }
+    });
 
-});
+    editor.onDidChangeModelContent(() => {
+      const yamlText = editor.getValue();
+      try {
+        const yamlLib = typeof jsyaml !== 'undefined' ? jsyaml : window.jsyaml;
+        if (!yamlLib) throw new Error('jsyaml is not defined');
+        yamlLib.load(yamlText);
+        statusEl.textContent = 'Config is valid ✅';
+        statusEl.style.color = '#0f0';
+      } catch (err) {
+        statusEl.textContent = 'Error ❌: ' + err.message;
+        statusEl.style.color = '#f44';
+      }
+    });
+  });
+}
+startMonacoIfYamlReady();
 </script>
 </body>
 </html>
