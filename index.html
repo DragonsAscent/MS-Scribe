@@ -45,14 +45,16 @@ require(['vs/editor/editor.main'], function() {
     automaticLayout: true
   });
 
-  // Helper: Find parent key for a given line
+  // Helper: Find parent key for a given line (ignores spell name itself)
   function findParentKey(model, lineNumber) {
     for (let i = lineNumber - 1; i > 0; i--) {
       const line = model.getLineContent(i).trim();
       // Match YAML key ending with ':'
       const match = line.match(/^([\w-]+):/);
       if (match && !line.startsWith('-')) {
-        return match[1];
+        // Only return if not the first line (spell name)
+        if (i !== 1) return match[1];
+        // Otherwise, skip spell name
       }
     }
     return null;
@@ -64,25 +66,19 @@ require(['vs/editor/editor.main'], function() {
       const word = model.getWordAtPosition(position);
       if (!word) return null;
 
+      // Ignore spell name itself (first line)
+      if (position.lineNumber === 1) return null;
+
       // Find parent key (spell name)
-      const parentKey = findParentKey(model, position.lineNumber);
+      let parentKey = findParentKey(model, position.lineNumber);
+      // If no parent key, try to find the first spell name
+      if (!parentKey) {
+        const firstLine = model.getLineContent(1).trim();
+        const match = firstLine.match(/^([\w-]+):/);
+        if (match) parentKey = match[1];
+      }
       if (parentKey && schema[parentKey]) {
         const options = schema[parentKey].options;
-        if (options && options[word.word]) {
-          const opt = options[word.word];
-          return {
-            range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
-            contents: [
-              { value: `**${word.word}** (${opt.type})` },
-              { value: `${opt.description}` },
-              { value: `Default: ${opt.default ?? 'none'}` }
-            ]
-          };
-        }
-      }
-      // Fallback: search all spells
-      for (const spellName in schema) {
-        const options = schema[spellName].options;
         if (options && options[word.word]) {
           const opt = options[word.word];
           return {
@@ -103,7 +99,7 @@ require(['vs/editor/editor.main'], function() {
   editor.onDidChangeModelContent(() => {
     const yamlText = editor.getValue();
     try {
-      window.jsyaml.load(yamlText);
+      jsyaml.load(yamlText);
       statusEl.textContent = 'Config is valid ✅';
       statusEl.style.color = '#0f0';
     } catch (err) {
