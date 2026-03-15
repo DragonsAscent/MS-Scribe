@@ -24,11 +24,15 @@
   }
   /* Percent-wrapped token (e.g., %arg:4:1%) */
   .monaco-editor .percent-token {
-    color: #ffbb00 !important;
-    font-style: italic;
-    background-color: rgba(255, 187, 0, 0.06) !important;
+    color: #00d9ff !important;
+    background-color: rgba(0, 217, 255, 0.03) !important;
+    /* repeating diagonal stripe pattern for better contrast */
+    background-image: repeating-linear-gradient(45deg,
+      rgba(0, 255, 234, 0.1) 0px, rgba(0, 183, 255, 0.1) 4px,
+      rgba(0, 217, 255, 0.02) 4px, rgba(0, 255, 242, 0.02) 8px);
+    background-size: 8px 8px;
     border-radius: 4px;
-    text-shadow: 0 0 8px rgba(255,187,0,0.18);
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.12);
     padding-left: 4px !important;
     padding-right: 0 !important;
   }
@@ -168,8 +172,8 @@ function startMonacoIfYamlReady() {
               if (endCol > lineMax) endCol = lineMax;
               if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
               // widen by a few columns to ensure cursor can be placed at the visual end
-              const EXTRA_END_COLS = 4;
-              if (endCol < lineMax) endCol = Math.min(endCol + EXTRA_END_COLS, lineMax);
+                const EXTRA_END_COLS = 8;
+                if (endCol < lineMax) endCol = Math.min(endCol + EXTRA_END_COLS, lineMax);
               newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-class-token' } });
           }
         }
@@ -197,7 +201,7 @@ function startMonacoIfYamlReady() {
           let endCol = startCol + key.length; // cover exactly the key characters
           if (endCol > lineMax) endCol = lineMax;
           if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
-          if (endCol < lineMax) endCol = endCol + 1;
+          if (endCol < lineMax) endCol = Math.min(endCol + 2, lineMax);
           newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-name-token' } });
         }
       }
@@ -220,7 +224,7 @@ function startMonacoIfYamlReady() {
           let endCol = startIndex + matchText.length + 1;
           if (endCol > lineMax) endCol = lineMax;
           if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
-          if (endCol < lineMax) endCol = endCol + 1;
+          if (endCol < lineMax) endCol = Math.min(endCol + 2, lineMax);
           newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'percent-token' } });
         }
       }
