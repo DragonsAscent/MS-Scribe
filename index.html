@@ -48,6 +48,7 @@
       rgba(43, 43, 43, 0.02) 4px, rgba(43, 43, 43, 0.02) 8px);
     background-size: 8px 8px;
     border-radius: 4px;
+    border: 1px solid rgba(177, 130, 130, 0.18) !important;
     text-shadow: 0 0 8px rgba(151, 81, 81, 0.205);
     padding-left: 4px !important;
     padding-right: 0 !important;
@@ -109,7 +110,7 @@
     width: 40%;
     pointer-events: none;
     z-index: 6; /* will be placed below text which we set to a higher z-index */
-    background-image: url('https://c.tenor.com/0NZ4t7ti0uwAAAAC/tenor.gif');
+    background-image: url('https://cdna.artstation.com/p/assets/images/images/017/778/384/original/evgeny-starostin-static.gif?1557313040');
     background-repeat: no-repeat;
     /* shift the GIF left ~10% (90% from left) so it sits a bit more inward */
     background-position: 110% center;
@@ -297,6 +298,7 @@ function startMonacoIfYamlReady() {
     updateSpellClassDecorations();
     let spellNameDecorationIds = [];
     let percentDecorationIds = [];
+    let hexDecorationIds = [];
     function updateSpellNameDecorations() {
       const model = editor.getModel();
       if (!model) return;
@@ -342,8 +344,56 @@ function startMonacoIfYamlReady() {
       }
       percentDecorationIds = editor.deltaDecorations(percentDecorationIds, newDecs);
     }
+
+    // Add decorations for any #hex color anywhere in the document
+    function updateHexDecorations() {
+      const model = editor.getModel();
+      if (!model) return;
+      const newDecs = [];
+      const lineCount = model.getLineCount();
+      const regex = /#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b/g;
+      // ensure a style element exists to hold generated classes
+      let styleEl = document.getElementById('hex-color-styles');
+      if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = 'hex-color-styles';
+        document.head.appendChild(styleEl);
+        window.__hexClasses = new Set();
+      }
+      for (let i = 1; i <= lineCount; i++) {
+        const line = model.getLineContent(i);
+        let m;
+        while ((m = regex.exec(line)) !== null) {
+          const matchText = m[0];
+          const startIndex = m.index;
+          const startCol = startIndex + 1;
+          const lineMax = model.getLineMaxColumn(i);
+          let endCol = startIndex + matchText.length + 1;
+          if (endCol > lineMax) endCol = lineMax;
+          if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
+          let hex = m[1];
+          if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+          hex = hex.toLowerCase();
+          const className = 'hex-bg-' + hex;
+          if (!window.__hexClasses.has(className)) {
+            const r = parseInt(hex.substring(0,2), 16) / 255;
+            const g = parseInt(hex.substring(2,4), 16) / 255;
+            const b = parseInt(hex.substring(4,6), 16) / 255;
+            const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+            const textColor = lum > 0.6 ? '#000' : '#fff';
+            const rule = `.monaco-editor .${className} { background-image: none !important; background-color: #${hex} !important; color: ${textColor} !important; border: 1px solid rgba(0,0,0,0.12) !important; }`;
+            styleEl.appendChild(document.createTextNode(rule));
+            window.__hexClasses.add(className);
+          }
+          newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: className } });
+        }
+      }
+      hexDecorationIds = editor.deltaDecorations(hexDecorationIds, newDecs);
+    }
+
     updateSpellNameDecorations();
     updatePercentDecorations();
+    updateHexDecorations();
     editor.onDidChangeModelContent(() => {
       updateSpellClassDecorations();
       updateSpellNameDecorations();
