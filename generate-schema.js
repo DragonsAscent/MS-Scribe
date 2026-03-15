@@ -237,6 +237,42 @@ function generate() {
         schema[spell] = { type, options: mergedOptions };
     }
 
+    // Parse condition (modifier) pages to expose modifier conditions as global options
+    const conditionFiles = files.filter(fn => fn.startsWith('Condition-') && fn.endsWith('.md'));
+    const globalConditions = {};
+    for (const cf of conditionFiles) {
+        try {
+            const content = fs.readFileSync(path.join(WIKI_DIR, cf), 'utf8');
+            // Look for a line like: "[Modifier](Modifiers) condition: `world`" or "condition: `name`"
+            const condMatch = content.match(/condition:\s*`([^`]+)`/i) || content.match(/condition:\s*'([^']+)'/i);
+            if (!condMatch) continue;
+            const condName = condMatch[1].trim();
+            // Extract the Description section: text after "# Description:" up to the next header (## or #) or a blank line
+            let desc = '';
+            const descHeader = content.match(/#\s*Description\s*:\s*\n([\s\S]*)/i);
+            if (descHeader) {
+                // take until next header (line starting with ## or #) or end of file
+                const rest = descHeader[1];
+                const stopIdx = rest.search(/\n#{1,2}\s+/);
+                desc = stopIdx === -1 ? rest : rest.substring(0, stopIdx);
+            } else {
+                // fallback: take the first paragraph after the top
+                const para = content.split(/\n\s*\n/)[0] || '';
+                desc = para;
+            }
+            desc = stripFormatting(desc).replace(/\n+/g, ' ').trim();
+            if (!desc) desc = `Modifier condition \"${condName}\" (see wiki).`;
+            globalConditions[condName] = { type: 'string', description: desc };
+        } catch (e) {
+            // ignore parse errors for individual condition files
+            continue;
+        }
+    }
+
+    // Add a 'global' entry that contains modifier conditions so hover/completion can find them
+    if (!schema['global']) schema['global'] = { type: 'global', options: {} };
+    schema['global'].options = Object.assign({}, schema['global'].options || {}, globalConditions);
+
     fs.writeFileSync(
         OUTPUT,
         JSON.stringify(schema,null,2)
