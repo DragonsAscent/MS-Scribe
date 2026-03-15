@@ -158,9 +158,14 @@ function startMonacoIfYamlReady() {
               const quoteAfter = Math.min(...quoteAfterCandidates);
               if (quoteAfter > endIndex) endIndex = quoteAfter;
             }
-            const startCol = startIndex + 1; // monaco is 1-based
-            const endCol = endIndex + 2; // end is inclusive so +1, and convert to 1-based
-            newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-class-token' } });
+              const lineMax = model.getLineMaxColumn(i);
+              let startCol = startIndex + 1; // monaco is 1-based
+              let endCol = endIndex + 2; // convert inclusive endIndex to 1-based exclusive-ish
+              // clamp within the line bounds to avoid ranges past line end
+              if (startCol < 1) startCol = 1;
+              if (endCol > lineMax) endCol = lineMax;
+              if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
+              newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-class-token' } });
           }
         }
       }
@@ -182,8 +187,11 @@ function startMonacoIfYamlReady() {
         const m = line.match(topKeyRegex);
         if (m && line.trim().length && line[0] !== ' ' && line[0] !== '\t') {
           const key = m[1];
-          const startCol = m.index + 1;
-          const endCol = startCol + key.length + 1;
+          const lineMax = model.getLineMaxColumn(i);
+          const startCol = (m.index || 0) + 1;
+          let endCol = startCol + key.length; // cover exactly the key characters
+          if (endCol > lineMax) endCol = lineMax;
+          if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
           newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-name-token' } });
         }
       }
@@ -202,7 +210,10 @@ function startMonacoIfYamlReady() {
           const matchText = m[0];
           const startIndex = m.index; // zero-based
           const startCol = startIndex + 1;
-          const endCol = startIndex + matchText.length + 1;
+          const lineMax = model.getLineMaxColumn(i);
+          let endCol = startIndex + matchText.length + 1;
+          if (endCol > lineMax) endCol = lineMax;
+          if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
           newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'percent-token' } });
         }
       }
