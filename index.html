@@ -45,16 +45,45 @@ require(['vs/editor/editor.main'], function() {
     automaticLayout: true
   });
 
-  // Hover provider
+  // Helper: Find parent key for a given line
+  function findParentKey(model, lineNumber) {
+    for (let i = lineNumber - 1; i > 0; i--) {
+      const line = model.getLineContent(i).trim();
+      // Match YAML key ending with ':'
+      const match = line.match(/^([\w-]+):/);
+      if (match && !line.startsWith('-')) {
+        return match[1];
+      }
+    }
+    return null;
+  }
+
+  // Hover provider (improved for nested keys)
   monaco.languages.registerHoverProvider('yaml', {
     provideHover: function(model, position) {
       const word = model.getWordAtPosition(position);
       if (!word) return null;
 
-      // Search in schema options
+      // Find parent key (spell name)
+      const parentKey = findParentKey(model, position.lineNumber);
+      if (parentKey && schema[parentKey]) {
+        const options = schema[parentKey].options;
+        if (options && options[word.word]) {
+          const opt = options[word.word];
+          return {
+            range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
+            contents: [
+              { value: `**${word.word}** (${opt.type})` },
+              { value: `${opt.description}` },
+              { value: `Default: ${opt.default ?? 'none'}` }
+            ]
+          };
+        }
+      }
+      // Fallback: search all spells
       for (const spellName in schema) {
         const options = schema[spellName].options;
-        if (options[word.word]) {
+        if (options && options[word.word]) {
           const opt = options[word.word];
           return {
             range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
