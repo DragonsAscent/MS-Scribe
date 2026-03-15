@@ -11873,5 +11873,590 @@
         "description": "Whether to play the block break effect when cast."
       }
     }
+  },
+  "global": {
+    "type": "global",
+    "options": {
+      "absorption": {
+        "type": "string",
+        "description": "Source Code"
+      },
+      "advancement": {
+        "type": "string",
+        "description": "Passes if the entity has the advancement defined. Remember that Minecraft advancements must start with the minecraft: namespace key."
+      },
+      "age": {
+        "type": "string",
+        "description": "Source Code"
+      },
+      "alive": {
+        "type": "string",
+        "description": "Passes if the player's time since last death matches the one specified."
+      },
+      "always": {
+        "type": "string",
+        "description": "Passes always, just like chance 100, but without any extra processing and math. These mechanics are useful when you don't care about the condition but want to perform a modifier action directly."
+      },
+      "angle": {
+        "type": "string",
+        "description": "Passes if the location angle is equal/less/more than the defined value to the other location (does not support caster-checked modifiers)."
+      },
+      "attributebase": {
+        "type": "string",
+        "description": "Compares the base value of the specified attribute."
+      },
+      "attributedefault": {
+        "type": "string",
+        "description": "Compares the default value of the specified attribute."
+      },
+      "attribute": {
+        "type": "string",
+        "description": "Compares the current value of the specified attribute."
+      },
+      "beneficial": {
+        "type": "string",
+        "description": "Passes if the spell was marked as a beneficial spell."
+      },
+      "biome": {
+        "type": "string",
+        "description": "Passes if the entity is in the biome."
+      },
+      "blocktag": {
+        "type": "string",
+        "description": "Passes if the checked block has at least one block tag."
+      },
+      "blocking": {
+        "type": "string",
+        "description": "Passes if the player is blocking with a shield."
+      },
+      "buffactive": {
+        "type": "string",
+        "description": "Passes if an entity has an active buff spell."
+      },
+      "buildable": {
+        "type": "string",
+        "description": "Passes if this block is solid. Determined by Minecraft, typically a block a player can use to place a new block to build things. An example of a non buildable block would be: liquids, flowers, or fire."
+      },
+      "burnable": {
+        "type": "string",
+        "description": "Passes if this block is a block that fire can destroy."
+      },
+      "canpickupitems": {
+        "type": "string",
+        "description": "Passes if the target can pick up items."
+      },
+      "cast": {
+        "type": "string",
+        "description": "Passes if the specified sub-spell successfully casts."
+      },
+      "chance": {
+        "type": "string",
+        "description": "Passes based on the chance defined."
+      },
+      "chestcontains": {
+        "type": "string",
+        "description": "Passes if the chest at the defined location contains the defined magic item."
+      },
+      "clientname": {
+        "type": "string",
+        "description": "If the client didn't send this information, the brand name will be null. For the Notchian client this name defaults to vanilla. Some modified clients report other names such as forge & fabric."
+      },
+      "climbing": {
+        "type": "string",
+        "description": "Passes if the checked entity is climbing."
+      },
+      "collection": {
+        "type": "string",
+        "description": "Source Code"
+      },
+      "collidable": {
+        "type": "string",
+        "description": "Passes if this block is collidable."
+      },
+      "customnamevisible": {
+        "type": "string",
+        "description": "Passes if the entity's custom name is visible."
+      },
+      "customname": {
+        "type": "string",
+        "description": "Passes if the entity's custom name is equal to the one specified. This does not work with players."
+      },
+      "data": {
+        "type": "string",
+        "description": "Compares the specified data element."
+      },
+      "day": {
+        "type": "string",
+        "description": "Passes if time is greater than 0 and less than 13000."
+      },
+      "displayname": {
+        "type": "string",
+        "description": "Passes if the target's display name is equal to the one specified."
+      },
+      "distance": {
+        "type": "string",
+        "description": "Compares the block distance between the entity and the targeted entity/location."
+      },
+      "durability": {
+        "type": "string",
+        "description": "Source Code"
+      },
+      "elevation": {
+        "type": "string",
+        "description": "Compares the entity's Y level."
+      },
+      "entitytypetag": {
+        "type": "string",
+        "description": "Passes if the checked entity has at least one entity type tag."
+      },
+      "entitytype": {
+        "type": "string",
+        "description": "Compares the entity's type."
+      },
+      "facing": {
+        "type": "string",
+        "description": "Passes if the entity is facing one of the directions specified."
+      },
+      "falling": {
+        "type": "string",
+        "description": "Source Code"
+      },
+      "fixedpose": {
+        "type": "string",
+        "description": "Passes if the target has a fixed pose."
+      },
+      "fixedtime": {
+        "type": "string",
+        "description": "Passes if the world has fixed time."
+      },
+      "flying": {
+        "type": "string",
+        "description": "Source Code"
+      },
+      "food": {
+        "type": "string",
+        "description": "Source Code"
+      },
+      "gamemode": {
+        "type": "string",
+        "description": "Source Code"
+      },
+      "gliding": {
+        "type": "string",
+        "description": "Passes if the entity is gliding (elytra flight can be enabled without them being equipped)."
+      },
+      "griefpreventionisowner": {
+        "type": "string",
+        "description": "Passes if the claim the player is in recognises them as its owner."
+      },
+      "hasitemamount": {
+        "type": "string",
+        "description": "Checks the entity's or block's item quantity."
+      },
+      "hasitemprecise": {
+        "type": "string",
+        "description": "Passes if the target has the item specified in their inventory."
+      },
+      "hasitem": {
+        "type": "string",
+        "description": "Passes if the entity or location is holding the item specified."
+      },
+      "hasmark": {
+        "type": "string",
+        "description": "Passes if the player has a mark set specified."
+      },
+      "hasrecipe": {
+        "type": "string",
+        "description": "Passes if the player has one of the recipes specified."
+      },
+      "hasscoreboardtag": {
+        "type": "string",
+        "description": "Passes if the entity has the scoreboard tag specified."
+      },
+      "hasspell": {
+        "type": "string",
+        "description": "Passes if the player has the spell defined."
+      },
+      "hastarget": {
+        "type": "string",
+        "description": "Passes if the entity has a target."
+      },
+      "health": {
+        "type": "string",
+        "description": "Checks the entity's health."
+      },
+      "holdingprecise": {
+        "type": "string",
+        "description": "Passes if the entity is holding the item specified."
+      },
+      "holding": {
+        "type": "string",
+        "description": "Passes if the entity is holding the items specified."
+      },
+      "hoveringwith": {
+        "type": "string",
+        "description": "Passes if the entity is hovering with an item specified in an open inventory."
+      },
+      "inblock": {
+        "type": "string",
+        "description": "Passes if the entity is inside the blocks specified."
+      },
+      "incuboid": {
+        "type": "string",
+        "description": "Passes if the entity is inside the cuboid location specified. A cuboid region is a region between two opposite corner locations."
+      },
+      "innomagiczone": {
+        "type": "string",
+        "description": "Passes if the entity is inside the No Magic Zones (https://github.com/TheComputerGeek2/MagicSpells/wiki/No-Magic-Zones) specified."
+      },
+      "inregion": {
+        "type": "string",
+        "description": "Passes if the entity is inside the WorldGuard region specified."
+      },
+      "input": {
+        "type": "string",
+        "description": "Passes if the player's current movement input passes the filter."
+      },
+      "isnpc": {
+        "type": "string",
+        "description": "Passes if the target has the \"NPC\" metadata string (NPCs from the Citizens plugin do). , it also passes if the entity is a mannequin entity."
+      },
+      "lastdamagetype": {
+        "type": "string",
+        "description": "Passes if the entity's last damage cause matches the one specified."
+      },
+      "lastlife": {
+        "type": "string",
+        "description": "Checks the ticks lifetime of the player's previous life."
+      },
+      "leaping": {
+        "type": "string",
+        "description": "Passes if the entity is in the air because its velocity was changed by the Leap spell specified."
+      },
+      "leashed": {
+        "type": "string",
+        "description": "Passes if the checked entity is leashed."
+      },
+      "level": {
+        "type": "string",
+        "description": "Checks the player's experience level."
+      },
+      "lightlevel": {
+        "type": "string",
+        "description": "Checks the entity's light level."
+      },
+      "los": {
+        "type": "string",
+        "description": "Checks if the caster has a line of sight towards the target."
+      },
+      "lookingatblock": {
+        "type": "string",
+        "description": "Passes if the entity is looking at the block specified."
+      },
+      "loopactive": {
+        "type": "string",
+        "description": "Checks if the target currently has a loop active in the spell specified."
+      },
+      "mana": {
+        "type": "string",
+        "description": "Checks the player's mana."
+      },
+      "maxmana": {
+        "type": "string",
+        "description": "Checks the player's max mana."
+      },
+      "money": {
+        "type": "string",
+        "description": "Checks the player's money."
+      },
+      "moonphase": {
+        "type": "string",
+        "description": "Passes if the entity's location present moon phase matches the one specified."
+      },
+      "namepattern": {
+        "type": "string",
+        "description": "Passes if the entity's name, or the player's username or display name matches the regex pattern specified."
+      },
+      "name": {
+        "type": "string",
+        "description": "Passes if the player's username or display name is equal to the one passed. This does work with other entities and it does not support the space character - use the customname condition instead."
+      },
+      "night": {
+        "type": "string",
+        "description": "Passes if time is greater than 13000  and less than 23000."
+      },
+      "offhandprecise": {
+        "type": "string",
+        "description": "Passes if the entity is holding, in the offhand slot, the item specified."
+      },
+      "offhand": {
+        "type": "string",
+        "description": "Passes if the entity is holding, in the offhand slot, the item specified."
+      },
+      "onblock": {
+        "type": "string",
+        "description": "Passes if the entity is standing on the blocks specified."
+      },
+      "oncooldown": {
+        "type": "string",
+        "description": "Passes if the player has the spell specified is currently on cooldown."
+      },
+      "onfire": {
+        "type": "string",
+        "description": "Passes if the entity is presently on fire."
+      },
+      "onground": {
+        "type": "string",
+        "description": "Passes if the entity is on the ground."
+      },
+      "onleash": {
+        "type": "string",
+        "description": "Passes if the entity is leashed."
+      },
+      "onsameteam": {
+        "type": "string",
+        "description": "Passes if the player is in the same scoreboard team as the targeted player."
+      },
+      "onteam": {
+        "type": "string",
+        "description": "Passes if the player is in the scoreboard team."
+      },
+      "openslots": {
+        "type": "string",
+        "description": "Check the player's empty inventory slots."
+      },
+      "outside": {
+        "type": "string",
+        "description": "Passes if the entity or location has no blocks above it."
+      },
+      "overblock": {
+        "type": "string",
+        "description": "Passes if the entity or location has blocks specified."
+      },
+      "overground": {
+        "type": "string",
+        "description": "Passes if the entity is over a solid block within the specified depth."
+      },
+      "ownedbuffactive": {
+        "type": "string",
+        "description": "Passes if the entity has a buff spell active cast by the caster of this modifier."
+      },
+      "ownedloopactive": {
+        "type": "string",
+        "description": "Checks if the target currently has a loop active that was cast by the caster."
+      },
+      "oxygen": {
+        "type": "string",
+        "description": "Checks the entity's oxygen level."
+      },
+      "passable": {
+        "type": "string",
+        "description": "Passes for blocks if it has no colliding parts that would prevent players from moving through it."
+      },
+      "permission": {
+        "type": "string",
+        "description": "Passes if the player has the permission specified. This passes anyway if they have the wildcard permission."
+      },
+      "pitch": {
+        "type": "string",
+        "description": "Checks the entity's pitch."
+      },
+      "playercount": {
+        "type": "string",
+        "description": "Checks the server's player count."
+      },
+      "playeronline": {
+        "type": "string",
+        "description": "Passes if an online player's username matches."
+      },
+      "pluginenabled": {
+        "type": "string",
+        "description": "Passes if a presently enabled plugin's name matches."
+      },
+      "potioneffect": {
+        "type": "string",
+        "description": "Passes if the entity has an active potion effect that matches."
+      },
+      "power": {
+        "type": "string",
+        "description": "Checks the spell's power."
+      },
+      "pulseractive": {
+        "type": "string",
+        "description": "Checks how many pulsers the target has."
+      },
+      "raining": {
+        "type": "string",
+        "description": "Passes if it's raining at the entity's location or targeted location."
+      },
+      "receivingredstone": {
+        "type": "string",
+        "description": "Checks the targeted location's redstone signal of power."
+      },
+      "replaceable": {
+        "type": "string",
+        "description": "Passes if this block is replaceable. Determined by Minecraft, representing a block that is not AIR that you can still place a new block at, such as flowers."
+      },
+      "richerthan": {
+        "type": "string",
+        "description": "Passes if the player is richer than the targeted player."
+      },
+      "riding": {
+        "type": "string",
+        "description": "Passes if the entity is riding the entity type specified."
+      },
+      "riptiding": {
+        "type": "string",
+        "description": "Passes if the entity is in the Riptide animation."
+      },
+      "roof": {
+        "type": "string",
+        "description": "Passes if the entity has a block, that isn't air, above them."
+      },
+      "rotation": {
+        "type": "string",
+        "description": "Check's player's yaw (but supports negative degrees)."
+      },
+      "saturation": {
+        "type": "string",
+        "description": "Checks the player's saturation level."
+      },
+      "signtext": {
+        "type": "string",
+        "description": "Passes if the sign at the defined location contains the defined text."
+      },
+      "silent": {
+        "type": "string",
+        "description": "Checks if the target is silent (as in, cannot make noises due to the silent tag being applied)."
+      },
+      "sleeping": {
+        "type": "string",
+        "description": "Passes if the checked entity is sleeping."
+      },
+      "slotselected": {
+        "type": "string",
+        "description": "Source Code"
+      },
+      "sneaking": {
+        "type": "string",
+        "description": "Passes if the player is sneaking."
+      },
+      "solid": {
+        "type": "string",
+        "description": "Check if this block is solid. Determined by Minecraft, typically a block a player can stand on and can't be passed through."
+      },
+      "spellcaststate": {
+        "type": "string",
+        "description": "Passes if this spell's cast state matches the one specified."
+      },
+      "spellselected": {
+        "type": "string",
+        "description": "Passes if the currently selected spell of the player's cast/bound item passes the filter."
+      },
+      "spelltag": {
+        "type": "string",
+        "description": "Passes if this spell's tag matches."
+      },
+      "sprinting": {
+        "type": "string",
+        "description": "Passes if the player is sprinting."
+      },
+      "storm": {
+        "type": "string",
+        "description": "Passes if there's a storm at the entity's location or the targeted location."
+      },
+      "swimming": {
+        "type": "string",
+        "description": "Passes if the player is swimming."
+      },
+      "targetmaxhealth": {
+        "type": "string",
+        "description": "Checks the targeted entity's max health."
+      },
+      "targeting": {
+        "type": "string",
+        "description": "Passes if the spell is targeting an entity type that matches at least one element."
+      },
+      "testforblock": {
+        "type": "string",
+        "description": "Passes if the location specified has the specified block."
+      },
+      "thundering": {
+        "type": "string",
+        "description": "Passes if the weather is currently thunder at the entity's location or the targeted location."
+      },
+      "time": {
+        "type": "string",
+        "description": "Passes if time at the entity's location or the targeted location is within the range specified."
+      },
+      "totemactive": {
+        "type": "string",
+        "description": "Checks how many totems the target has. Operator and value are optional."
+      },
+      "underblock": {
+        "type": "string",
+        "description": "Passes if the entity or location is under a block."
+      },
+      "underwater": {
+        "type": "string",
+        "description": "Passes if the checked entity is underwater."
+      },
+      "uptime": {
+        "type": "string",
+        "description": "Passes if the time in seconds since the server started is greater than the amount specified."
+      },
+      "usingitem": {
+        "type": "string",
+        "description": "Passes if the item specified is being actively \"used\" or consumed. If no item is specified, it passes for any item."
+      },
+      "variablematches": {
+        "type": "string",
+        "description": "Passes if the player's value of the variable matches the value of the target's variable."
+      },
+      "variablestringequals": {
+        "type": "string",
+        "description": "Passes if the player's string variable value matches the one specified."
+      },
+      "variable": {
+        "type": "string",
+        "description": "Checks the player's variable."
+      },
+      "velocityactive": {
+        "type": "string",
+        "description": "Passes if the entity is in the air because its velocity was changed by the specified VelocitySpell."
+      },
+      "wearinginslot": {
+        "type": "string",
+        "description": "Passes if the player has the item specified in the specific wearable slot."
+      },
+      "wearingprecise": {
+        "type": "string",
+        "description": "Passes if the player is wearing the item specified in any of their wearable slots."
+      },
+      "wearing": {
+        "type": "string",
+        "description": "Passes if the player has any of the items specified in any wearable slots."
+      },
+      "worldguardbooleanflag": {
+        "type": "string",
+        "description": "Passes if the top-level region the player is standing in has the boolean flag specified set to TRUE."
+      },
+      "worldguardmembership": {
+        "type": "string",
+        "description": "Passes if the player has membership status in the top-level region the player is standing in."
+      },
+      "worldguardstateflag": {
+        "type": "string",
+        "description": "Passes, if the top-level region the player is standing in, has the state flag specified set to ALLOW."
+      },
+      "world": {
+        "type": "string",
+        "description": "Passes if the entity or targeted location is in the world specified."
+      },
+      "yaw": {
+        "type": "string",
+        "description": "Checks the entity's yaw value."
+      }
+    }
   }
 }
