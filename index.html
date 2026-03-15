@@ -65,22 +65,22 @@
   .monaco-editor .spell-class-token::before {
     content: "";
     position: absolute;
-    /* place a small background box to the left that visually connects with the token background and holds a pixel hat */
-    left: -20px;
+    /* background box placed to the left of the token; height matches token line height */
+    left: -22px;
     top: 50%;
     transform: translateY(-50%);
-    width: 28px;
-    height: 20px;
+    width: 30px;
+    height: 1em; /* match the token's font/line height */
     background-color: rgba(164, 107, 255, 0.13);
     border-radius: 6px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.25) !important;
     pointer-events: none;
     z-index: 0;
-    /* pixel-style hat SVG (small, crisp) centered inside the box */
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><rect width='16' height='16' fill='none'/>%3Crect x='3' y='2' width='10' height='2' fill='%233E24B8'/%3E%3Crect x='2' y='4' width='12' height='1' fill='%23613BFF'/%3E%3Crect x='1' y='5' width='14' height='1' fill='%23613BFF'/%3E%3Crect x='1' y='6' width='14' height='1' fill='%23613BFF'/%3E%3Crect x='2' y='7' width='12' height='1' fill='%23613BFF'/%3E%3Crect x='3' y='8' width='10' height='1' fill='%23613BFF'/%3E%3Crect x='4' y='9' width='8' height='1' fill='%23613BFF'/%3E%3Crect x='5' y='10' width='6' height='1' fill='%233E24B8'/%3E%3Crect x='6' y='11' width='4' height='1' fill='%23FFD166'/%3E%3C/svg>");
+    /* use the provided witch-hat image; size to fill the pseudo-element height */
+    background-image: url("https://static.vecteezy.com/system/resources/previews/022/906/948/non_2x/witch-hat-in-pixel-art-style-vector.jpg");
     background-repeat: no-repeat;
-    background-position: 8px center;
-    background-size: 12px 12px;
+    background-position: center left;
+    background-size: auto 100%;
   }
   .monaco-editor .monaco-hover .hover-contents {
     border-radius: 10px !important;
