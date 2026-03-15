@@ -41,29 +41,30 @@
   }
   /* Percent-wrapped token (e.g., %arg:4:1%) */
   .monaco-editor .percent-token {
-    color: rgb(177, 130, 159) !important;
-    background-color: rgba(235, 149, 235, 0.03) !important;
+    color: rgb(177, 130, 130) !important;
+    background-color: rgba(235, 149, 149, 0.03) !important;
     /* repeating diagonal stripe pattern for better contrast */
     background-image: repeating-linear-gradient(45deg,
-      rgba(235, 149, 235, 0.1) 0px, rgba(235, 149, 235, 0.1) 4px,
+      rgba(235, 149, 149, 0.1) 0px, rgba(235, 149, 149, 0.1) 4px,
       rgba(43, 43, 43, 0.02) 4px, rgba(43, 43, 43, 0.02) 8px);
     background-size: 8px 8px;
     border-radius: 4px;
-    text-shadow: 0 0 8px rgba(151, 81, 124, 0.205);
+    text-shadow: 0 0 8px rgba(151, 81, 81, 0.205);
     padding-left: 4px !important;
     padding-right: 0 !important;
   }
   /* First-line spell name token */
   .monaco-editor .spell-name-token {
-    color: hsl(162, 74%, 33%) !important;
+    color: hsl(162, 26%, 44%) !important;
     font-weight: 700;
-    background-color: rgba(63, 255, 175, 0.103) !important;
+    background-color: rgba(87, 87, 87, 0.103) !important;
     border-radius: 4px;
     position: relative;
     /* keep background-free so text layout is exact; we render the hat via ::before */
     border-radius: 10px !important;
     overflow: hidden;
     box-shadow: 0 8px 30px rgba(0,0,0,0.6) !important;
+  }
   .monaco-editor .spell-class-token::before {
     content: "";
     position: absolute;
@@ -76,7 +77,6 @@
     background-size: contain;
     background-repeat: no-repeat;
     pointer-events: none;
-  }
   }
   .monaco-editor .monaco-hover .hover-contents {
     border-radius: 10px !important;
