@@ -167,6 +167,8 @@ function startMonacoIfYamlReady() {
               if (startCol < 1) startCol = 1;
               if (endCol > lineMax) endCol = lineMax;
               if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
+              // widen by one column to ensure cursor can be placed at the visual end
+              if (endCol < lineMax) endCol = endCol + 1;
               newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-class-token' } });
           }
         }
@@ -194,6 +196,7 @@ function startMonacoIfYamlReady() {
           let endCol = startCol + key.length; // cover exactly the key characters
           if (endCol > lineMax) endCol = lineMax;
           if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
+          if (endCol < lineMax) endCol = endCol + 1;
           newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'spell-name-token' } });
         }
       }
@@ -216,6 +219,7 @@ function startMonacoIfYamlReady() {
           let endCol = startIndex + matchText.length + 1;
           if (endCol > lineMax) endCol = lineMax;
           if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
+          if (endCol < lineMax) endCol = endCol + 1;
           newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'percent-token' } });
         }
       }
