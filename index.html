@@ -100,25 +100,25 @@
     color: var(--vscode-editor-foreground, #d4d4d4) !important;
     background: transparent !important;
   }
-  /* Right-side animated background GIF with soft fade toward the editor */
-  #editor::after {
-    content: "";
+  /* Overlay element for right-side animated GIF. We'll append a DOM node so we can layer it between editor background and text. */
+  #editor .editor-gif-overlay {
     position: absolute;
     right: 0;
     top: 0;
     bottom: 0;
     width: 40%;
     pointer-events: none;
-    z-index: 1; /* behind editor content (which is z-index:2) */
+    z-index: 6; /* will be placed below text which we set to a higher z-index */
     background-image: url('https://c.tenor.com/0NZ4t7ti0uwAAAAC/tenor.gif');
     background-repeat: no-repeat;
     background-position: center right;
     background-size: cover;
     opacity: 0.30;
-    /* fade the gif as it approaches the editor content using mask */
     -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
     mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
   }
+  /* Ensure monaco text layer sits above the overlay */
+  .monaco-editor .view-lines { position: relative; z-index: 10; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.40.0/min/vs/loader.js"></script>
