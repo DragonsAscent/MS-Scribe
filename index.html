@@ -74,7 +74,7 @@ require(['vs/editor/editor.main'], function() {
   editor.onDidChangeModelContent(() => {
     const yamlText = editor.getValue();
     try {
-      jsyaml.load(yamlText);
+      window.jsyaml.load(yamlText);
       statusEl.textContent = 'Config is valid ✅';
       statusEl.style.color = '#0f0';
     } catch (err) {

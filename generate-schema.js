@@ -23,6 +23,13 @@ function stripFormatting(text) {
     // convert markdown links
     text = text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
 
+    // convert GitHub shorthand links [[Spell Effects]] to wiki URL
+    text = text.replace(/\[\[([^\]]+)\]\]/g, function(match, p1) {
+        // Replace spaces with hyphens for wiki page
+        const page = p1.replace(/\s+/g, "-");
+        return `${p1} (https://github.com/TheComputerGeek2/MagicSpells/wiki/${page})`;
+    });
+
     return text.trim()
 }
 
