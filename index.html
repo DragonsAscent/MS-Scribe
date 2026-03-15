@@ -228,6 +228,16 @@ function startMonacoIfYamlReady() {
       automaticLayout: true
     });
 
+    // Add the GIF overlay element so it can be layered between the editor background and the text layer
+    try {
+      const editorContainer = document.getElementById('editor');
+      const gifOverlay = document.createElement('div');
+      gifOverlay.className = 'editor-gif-overlay';
+      editorContainer.appendChild(gifOverlay);
+    } catch (e) {
+      console.error('Failed to append editor GIF overlay', e);
+    }
+
     // Decorations for highlighting spell-class values
     let spellClassDecorationIds = [];
     function updateSpellClassDecorations() {
