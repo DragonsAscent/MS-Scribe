@@ -6,7 +6,9 @@
 <title>Spell Scribe</title>
 <style>
   body, html { margin:0; padding:0; height:100%; display:flex; flex-direction:column; font-family:sans-serif; }
-  #editor { flex:1; }
+  #editor { flex:1; position: relative; }
+  /* ensure Monaco content renders above decorative backgrounds */
+  #editor .monaco-editor { position: relative; z-index: 2; }
   #status {
     position: fixed;
     right: 16px;
@@ -78,7 +80,7 @@
     background-image: url("https://static.vecteezy.com/system/resources/previews/022/906/948/non_2x/witch-hat-in-pixel-art-style-vector.jpg");
     background-repeat: no-repeat;
     background-position: center left;
-    background-size: auto 120%;
+    background-size: auto 100%;
   }
   .monaco-editor .monaco-hover .hover-contents {
     border-radius: 10px !important;
@@ -97,6 +99,25 @@
     padding: 8px 10px !important;
     color: var(--vscode-editor-foreground, #d4d4d4) !important;
     background: transparent !important;
+  }
+  /* Right-side animated background GIF with soft fade toward the editor */
+  #editor::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 40%;
+    pointer-events: none;
+    z-index: 1; /* behind editor content (which is z-index:2) */
+    background-image: url('https://c.tenor.com/0NZ4t7ti0uwAAAAC/tenor.gif');
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-size: cover;
+    opacity: 0.30;
+    /* fade the gif as it approaches the editor content using mask */
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
   }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
