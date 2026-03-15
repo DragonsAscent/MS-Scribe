@@ -18,18 +18,18 @@
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16'><path fill='%23a46bff' d='M12 2l4 6 6 2-10 7-10-7 6-2 4-6z'/></svg>");
     background-repeat: no-repeat;
     background-position: 8px center;
-    padding-left: 30px !important;
+    padding-left: 26px !important;
     padding-right: 0 !important;
     line-height: 18px;
   }
   /* Percent-wrapped token (e.g., %arg:4:1%) */
   .monaco-editor .percent-token {
-    color: #00d9ff !important;
-    background-color: rgba(0, 217, 255, 0.03) !important;
+    color: #00ffbf !important;
+    background-color: rgba(0, 255, 200, 0.03) !important;
     /* repeating diagonal stripe pattern for better contrast */
     background-image: repeating-linear-gradient(45deg,
-      rgba(0, 255, 234, 0.1) 0px, rgba(0, 183, 255, 0.1) 4px,
-      rgba(0, 217, 255, 0.02) 4px, rgba(0, 255, 242, 0.02) 8px);
+      rgba(0, 255, 200, 0.1) 0px, rgba(0, 255, 200, 0.1) 4px,
+      rgba(90, 90, 90, 0.02) 4px, rgba(90, 90, 90, 0.02) 8px);
     background-size: 8px 8px;
     border-radius: 4px;
     text-shadow: 0 0 8px rgba(0, 255, 255, 0.12);
@@ -64,6 +64,17 @@ function startMonacoIfYamlReady() {
   require(['vs/editor/editor.main'], function() {
     const statusEl = document.getElementById('status');
     let schema = {};
+    // Helper to collect global options from schema entries that represent global/common options.
+    function getGlobalOptions() {
+      const candidateNames = ['global','Global','__global','GLOBAL','*','AllSpells','GlobalSpell','globalOptions'];
+      const merged = {};
+      for (const n of candidateNames) {
+        if (schema && schema[n] && schema[n].options) {
+          Object.assign(merged, schema[n].options);
+        }
+      }
+      return merged;
+    }
 
     fetch('schema.json')
       .then(res => res.json())
@@ -345,7 +356,38 @@ function startMonacoIfYamlReady() {
           }
         }
 
+        // Heuristic: keys starting with `str-` are caster-facing strings (e.g., str-cast-self, str-no-target)
+        try {
+          if (key && key.startsWith('str-')) {
+            const startCol = word && word.startColumn ? word.startColumn : Math.max(1, position.column - key.length);
+            const endCol = word && word.endColumn ? word.endColumn : startCol + key.length;
+            return {
+              range: new monaco.Range(position.lineNumber, startCol, position.lineNumber, endCol),
+              contents: [
+                { value: `**${key}** (string)` },
+                { value: 'A message shown to the caster (e.g., cast success, no target). Supports formatting tokens.' }
+              ]
+            };
+          }
+        } catch (e) {
+          // ignore heuristic failures
+        }
+
         // Fallback: global option lookup across all spells (unchanged)
+        // First check a merged global options entry (if present in the schema)
+        const globalOptions = getGlobalOptions();
+        if (globalOptions && globalOptions[key]) {
+          const opt = globalOptions[key];
+          return {
+            range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
+            contents: [
+              { value: `**${key}** (${opt.type}) — global` },
+              { value: `${opt.description}` },
+              { value: `Default: ${opt.default ?? 'none'}` }
+            ]
+          };
+        }
+        // Otherwise search per-spell options as a fallback
         for (const spellName in schema) {
           const options = schema[spellName].options;
           if (options && options[key]) {
