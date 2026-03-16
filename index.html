@@ -53,6 +53,32 @@
     padding-left: 4px !important;
     padding-right: 0 !important;
   }
+  /* %var tokens: bluish purple background */
+  .monaco-editor .percent-var {
+    color: #fff !important;
+    background-color: rgba(107,75,255,0.08) !important;
+    background-image: repeating-linear-gradient(45deg,
+      rgba(107,75,255,0.10) 0px, rgba(107,75,255,0.10) 4px,
+      rgba(43,43,43,0.02) 4px, rgba(43,43,43,0.02) 8px);
+    background-size: 8px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(86,55,196,0.22) !important;
+    padding-left: 4px !important;
+    padding-right: 0 !important;
+  }
+  /* %papi tokens: navy blue background */
+  .monaco-editor .percent-papi {
+    color: #fff !important;
+    background-color: rgba(10,40,100,0.07) !important;
+    background-image: repeating-linear-gradient(45deg,
+      rgba(10,40,100,0.12) 0px, rgba(10,40,100,0.12) 4px,
+      rgba(43,43,43,0.02) 4px, rgba(43,43,43,0.02) 8px);
+    background-size: 8px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(10,40,100,0.28) !important;
+    padding-left: 4px !important;
+    padding-right: 0 !important;
+  }
   /* First-line spell name token */
   .monaco-editor .spell-name-token {
     color: rgb(117, 161, 148) !important;
@@ -339,7 +365,16 @@ function startMonacoIfYamlReady() {
           let endCol = startIndex + matchText.length + 1; // exclusive end
           if (endCol > lineMax) endCol = lineMax;
           if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
-          newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: 'percent-token' } });
+          // Inspect token prefix to assign specialized classes: %var, %papi, %arg
+          let cls = 'percent-token';
+          try {
+            const inner = matchText.slice(1, -1); // remove surrounding %
+            const prefix = inner.split(':')[0].toLowerCase();
+            if (prefix === 'var') cls = 'percent-var';
+            else if (prefix === 'papi') cls = 'percent-papi';
+            // keep %arg as default percent-token
+          } catch (e) {}
+          newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: cls } });
         }
       }
       percentDecorationIds = editor.deltaDecorations(percentDecorationIds, newDecs);
@@ -439,6 +474,49 @@ function startMonacoIfYamlReady() {
         if (!key) return null;
 
         const line = model.getLineContent(position.lineNumber);
+
+        // Helper: find a %...% token on the current line that contains the cursor
+        function findPercentTokenAtPos() {
+          const regex = /%[^%]+%/g;
+          let m;
+          while ((m = regex.exec(line)) !== null) {
+            const start = m.index; // zero-based
+            const end = m.index + m[0].length; // exclusive
+            const col0 = position.column - 1; // zero-based
+            if (col0 >= start && col0 < end) {
+              return { text: m[0], startCol: start + 1, endCol: end + 1 };
+            }
+          }
+          return null;
+        }
+
+        // If hovering inside a percent token, provide specific docs
+        const pct = findPercentTokenAtPos();
+        if (pct) {
+          const inner = pct.text.slice(1, -1);
+          const prefix = inner.split(':')[0].toLowerCase();
+          const contents = [];
+          if (prefix === 'arg') {
+            contents.push({ value: '**%arg:INDEX:DEFAULT%** — Cast argument' });
+            contents.push({ value: 'Returns the spell cast argument at `INDEX` (1-based). If the argument is missing, `DEFAULT` is used.' });
+            contents.push({ value: 'Example: `%arg:1:x%` — use the first argument or `x` if not provided.' });
+          } else if (prefix === 'var' || prefix === 'castervar' || prefix === 'targetvar' || prefix === 'playervar') {
+            contents.push({ value: `**%${prefix}:<varName>:[precision]%** — Variable placeholder` });
+            contents.push({ value: 'Returns a stored variable value for the recipient (or the named scope). `precision` (optional) controls decimal places.' });
+            contents.push({ value: 'Notes: variable placeholders do not work for non-player entities unless the variable is global.' });
+            contents.push({ value: 'Example: `%var:meta_current_health:0%` — current health rounded to 0 decimals.' });
+          } else if (prefix === 'papi' || prefix === 'casterpapi' || prefix === 'targetpapi' || prefix === 'playerpapi') {
+            contents.push({ value: `**%${prefix}:<placeholder>%** — PlaceholderAPI (PAPI)` });
+            contents.push({ value: 'Resolves a PlaceholderAPI placeholder parsed against the recipient (or specified player). Supports inner PAPI placeholders using `{}`.' });
+            contents.push({ value: 'Example: `%papi:player_name%`, or nested `%papi:ms_cooldown_now_{ms_selectedspell},0%`.' });
+            contents.push({ value: 'PAPI expansions may be resolved for non-player entities depending on the expansion.' });
+          } else {
+            // generic percent token info
+            contents.push({ value: `**${pct.text}** — Placeholder / token` });
+            contents.push({ value: 'This is a MagicSpells placeholder token. Supported prefixes include `%arg`, `%var`, `%papi`, and scope variants like `castervar` or `casterpapi`.' });
+          }
+          return { range: new monaco.Range(position.lineNumber, pct.startCol, position.lineNumber, pct.endCol), contents };
+        }
 
         // Helper: get YAML-parsed object
         function parseYaml() {
