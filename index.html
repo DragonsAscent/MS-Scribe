@@ -417,7 +417,7 @@ function startMonacoIfYamlReady() {
             const b = parseInt(hex.substring(4,6), 16) / 255;
             const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
             const textColor = lum > 0.6 ? '#000' : '#fff';
-            const rule = `.monaco-editor .${className} { background-image: none !important; background-color: #${hex} !important; color: ${textColor} !important; border: 1px solid rgba(0,0,0,0.12) !important; }`;
+            const rule = `.monaco-editor .${className} { background-image: none !important; background-color: #${hex} !important; color: ${textColor} !important; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12) !important; }`;
             styleEl.appendChild(document.createTextNode(rule));
             window.__hexClasses.add(className);
           }
