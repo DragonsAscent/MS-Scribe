@@ -116,11 +116,15 @@
   }
   /* First hover row (title) with purple background */
   .monaco-editor .monaco-hover .hover-contents .hover-row:first-child {
-    background: linear-gradient(180deg, rgba(164,107,255,0.16), rgba(124,67,255,0.12));
-    color: #fff !important;
-    padding: 6px 10px !important;
+    /* Match spell-class token appearance: subtle purple background and purple text */
+    background: rgba(164, 107, 255, 0.13) !important;
+    color: hsl(263, 100%, 71%) !important;
+    padding: 10px 14px !important; /* slightly bigger area */
     font-weight: 700;
+    font-size: 13px !important;
     border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
   }
   /* Rest of hover content padding */
   .monaco-editor .monaco-hover .hover-contents .hover-row:not(:first-child) {
