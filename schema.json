@@ -235,7 +235,7 @@
       "scan-modifiers": {
         "type": "string",
         "default": null,
-        "description": "Location modifiers (https://github.com/TheComputerGeek2/MagicSpells/wiki/modifiers) which is checked against each block in the scan. location-modifiers are only checked for the initial block."
+        "description": "Location [modifiers](https://github.com/TheComputerGeek2/MagicSpells/wiki/modifiers) which is checked against each block in the scan. location-modifiers are only checked for the initial block."
       }
     }
   },
@@ -345,7 +345,7 @@
       "helmet": {
         "type": "string",
         "default": null,
-        "description": "The helmet to conjure to the player. Supports Magic Item String (https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) and Magic Item Config (https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-Config) format."
+        "description": "The helmet to conjure to the player. Supports [Magic Item String](https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) and [Magic Item Config](https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-Config) format."
       },
       "chestplate": {
         "type": "string",
@@ -775,7 +775,7 @@
       "bow-items": {
         "type": "string",
         "default": null,
-        "description": "When defined, only bows that match one of the listed items (using the Magic Item String (https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) format) can trigger the spell."
+        "description": "When defined, only bows that match one of the listed items (using the [Magic Item String](https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) format) can trigger the spell."
       },
       "ammo-items": {
         "type": "string",
@@ -785,7 +785,7 @@
       "disallowed-bow-items": {
         "type": "string",
         "default": null,
-        "description": "When defined, only bows that do not match one of the list items (using the Magic Item String (https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) format) can trigger the spell. This option takes precedence over the option bow-items."
+        "description": "When defined, only bows that do not match one of the list items (using the [Magic Item String](https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) format) can trigger the spell. This option takes precedence over the option bow-items."
       },
       "disallowed-ammo-items": {
         "type": "string",
@@ -1915,7 +1915,7 @@
       "disarmable-items": {
         "type": "string",
         "default": null,
-        "description": "List every item with the Magic Item String (https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) format you want to be disarmable via this spell. Leave blank to disarm all items."
+        "description": "List every item with the [Magic Item String](https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) format you want to be disarmable via this spell. Leave blank to disarm all items."
       },
       "disarm-duration": {
         "type": "number",
@@ -2075,7 +2075,7 @@
       "disguise": {
         "type": "any",
         "default": null,
-        "description": "Entity Data (https://github.com/TheComputerGeek2/MagicSpells/wiki/Entity-Data) config section."
+        "description": "[Entity Data](https://github.com/TheComputerGeek2/MagicSpells/wiki/Entity-Data) config section."
       }
     }
   },
@@ -3970,7 +3970,7 @@
       "homing-modifiers": {
         "type": "string",
         "default": null,
-        "description": "Modifiers (https://github.com/TheComputerGeek2/MagicSpells/wiki/Modifiers) for the missile, if the modifier checks won't pass, the missile will stop flying."
+        "description": "[Modifiers](https://github.com/TheComputerGeek2/MagicSpells/wiki/Modifiers) for the missile, if the modifier checks won't pass, the missile will stop flying."
       },
       "effect-offset": {
         "type": "any",
@@ -4235,7 +4235,7 @@
       "homing-modifiers": {
         "type": "string",
         "default": null,
-        "description": "Modifiers (https://github.com/TheComputerGeek2/MagicSpells/wiki/Modifiers) for the missile, if the modifier check won't pass, the missile will stop flying."
+        "description": "[Modifiers](https://github.com/TheComputerGeek2/MagicSpells/wiki/Modifiers) for the missile, if the modifier check won't pass, the missile will stop flying."
       }
     }
   },
@@ -5530,17 +5530,17 @@
       "loop-modifiers": {
         "type": "string",
         "default": null,
-        "description": "List of modifiers (https://github.com/TheComputerGeek2/MagicSpells/wiki/modifiers) checked at the beginning of each iteration of the loop. Checked after variable-mods-loop and variable-mods-target-loop are performed."
+        "description": "List of [modifiers](https://github.com/TheComputerGeek2/MagicSpells/wiki/modifiers) checked at the beginning of each iteration of the loop. Checked after variable-mods-loop and variable-mods-target-loop are performed."
       },
       "loop-target-modifiers": {
         "type": "string",
         "default": null,
-        "description": "List of target modifiers (https://github.com/TheComputerGeek2/MagicSpells/wiki/modifiers) checked at the beginning of each iteration of the loop. Checked after variable-mods-loop and variable-mods-target-loop are performed."
+        "description": "List of target [modifiers](https://github.com/TheComputerGeek2/MagicSpells/wiki/modifiers) checked at the beginning of each iteration of the loop. Checked after variable-mods-loop and variable-mods-target-loop are performed."
       },
       "loop-location-modifiers": {
         "type": "string",
         "default": null,
-        "description": "List of location modifiers (https://github.com/TheComputerGeek2/MagicSpells/wiki/modifiers) checked at the beginning of each iteration of the loop. Checked after variable-mods-loop and variable-mods-target-loop are performed."
+        "description": "List of location [modifiers](https://github.com/TheComputerGeek2/MagicSpells/wiki/modifiers) checked at the beginning of each iteration of the loop. Checked after variable-mods-loop and variable-mods-target-loop are performed."
       }
     }
   },
@@ -5905,7 +5905,7 @@
       "filler": {
         "type": "string",
         "default": null,
-        "description": "An item to fill slots without items. Uses the Magic Item String (https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) format."
+        "description": "An item to fill slots without items. Uses the [Magic Item String](https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) format."
       },
       "stay-open-non-option": {
         "type": "boolean",
@@ -6035,7 +6035,7 @@
       "attributes": {
         "type": "any",
         "default": null,
-        "description": "Attributes (https://github.com/TheComputerGeek2/MagicSpells/wiki/Attributes) to apply to the summoned minion."
+        "description": "[Attributes](https://github.com/TheComputerGeek2/MagicSpells/wiki/Attributes) to apply to the summoned minion."
       },
       "main-hand": {
         "type": "string",
@@ -6360,7 +6360,7 @@
       "item": {
         "type": "any",
         "default": null,
-        "description": "The item is placed in the slot and used to display the cooldown. Can be Magic Item String (https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) or Magic Item Config (https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-Config)."
+        "description": "The item is placed in the slot and used to display the cooldown. Can be [Magic Item String](https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) or [Magic Item Config](https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-Config)."
       },
       "spell": {
         "type": "any",
@@ -6995,7 +6995,7 @@
       "projectile-modifiers": {
         "type": "string",
         "default": null,
-        "description": "Modifiers (https://github.com/TheComputerGeek2/MagicSpells/wiki/Modifiers) for the projectile, if the modifier check won't pass, the projectile will stop flying."
+        "description": "[Modifiers](https://github.com/TheComputerGeek2/MagicSpells/wiki/Modifiers) for the projectile, if the modifier check won't pass, the projectile will stop flying."
       },
       "interactions": {
         "type": "number",
@@ -7330,7 +7330,7 @@
       "player-modifiers": {
         "type": "string",
         "default": null,
-        "description": "If these modifiers (https://github.com/TheComputerGeek2/MagicSpells/wiki/modifiers) don't pass, the player won't be shown in the menu."
+        "description": "If these [modifiers](https://github.com/TheComputerGeek2/MagicSpells/wiki/modifiers) don't pass, the player won't be shown in the menu."
       },
       "previous-page-item": {
         "type": "string",
@@ -7900,7 +7900,7 @@
       "projectile-modifiers": {
         "type": "string",
         "default": null,
-        "description": "Modifiers (https://github.com/TheComputerGeek2/MagicSpells/wiki/Modifiers) for the projectile. If the modifier checks won't pass, the projectile will stop flying."
+        "description": "[Modifiers](https://github.com/TheComputerGeek2/MagicSpells/wiki/Modifiers) for the projectile. If the modifier checks won't pass, the projectile will stop flying."
       }
     }
   },
@@ -9515,7 +9515,7 @@
       "attributes": {
         "type": "any",
         "default": null,
-        "description": "Attributes (https://github.com/TheComputerGeek2/MagicSpells/wiki/Attributes) for the mob."
+        "description": "[Attributes](https://github.com/TheComputerGeek2/MagicSpells/wiki/Attributes) for the mob."
       },
       "potion-effects": {
         "type": "string",
@@ -9580,7 +9580,7 @@
       "spell-class": {
         "type": "string",
         "default": null,
-        "description": "Aside from these general options, every class has its options - you can find them along with their class name in the Spell List (https://github.com/TheComputerGeek2/MagicSpells/wiki/Spell-List). The spell class is the Java class' fully qualified class name - if the class is from MS, then com.nisovin.spells may be omitted."
+        "description": "Aside from these general options, every class has its options - you can find them along with their class name in the [Spell List](https://github.com/TheComputerGeek2/MagicSpells/wiki/Spell-List). The spell class is the Java class' fully qualified class name - if the class is from MS, then com.nisovin.spells may be omitted."
       },
       "name": {
         "type": "string",
@@ -9620,7 +9620,7 @@
       "effects": {
         "type": "any",
         "default": null,
-        "description": "Configuration section for Spell Effects (https://github.com/TheComputerGeek2/MagicSpells/wiki/Spell-Effects)."
+        "description": "Configuration section for [Spell Effects](https://github.com/TheComputerGeek2/MagicSpells/wiki/Spell-Effects)."
       },
       "cost": {
         "type": "string",
@@ -9675,7 +9675,7 @@
       "tags": {
         "type": "string",
         "default": null,
-        "description": "This is a list of strings which some spells support to refer to a group of spells that are tagged with a specific tag. This is most commonly used in a Spell Filter (https://github.com/TheComputerGeek2/MagicSpells/wiki/Spell-Filter) which some spells like the SilenceSpell or No Magic Zones (https://github.com/TheComputerGeek2/MagicSpells/wiki/No-Magic-Zones) use."
+        "description": "This is a list of strings which some spells support to refer to a group of spells that are tagged with a specific tag. This is most commonly used in a [Spell Filter](https://github.com/TheComputerGeek2/MagicSpells/wiki/Spell-Filter) which some spells like the SilenceSpell or [No Magic Zones](https://github.com/TheComputerGeek2/MagicSpells/wiki/No-Magic-Zones) use."
       }
     }
   },
@@ -9720,7 +9720,7 @@
       "modifiers": {
         "type": "any",
         "default": null,
-        "description": "Modifiers (https://github.com/TheComputerGeek2/MagicSpells/wiki/Modifiers) which determine whether the spell effect should be played or not."
+        "description": "[Modifiers](https://github.com/TheComputerGeek2/MagicSpells/wiki/Modifiers) which determine whether the spell effect should be played or not."
       },
       "caster-modifiers": {
         "type": "any",
@@ -10050,7 +10050,7 @@
       "armor": {
         "type": "string",
         "default": null,
-        "description": "Armor of the horse defined as a Magic Item String (https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String)."
+        "description": "Armor of the horse defined as a [Magic Item String](https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String)."
       },
       "str-invalid-type": {
         "type": "string",
@@ -11035,7 +11035,7 @@
       "items": {
         "type": "any",
         "default": null,
-        "description": "A string list of items written using the Magic Item String (https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) format that should be unconjured. Quantity can be specified by separating it by a space from the item to make it match against stacks instead."
+        "description": "A string list of items written using the [Magic Item String](https://github.com/TheComputerGeek2/MagicSpells/wiki/Magic-Item-String) format that should be unconjured. Quantity can be specified by separating it by a space from the item to make it match against stacks instead."
       }
     }
   },
@@ -12107,7 +12107,7 @@
       },
       "innomagiczone": {
         "type": "string",
-        "description": "Passes if the entity is inside the No Magic Zones (https://github.com/TheComputerGeek2/MagicSpells/wiki/No-Magic-Zones) specified."
+        "description": "Passes if the entity is inside the [No Magic Zones](https://github.com/TheComputerGeek2/MagicSpells/wiki/No-Magic-Zones) specified."
       },
       "inregion": {
         "type": "string",

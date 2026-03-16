@@ -70,10 +70,11 @@ function stripFormatting(text) {
     text = text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
 
     // convert GitHub shorthand links [[Spell Effects]] to wiki URL
+    // convert GitHub shorthand links [[Spell Effects]] to Markdown links pointing at the wiki
     text = text.replace(/\[\[([^\]]+)\]\]/g, function(match, p1) {
         // Replace spaces with hyphens for wiki page
         const page = p1.replace(/\s+/g, "-");
-        return `${p1} (https://github.com/TheComputerGeek2/MagicSpells/wiki/${page})`;
+        return `[${p1}](https://github.com/TheComputerGeek2/MagicSpells/wiki/${page})`;
     });
 
     return text.trim()
