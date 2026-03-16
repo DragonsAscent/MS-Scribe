@@ -40,6 +40,7 @@
   }
   /* Percent-wrapped token (e.g., %arg:4:1%) */
   .monaco-editor .percent-token {
+    position: relative;
     color: rgb(173, 114, 114) !important;
     background-color: rgba(235, 149, 149, 0.03) !important;
     /* repeating diagonal stripe pattern for better contrast */
@@ -50,33 +51,33 @@
     border-radius: 4px;
     border: 1px solid rgba(177, 130, 130, 0.18) !important;
     text-shadow: 0 0 8px rgba(151, 81, 81, 0.205);
-    padding-left: 4px !important;
+    /* remove padding to avoid shifting the caret; visual accents should be absolute so they don't affect layout */
     padding-right: 0 !important;
   }
   /* %var tokens: bluish purple background */
   .monaco-editor .percent-var {
-    color: #fff !important;
-    background-color: rgba(107,75,255,0.08) !important;
+    position: relative;
+    color: rgb(158, 130, 224) !important;
+    background-color: rgba(150,120,255,0.12) !important;
     background-image: repeating-linear-gradient(45deg,
-      rgba(107,75,255,0.10) 0px, rgba(107,75,255,0.10) 4px,
+      rgba(150,120,255,0.10) 0px, rgba(150,120,255,0.10) 4px,
       rgba(43,43,43,0.02) 4px, rgba(43,43,43,0.02) 8px);
     background-size: 8px 8px;
     border-radius: 4px;
-    border: 1px solid rgba(86,55,196,0.22) !important;
-    padding-left: 4px !important;
+    border: 1px solid rgba(86,55,196,0.18) !important;
     padding-right: 0 !important;
   }
   /* %papi tokens: navy blue background */
   .monaco-editor .percent-papi {
-    color: #fff !important;
-    background-color: rgba(10,40,100,0.07) !important;
+    position: relative;
+    color: rgb(103, 148, 182) !important;
+    background-color: rgba(100,150,255,0.12) !important;
     background-image: repeating-linear-gradient(45deg,
-      rgba(10,40,100,0.12) 0px, rgba(10,40,100,0.12) 4px,
+      rgba(100,150,255,0.10) 0px, rgba(100,150,255,0.10) 4px,
       rgba(43,43,43,0.02) 4px, rgba(43,43,43,0.02) 8px);
     background-size: 8px 8px;
     border-radius: 4px;
-    border: 1px solid rgba(10,40,100,0.28) !important;
-    padding-left: 4px !important;
+    border: 1px solid rgba(30,80,160,0.18) !important;
     padding-right: 0 !important;
   }
   /* First-line spell name token */
