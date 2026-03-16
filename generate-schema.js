@@ -274,11 +274,47 @@ function generate() {
     if (!schema['modifiers']) schema['modifiers'] = { type: 'modifiers', options: {} };
     schema['modifiers'].options = Object.assign({}, schema['modifiers'].options || {}, globalConditions);
 
-    fs.writeFileSync(
-        OUTPUT,
-        JSON.stringify(schema,null,2)
-    )
+    // ----- registry merge: if ./registries/*.json exists, load and attach enums -----
+    const REG_DIR = path.resolve(__dirname, 'registries')
+    if (fs.existsSync(REG_DIR)) {
+        const regFiles = fs.readdirSync(REG_DIR).filter(f => f.endsWith('.json'))
+        const registries = {}
+        for (const rf of regFiles) {
+            try {
+                const key = path.basename(rf, '.json')
+                const arr = JSON.parse(fs.readFileSync(path.join(REG_DIR, rf), 'utf8'))
+                if (Array.isArray(arr) && arr.length) registries[key] = arr
+            } catch (e) {
+                // skip
+            }
+        }
 
+        if (Object.keys(registries).length) {
+            // expose raw registries under schema.registries
+            schema.registries = registries
+
+            // try to attach enum lists to any matching option keys (simple heuristic)
+            for (const [spellName, spellData] of Object.entries(schema)) {
+                if (!spellData || !spellData.options) continue
+                for (const optName of Object.keys(spellData.options)) {
+                    const lower = optName.toLowerCase()
+                    for (const [regKey, list] of Object.entries(registries)) {
+                        // match exact or contains (e.g., 'particle' or 'sound_event' or 'biome')
+                        if (lower === regKey || lower.includes(regKey) || regKey.includes(lower)) {
+                            // attach enum if the option is string-typed or unknown
+                            const opt = spellData.options[optName]
+                            if (opt && (!opt.enum || !opt.enum.length)) {
+                                opt.enum = list.slice()
+                                // keep enum limited if extremely large? leave as-is for now
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fs.writeFileSync(OUTPUT, JSON.stringify(schema, null, 2))
     console.log("Schema generated.")
 }
 

@@ -268,6 +268,57 @@ function startMonacoIfYamlReady() {
       automaticLayout: true
     });
 
+    // Completion provider: suggest registry values (particles, biomes, sounds, items, etc.)
+    monaco.languages.registerCompletionItemProvider('yaml', {
+      provideCompletionItems: function(model, position) {
+        // if schema or registries not loaded yet, no suggestions
+        if (!schema || !schema.registries) return { suggestions: [] };
+
+        const word = model.getWordUntilPosition(position) || { word: '', startColumn: position.column, endColumn: position.column };
+        const line = model.getLineContent(position.lineNumber);
+
+        // derive a key-like token at the cursor (reuse getFullKey logic)
+        function getFullKeyAtPos() {
+          const col = position.column - 1; // zero-based
+          if (col < 0 || col > line.length) return word.word || null;
+          const isKeyChar = c => /[A-Za-z0-9_\-]/.test(c);
+          if (!isKeyChar(line[col])) {
+            if (word && word.word) return word.word;
+            return null;
+          }
+          let left = col;
+          while (left - 1 >= 0 && isKeyChar(line[left - 1])) left--;
+          let right = col;
+          while (right + 1 < line.length && isKeyChar(line[right + 1])) right++;
+          return line.substring(left, right + 1);
+        }
+
+        const key = (getFullKeyAtPos() || '').toLowerCase();
+        if (!key) return { suggestions: [] };
+
+        const suggestions = [];
+        // simple heuristic: if key matches or contains a registry name, suggest from that registry
+        for (const regKey of Object.keys(schema.registries)) {
+          if (key === regKey || key.includes(regKey) || regKey.includes(key) || key.endsWith(regKey)) {
+            const list = schema.registries[regKey] || [];
+            for (const id of list) {
+              suggestions.push({
+                label: id,
+                kind: monaco.languages.CompletionItemKind.Value,
+                insertText: '"' + id + '"',
+                documentation: `${regKey} registry value`,
+                range: new monaco.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn)
+              });
+            }
+            // prefer exact registry match; stop after filling suggestions for this registry
+            if (key === regKey) break;
+          }
+        }
+
+        return { suggestions };
+      }
+    });
+
     // Add the GIF overlay element so it can be layered between the editor background and the text layer
     try {
       const editorContainer = document.getElementById('editor');
