@@ -408,8 +408,8 @@ function startMonacoIfYamlReady() {
       if (!model) return;
       const newDecs = [];
       const lineCount = model.getLineCount();
-      // Match either percent-wrapped tokens like %arg:1% or single-percent tokens like %a, %t, %t_uuid
-      const regex = /%[^%]+%|%[A-Za-z0-9_]+(?:_[A-Za-z0-9_]+)*/g;
+      // Match single-percent tokens like %a, %t, %t_uuid first, then percent-wrapped tokens like %arg:1% (allows whitespace inside)
+      const regex = /%[A-Za-z0-9_]+(?:_[A-Za-z0-9_]+)*|%[^%]+%/g;
       for (let i = 1; i <= lineCount; i++) {
         const line = model.getLineContent(i);
         let m;
@@ -544,8 +544,8 @@ function startMonacoIfYamlReady() {
 
         // Helper: find a %...% token on the current line that contains the cursor
         function findPercentTokenAtPos() {
-          // match either %...% or single-percent tokens like %a, %t, %t_uuid
-          const regex = /%[^%]+%|%[A-Za-z0-9_]+(?:_[A-Za-z0-9_]+)*/g;
+          // match single-percent tokens like %a, %t, %t_uuid first, or percent-wrapped tokens (allows whitespace inside)
+          const regex = /%[A-Za-z0-9_]+(?:_[A-Za-z0-9_]+)*|%[^%]+%/g;
           let m;
           while ((m = regex.exec(line)) !== null) {
             const start = m.index; // zero-based
