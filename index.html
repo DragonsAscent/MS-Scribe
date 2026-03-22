@@ -408,7 +408,8 @@ function startMonacoIfYamlReady() {
       if (!model) return;
       const newDecs = [];
       const lineCount = model.getLineCount();
-      const regex = /%[^%]+%/g;
+      // Match either percent-wrapped tokens like %arg:1% or single-percent tokens like %a, %t, %t_uuid
+      const regex = /%[^%]+%|%[A-Za-z0-9_]+(?:_[A-Za-z0-9_]+)*/g;
       for (let i = 1; i <= lineCount; i++) {
         const line = model.getLineContent(i);
         let m;
@@ -421,14 +422,24 @@ function startMonacoIfYamlReady() {
           let endCol = startIndex + matchText.length + 1; // exclusive end
           if (endCol > lineMax) endCol = lineMax;
           if (endCol <= startCol) endCol = Math.min(startCol + 1, lineMax);
-          // Inspect token prefix to assign specialized classes: %var, %papi, %arg
+          // Inspect token prefix to assign specialized classes: %var, %papi, %arg, or single-percent like %a/%t
           let cls = 'percent-token';
           try {
-            const inner = matchText.slice(1, -1); // remove surrounding %
-            const prefix = inner.split(':')[0].toLowerCase();
-            if (prefix === 'var') cls = 'percent-var';
-            else if (prefix === 'papi') cls = 'percent-papi';
-            // keep %arg as default percent-token
+            let inner;
+            let prefix;
+            if (matchText.startsWith('%') && matchText.endsWith('%')) {
+              inner = matchText.slice(1, -1); // remove surrounding %
+              prefix = inner.split(':')[0].toLowerCase();
+            } else {
+              inner = matchText.slice(1); // single-percent token
+              // treat underscores or trailing parts as suffixes (e.g. t_uuid)
+              prefix = inner.split(/[:_]/)[0].toLowerCase();
+            }
+            if (prefix === 'var' || prefix === 'castervar' || prefix === 'targetvar' || prefix === 'playervar') cls = 'percent-var';
+            else if (prefix === 'papi' || prefix === 'casterpapi' || prefix === 'targetpapi' || prefix === 'playerpapi') cls = 'percent-papi';
+            else if (prefix === 'a') cls = 'percent-a';
+            else if (prefix === 't') cls = 'percent-t';
+            // keep %arg and other forms as default percent-token
           } catch (e) {}
           newDecs.push({ range: new monaco.Range(i, startCol, i, endCol), options: { inlineClassName: cls } });
         }
@@ -533,7 +544,8 @@ function startMonacoIfYamlReady() {
 
         // Helper: find a %...% token on the current line that contains the cursor
         function findPercentTokenAtPos() {
-          const regex = /%[^%]+%/g;
+          // match either %...% or single-percent tokens like %a, %t, %t_uuid
+          const regex = /%[^%]+%|%[A-Za-z0-9_]+(?:_[A-Za-z0-9_]+)*/g;
           let m;
           while ((m = regex.exec(line)) !== null) {
             const start = m.index; // zero-based
@@ -549,8 +561,15 @@ function startMonacoIfYamlReady() {
         // If hovering inside a percent token, provide specific docs
         const pct = findPercentTokenAtPos();
         if (pct) {
-          const inner = pct.text.slice(1, -1);
-          const prefix = inner.split(':')[0].toLowerCase();
+          let inner;
+          let prefix;
+          if (pct.text.startsWith('%') && pct.text.endsWith('%')) {
+            inner = pct.text.slice(1, -1);
+            prefix = inner.split(':')[0].toLowerCase();
+          } else {
+            inner = pct.text.slice(1);
+            prefix = inner.split(/[:_]/)[0].toLowerCase();
+          }
           const contents = [];
           if (prefix === 'arg') {
             contents.push({ value: '**%arg:INDEX:DEFAULT%** — Cast argument' });
@@ -566,6 +585,16 @@ function startMonacoIfYamlReady() {
             contents.push({ value: 'Resolves a PlaceholderAPI placeholder parsed against the recipient (or specified player). Supports inner PAPI placeholders using `{}`.' });
             contents.push({ value: 'Example: `%papi:player_name%`, or nested `%papi:ms_cooldown_now_{ms_selectedspell},0%`.' });
             contents.push({ value: 'PAPI expansions may be resolved for non-player entities depending on the expansion.' });
+          } else if (prefix === 'a') {
+            contents.push({ value: '**%a** — Caster entity name' });
+            contents.push({ value: 'Replaced with the caster (source) entity name when the spell is executed.' });
+            contents.push({ value: 'Example: `%a cast fireball` → `DragonsAscent cast fireball`' });
+            contents.push({ value: 'Also supports suffixes like `%a_uuid` for the caster UUID.' });
+          } else if (prefix === 't') {
+            contents.push({ value: '**%t** — Target entity name' });
+            contents.push({ value: 'Replaced with the spell target entity name when applicable.' });
+            contents.push({ value: 'Example: `You hit %t` → `You hit Villager123`' });
+            contents.push({ value: 'Also supports suffixes like `%t_uuid` for the target UUID.' });
           } else {
             // generic percent token info
             contents.push({ value: `**${pct.text}** — Placeholder / token` });
